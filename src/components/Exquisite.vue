@@ -10,8 +10,19 @@ export default {
         story: '',
         msg1: ''
       }
+    },
+    methods: {
+      reset() {
+        this.message = '',
+        this.count = 0,
+        this.players = 1,
+        this.ishidden = true,
+        this.finished = false,
+        this.story = '',
+        this.msg1 = ''
+      },
     }
-}
+  }
 </script>
 
 <template>
@@ -23,8 +34,8 @@ export default {
     Number of players: {{players}}
     </h2>
     <input v-if= "count == 0" v-model="players">
-      <br>
-      <br>
+      <br v-if="count == 0">
+      <br v-if="count == 0">
     <button v-on:click="count++ , ishidden = false" v-if="count == 0">Submit</button>
     
     <h2 v-for= "i in players" v-if="!ishidden && count <= players">
@@ -45,6 +56,8 @@ export default {
     </button>
     
     <h3 v-if="finished && count > players">{{story}}</h3>
+    <br>
+    <button @click = 'reset' v-if="finished && count > players">Play Again</button>
     
   </div>
 </template>
