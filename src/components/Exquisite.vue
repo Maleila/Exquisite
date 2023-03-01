@@ -38,7 +38,7 @@ export default {
       <br v-if="count == 0">
     <button v-on:click="count++ , ishidden = false" v-if="count == 0">Submit</button>
     
-    <h2 v-for= "i in players" v-if="!ishidden && count <= players">
+    <h2 v-if="!ishidden && count <= players">
     Player {{count}}/{{players}} write your sentence:
       <br>
       {{msg1}}
