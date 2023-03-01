@@ -33,7 +33,7 @@ export default {
     <h2 v-if= "count == 0">
     Number of players: {{players}}
     </h2>
-    <input v-if= "count == 0" v-model="players">
+    <input v-if= "count == 0" v-model="players" @keydown.enter = "count++ , ishidden = false">
       <br v-if="count == 0">
       <br v-if="count == 0">
     <button v-on:click="count++ , ishidden = false" v-if="count == 0">Submit</button>
@@ -45,7 +45,7 @@ export default {
       <br>
       {{message}}
       <br>
-    <input v-model="message">
+    <input v-model="message" @keydown.enter= "count++ , story = story.concat(message + ' '), msg1 = message, message = ''">
     </h2>
     
     <button v-if="!ishidden && count <= players" v-on:click="count++ , story = story.concat(message + ' '), msg1 = message, message = ''">Submit</button>
