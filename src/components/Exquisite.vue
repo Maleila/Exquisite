@@ -1,5 +1,12 @@
 <script>
+const focus = {
+  mounted: (el) => el.focus()
+}
 export default {
+  directives: {
+    // enables v-focus in template
+    focus
+  },
     data() {
       return {
         message: '',
@@ -20,9 +27,10 @@ export default {
         this.finished = false,
         this.story = '',
         this.msg1 = ''
-      }
-    }
+      },
+      
   }
+}
 </script>
 
 <template>
@@ -56,7 +64,7 @@ export default {
       <br>
       {{message}}
       <br>
-    <input v-model="message" @keydown.enter= "count++ , story = story.concat(message + ' '), msg1 = message, message = ''">
+    <input v-model="message" @keydown.enter= "count++ , story = story.concat(message + ' '), msg1 = message, message = ''" v-focus>
     </h2>
     
     <button v-if="!ishidden && count <= players" v-on:click="count++ , story = story.concat(message + ' '), msg1 = message, message = ''">Submit</button>
