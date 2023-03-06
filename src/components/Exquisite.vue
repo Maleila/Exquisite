@@ -20,7 +20,7 @@ export default {
         this.finished = false,
         this.story = '',
         this.msg1 = ''
-      },
+      }
     }
   }
 </script>
@@ -33,7 +33,18 @@ export default {
     <h2 v-if= "count == 0">
     Number of players: {{players}}
     </h2>
-    <input v-if= "count == 0" v-model="players" @keydown.enter = "count++ , ishidden = false">
+    <!--<input v-if= "count == 0" v-model.number="players" @keydown.enter = "count++ , ishidden = false">-->
+    <!--Looks like it's going to be more involved to check the type so this can be a temporary fix,
+    although it limits the number of players-->
+    <select v-if= "count == 0" v-model="players">
+      <option disabled value="">Select number of players</option>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+    </select>
       <br v-if="count == 0">
       <br v-if="count == 0">
     <button v-on:click="count++ , ishidden = false" v-if="count == 0">Submit</button>
