@@ -1,11 +1,8 @@
 <script>
-const focus = {
-  mounted: (el) => el.focus()
-}
+import { nextTick } from 'vue'
 export default {
-  directives: {
-    // enables v-focus in template
-    focus
+  mounted() { //called when a component is added (ex when the page loads)
+    this.focusInput()
   },
     data() {
       return {
@@ -28,7 +25,23 @@ export default {
         this.story = '',
         this.msg1 = ''
       },
-      
+      submitStory() {
+        this.count++ ,
+        this.story = this.story.concat(this.message + ' '),
+        this.msg1 = this.message,
+        this.message = '',
+        this.focusInput()
+      },
+      submitPlayers() {
+        this.count++,
+        this.ishidden = false,
+        this.focusInput()
+      },
+      focusInput() {
+        nextTick(() => {
+          this.$refs.storyInput.focus() //need this bc vue gets confused since the input field has a v-if
+        });
+    },     
   }
 }
 </script>
@@ -55,7 +68,7 @@ export default {
     </select>
       <br v-if="count == 0">
       <br v-if="count == 0">
-    <button v-on:click="count++ , ishidden = false" v-if="count == 0">Submit</button>
+    <button @click='submitPlayers' v-if="count == 0">Submit</button>
     
     <h2 v-if="!ishidden && count <= players">
     Player {{count}}/{{players}} write your sentence:
@@ -64,12 +77,11 @@ export default {
       <br>
       {{message}}
       <br>
-    <input v-model="message" @keydown.enter= "count++ , story = story.concat(message + ' '), msg1 = message, message = ''" v-focus>
-    </h2>
+    <input v-model="message" @keydown.enter= 'submitStory' ref = "storyInput">
+  </h2>
     
-    <button v-if="!ishidden && count <= players" v-on:click="count++ , story = story.concat(message + ' '), msg1 = message, message = ''">Submit</button>
+    <button v-if="!ishidden && count <= players" @click= 'submitStory'>Submit</button>
       
-
     <button v-on:click= "finished = true, ishidden = ! ishidden" v-if="count > players && !ishidden">
       View Story
     </button>

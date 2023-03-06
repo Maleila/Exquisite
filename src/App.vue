@@ -4,7 +4,7 @@ import HelloWorld from './components/Exquisite.vue'
 </script>
 
 <template>
-  <Exquisite msg="Exquisite" />
+  <Exquisite />
 </template>
 
 <style scoped>
