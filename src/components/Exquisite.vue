@@ -71,11 +71,16 @@ export default {
     <button @click='submitPlayers' v-if="count == 0">Submit</button>
     
     <h2 v-if="!ishidden && count <= players">
-    Player {{count}}/{{players}} write your sentence:
+    Player {{count}}/{{players}}:
       <br>
-      {{msg1}}
+      <div v-if= "count == 1">
+      Start the story!
+      </div>
+      <div v-if= "count > 1">
+      Previous player's sentence: {{msg1}}
+      </div>
       <br>
-      {{message}}
+      Add your sentence: {{message}}
       <br>
     <input v-model="message" @keydown.enter= 'submitStory' ref = "storyInput">
   </h2>
