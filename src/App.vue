@@ -1,23 +1,13 @@
 <script setup>
-import Exquisite from './components/Exquisite.vue';
-import HelloWorld from './components/Exquisite.vue'
+import Exquisite from "./views/Exquisite.vue";
+import HelloWorld from "./views/Exquisite.vue";
 </script>
 
 <template>
-  <Exquisite />
+  <!-- <Exquisite /> -->
+  <br />
+  <div class="cotainer">
+    <router-view />
+    <!-- here we want the home compoenet to show up  -->
+  </div>
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
