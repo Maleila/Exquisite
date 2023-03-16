@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="text-page">
     <h1>About</h1>
     <p>
       Written enquire painful ye to offices forming it. Then so does over sent
