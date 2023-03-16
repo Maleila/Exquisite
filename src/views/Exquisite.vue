@@ -69,6 +69,9 @@ export default {
       <br v-if="count == 0">
       <br v-if="count == 0">
     <button @click='submitPlayers' v-if="count == 0">Submit</button>
+    <router-link to="/" custom v-slot="{ navigate }">
+      <button @click="navigate" role="link">Back</button>
+    </router-link>
     
     <h2 v-if="!ishidden && count <= players">
     Player {{count}}/{{players}}:
