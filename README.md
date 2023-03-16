@@ -12,3 +12,7 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 1. Format `Gameplay` and `About` ("text-page" class)
 2. Format the main game page ("main.css" file)
 3. Deconstract the components of `Exquisite.vue`
+
+## Resources
+
+1. [Vue router tutorial from vueschool](https://vueschool.io/lessons/creating-the-project-with-vite-vite-only)
