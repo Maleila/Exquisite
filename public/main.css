@@ -181,3 +181,12 @@ a {
   border-radius: 5px;
   border:none;
 }
+
+.title{
+  display: flex;
+  justify-content: center;
+}
+
+.title h1{
+  color: peru;
+}
