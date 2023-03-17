@@ -1,8 +1,10 @@
 <template>
-  <div class = "title">
-    <h1>Exquisite Corpse</h1>
+  <div class="title">
+    <h1>Exquisite</h1>
+    <h1>Corpse</h1>
   </div>
-  <div>
+  <div class="empty"></div>
+  <div class="button">
     <router-link to="/game" custom v-slot="{ navigate }">
       <button @click="navigate" role="link">START</button>
     </router-link>

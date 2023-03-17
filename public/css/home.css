@@ -1,0 +1,32 @@
+.title h1 {
+  color: #707070;
+  font-size: 6em;
+  font-weight: 900;
+  line-height: 0.5em;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.button button {
+  color: #707070;
+  font-family: inherit;
+  font-size: 1.5rem;
+  font-weight: 100;
+  margin-bottom: 2.2rem;
+  border: none;
+  background: none;
+  letter-spacing: 0.1em;
+}
+
+.button button:hover {
+  text-decoration: underline;
+}
+
+.empty {
+  height: 4.5em;
+}
