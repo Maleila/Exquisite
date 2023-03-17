@@ -39,7 +39,14 @@ export default {
       },
       focusInput() {
         nextTick(() => {
-          this.$refs.storyInput.focus() //need this bc vue gets confused since the input field has a v-if
+          // Without the try and catch: Error message is: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'focus')
+          // Need a try and catch block b/c you can only access the ref after the component is mounted. So the first render this.$ref.storyInput is going to be null and raise a promise error. This try and catch block doesn't change the overall logic of this method and only serves as a way to reduce any errors on console. Reference: https://vuejs.org/guide/essentials/template-refs.html#accessing-the-refs
+          try {
+            this.$refs.storyInput.focus(); //need this bc vue gets confused since the input field has a v-if
+          } catch (ex) {
+            // Print out the error message, commented out to avoid clustering the console
+            // console.log("Error detected: " + ex)
+          }
         });
     },     
   }
