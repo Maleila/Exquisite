@@ -7,40 +7,47 @@ export default {
   },
   data() {
     return {
-      message: "",
+      current: "",
       count: 0,
       players: 1,
       ishidden: true, //what specifically does this describe? like what's hidden or not?
       finished: false,
       story: "",
-      msg1: "",
+      previous: "",
       invis: false,
     };
   },
   methods: {
     reset() {
-      (this.message = ""),
+      (this.current = ""),
         (this.count = 0),
         (this.players = 1),
         (this.ishidden = true),
         (this.finished = false),
         (this.story = ""),
-        (this.msg1 = "");
+        (this.previous = "");
     },
     submitStory() {
-      this.count++,
-      this.invis = true,
+      this.invis = true;
       setTimeout(() => this.transition(), 900);
-      setTimeout(() => this.invis = false, 900);
     },
     transition() {
-      (this.story = this.story.concat(this.message + " ")),
-        (this.msg1 = this.message),
-        (this.message = ""),
+      this.count++;
+      (this.story = this.story.concat(this.previous + " ")),
+      this.invis = false, //want it to fade out but not back in basically... the fade in is what's causing the weird flashing effect
+        (this.previous = this.current),
+        (this.current = ""),
         this.focusInput()
     },
     submitPlayers() {
       this.count++, (this.ishidden = false), this.focusInput();
+    },
+    viewStory() {
+      this.story = this.story.concat(this.previous),
+      console.log(this.previous),
+      console.log(this.current),
+      this.finished = true,
+      this.ishidden = !this.ishidden
     },
     focusInput() {
       nextTick(() => {
@@ -84,17 +91,21 @@ export default {
     <h2 v-if="!ishidden && count <= players">
       Player {{ count }}/{{ players }}:
       <br />
-      <div v-if="count == 1">Start the story!</div>
+      <!--<div v-if="count == 1">Start the story!</div>-->
+      <div class = "storytest"> {{ story }}
+    </div>
       <div class = "invisibleInk" 
       :style = "{
-      opacity: invis ? 0:1
+      opacity: invis ? 0.2:1
       }"
-      v-if="count > 1"> {{ msg1 }} 
+      v-if="count > 1"> {{ previous + " "}}
+      </div>
+      <!--Add your sentence: {{ current }}-->
+      <div class = "ink">
+        {{ current }}
       </div>
       <br />
-      Add your sentence: {{ message }}
-      <br />
-      <input v-model="message" @keydown.enter="submitStory" ref="storyInput" />
+      <input v-model="current" @keydown.enter="submitStory" ref="storyInput" />
     </h2>
 
     <button v-if="!ishidden && count <= players" @click="submitStory">
@@ -102,7 +113,7 @@ export default {
     </button>
 
     <button
-      v-on:click="(finished = true), (ishidden = !ishidden)"
+      @click="viewStory"
       v-if="count > players && !ishidden"
     >
       View Story
@@ -118,8 +129,19 @@ export default {
 
 <style scoped>
 .invisibleInk {
+  display: inline;
   filter: opacity(100);
   transition: opacity 900ms ease-in-out;
   color:#56e1f0;
+}
+
+.ink {
+  display: inline;
+  color:#56e1f0;
+}
+
+.storytest {
+  opacity: 0.1;
+  display: inline;
 }
 </style>
