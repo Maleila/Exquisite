@@ -1,5 +1,5 @@
 <script>
-import { nextTick } from "vue";
+import { nextTick} from "vue";
 export default {
   mounted() {
     //called when a component is added (ex when the page loads)
@@ -14,6 +14,7 @@ export default {
       finished: false,
       story: "",
       msg1: "",
+      invis: false,
     };
   },
   methods: {
@@ -28,10 +29,15 @@ export default {
     },
     submitStory() {
       this.count++,
-        (this.story = this.story.concat(this.message + " ")),
+      this.invis = true,
+      setTimeout(() => this.transition(), 900);
+      setTimeout(() => this.invis = false, 900);
+    },
+    transition() {
+      (this.story = this.story.concat(this.message + " ")),
         (this.msg1 = this.message),
         (this.message = ""),
-        this.focusInput();
+        this.focusInput()
     },
     submitPlayers() {
       this.count++, (this.ishidden = false), this.focusInput();
@@ -79,7 +85,12 @@ export default {
       Player {{ count }}/{{ players }}:
       <br />
       <div v-if="count == 1">Start the story!</div>
-      <div v-if="count > 1">Previous player's sentence: {{ msg1 }}</div>
+      <div class = "invisibleInk" 
+      :style = "{
+      opacity: invis ? 0:1
+      }"
+      v-if="count > 1"> {{ msg1 }} 
+      </div>
       <br />
       Add your sentence: {{ message }}
       <br />
@@ -106,7 +117,9 @@ export default {
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
+.invisibleInk {
+  filter: opacity(100);
+  transition: opacity 900ms ease-in-out;
+  color:#56e1f0;
 }
 </style>
