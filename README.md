@@ -10,7 +10,7 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 **Eric**
 
-1. Format `Gameplay` and `About` - title and back button
+1. Decompose `Room.vue` from `Exquisite.vue`
 
 ## Resources
 
