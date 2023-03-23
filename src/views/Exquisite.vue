@@ -34,18 +34,23 @@ export default {
     transition() {
       this.count++;
       (this.story = this.story.concat(this.previous + " ")),
-      this.invis = false, //want it to fade out but not back in basically... the fade in is what's causing the weird flashing effect
-        (this.previous = this.current),
-        (this.current = ""),
-        this.focusInput()
+
+      //remove transition for resetting opacity to 1, then re-add after the story is updated
+      document.getElementById('prev').classList.add('notransition'),
+      document.getElementById('prev').style.opacity = 1,
+      document.getElementById('prev').offsetHeight,
+      document.getElementById('prev').classList.remove('notransition'),
+
+      this.invis = false,
+      (this.previous = this.current),
+      (this.current = ""),
+      this.focusInput()
     },
     submitPlayers() {
       this.count++, (this.ishidden = false), this.focusInput();
     },
     viewStory() {
       this.story = this.story.concat(this.previous),
-      console.log(this.previous),
-      console.log(this.current),
       this.finished = true,
       this.ishidden = !this.ishidden
     },
@@ -94,11 +99,11 @@ export default {
       <!--<div v-if="count == 1">Start the story!</div>-->
       <div class = "storytest"> {{ story }}
     </div>
-      <div class = "invisibleInk" 
+      <div id = "prev" class = "invisibleInk"
       :style = "{
       opacity: invis ? 0.2:1
       }"
-      v-if="count > 1"> {{ previous + " "}}
+      v-if="count > 0"> {{ previous + " "}}
       </div>
       <!--Add your sentence: {{ current }}-->
       <div class = "ink">
@@ -133,6 +138,10 @@ export default {
   filter: opacity(100);
   transition: opacity 900ms ease-in-out;
   color:#56e1f0;
+}
+
+.notransition {
+  transition: none !important
 }
 
 .ink {
