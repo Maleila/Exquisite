@@ -1,0 +1,13 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /rooms/{room} {
+      // 允许所有用户读取房间数据
+      allow read: if true;
+      // 仅允许创建房间，不允许修改或删除
+      allow create: if true;
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}
