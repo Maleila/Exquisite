@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bulma": "^0.9.4",
+    "firebase": "^9.18.0",
     "path": "^0.12.7",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
