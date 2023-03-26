@@ -4,6 +4,7 @@ import About from "@/views/About.vue";
 import Gameplay from "@/views/Gameplay.vue";
 import Exquisite from "@/views/Exquisite.vue";
 import Room from "@/views/Room.vue";
+import MainGame from "@/views/MainGame.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home }, // Tell the router to render home component when the home route is visited
@@ -11,6 +12,12 @@ const routes = [
   { path: "/game", name: "Game", component: Exquisite },
   { path: "/gameplay", name: "Gameplay", component: Gameplay },
   { path: "/room", name: "Room", component: Room },
+  {
+    path: "/maingame",
+    name: "MainGame",
+    component: MainGame,
+    props: (route) => ({ playerNum: parseInt(route.query.playerNum, 10) }),
+  },
 ];
 
 // Create a router instance

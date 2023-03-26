@@ -8,9 +8,8 @@ export default {
   data() {
     return {
       current: "",
-      count: 0,
-      players: 1,
-      ishidden: true, //what specifically does this describe? like what's hidden or not?
+      count: 1,
+      ishidden: false, //what specifically does this describe? like what's hidden or not?
       finished: false,
       story: "",
       previous: "",
@@ -21,7 +20,6 @@ export default {
     reset() {
       (this.current = ""),
         (this.count = 0),
-        (this.players = 1),
         (this.ishidden = true),
         (this.finished = false),
         (this.story = ""),
@@ -44,9 +42,6 @@ export default {
         (this.current = ""),
         this.focusInput();
     },
-    submitPlayers() {
-      this.count++, (this.ishidden = false), this.focusInput();
-    },
     viewStory() {
       (this.story = this.story.concat(this.previous)),
         (this.finished = true),
@@ -60,9 +55,15 @@ export default {
           this.$refs.storyInput.focus(); //need this bc vue gets confused since the input field has a v-if
         } catch (ex) {
           // Print out the error message, commented out to avoid clustering the console
-          // console.log("Error detected: " + ex)
+          console.log("Error detected: " + ex);
         }
       });
+    },
+  },
+  props: {
+    playerNum: {
+      type: Number,
+      required: true,
     },
   },
 };
@@ -70,26 +71,8 @@ export default {
 
 <template>
   <div class="start">
-    <!-- <h1>Exquisite Corpse</h1> -->
-    <h2 v-if="count == 0">Number of players: {{ players }}</h2>
-    <!--<input v-if= "count == 0" v-model.number="players" @keydown.enter = "count++ , ishidden = false">-->
-    <!--Looks like it's going to be more involved to check the type so this can be a temporary fix,
-    although it limits the number of players-->
-    <select v-if="count == 0" v-model="players">
-      <option disabled value="">Select number of players</option>
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-      <option>6</option>
-    </select>
-    <br v-if="count == 0" />
-    <br v-if="count == 0" />
-    <button @click="submitPlayers" v-if="count == 0">Submit</button>
-
-    <h2 v-if="!ishidden && count <= players">
-      Player {{ count }}/{{ players }}:
+    <h2 v-if="!ishidden && count <= playerNum">
+      Player {{ count }}/{{ playerNum }}:
       <br />
       <!--<div v-if="count == 1">Start the story!</div>-->
       <div class="storytest">{{ story }}</div>
@@ -111,17 +94,17 @@ export default {
       <input v-model="current" @keydown.enter="submitStory" ref="storyInput" />
     </h2>
 
-    <button v-if="!ishidden && count <= players" @click="submitStory">
+    <button v-if="!ishidden && count <= playerNum" @click="submitStory">
       Submit
     </button>
 
-    <button @click="viewStory" v-if="count > players && !ishidden">
+    <button @click="viewStory" v-if="count > playerNum && !ishidden">
       View Story
     </button>
 
-    <h3 v-if="finished && count > players">{{ story }}</h3>
+    <h3 v-if="finished && count > playerNum">{{ story }}</h3>
     <br />
-    <button @click="reset" v-if="finished && count > players">
+    <button @click="reset" v-if="finished && count > playerNum">
       Play Again
     </button>
 
@@ -130,26 +113,3 @@ export default {
     </router-link>
   </div>
 </template>
-
-<style scoped>
-.invisibleInk {
-  display: inline;
-  filter: opacity(100);
-  transition: opacity 900ms ease-in-out;
-  color: #56e1f0;
-}
-
-.notransition {
-  transition: none !important;
-}
-
-.ink {
-  display: inline;
-  color: #56e1f0;
-}
-
-.storytest {
-  opacity: 0.1;
-  display: inline;
-}
-</style>
