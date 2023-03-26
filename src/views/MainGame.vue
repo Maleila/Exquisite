@@ -9,7 +9,6 @@ export default {
     return {
       current: "",
       count: 1,
-      ishidden: false, //what specifically does this describe? like what's hidden or not?
       finished: false,
       story: "",
       previous: "",
@@ -19,8 +18,7 @@ export default {
   methods: {
     reset() {
       (this.current = ""),
-        (this.count = 0),
-        (this.ishidden = true),
+        (this.count = 1),
         (this.finished = false),
         (this.story = ""),
         (this.previous = "");
@@ -43,9 +41,7 @@ export default {
         this.focusInput();
     },
     viewStory() {
-      (this.story = this.story.concat(this.previous)),
-        (this.finished = true),
-        (this.ishidden = !this.ishidden);
+      (this.story = this.story.concat(this.previous)), (this.finished = true);
     },
     focusInput() {
       nextTick(() => {
@@ -71,7 +67,7 @@ export default {
 
 <template>
   <div class="start">
-    <h2 v-if="!ishidden && count <= playerNum">
+    <h2 v-if="!finished && count <= playerNum">
       Player {{ count }}/{{ playerNum }}:
       <br />
       <!--<div v-if="count == 1">Start the story!</div>-->
@@ -94,11 +90,11 @@ export default {
       <input v-model="current" @keydown.enter="submitStory" ref="storyInput" />
     </h2>
 
-    <button v-if="!ishidden && count <= playerNum" @click="submitStory">
+    <button v-if="!finished && count <= playerNum" @click="submitStory">
       Submit
     </button>
 
-    <button @click="viewStory" v-if="count > playerNum && !ishidden">
+    <button @click="viewStory" v-if="count > playerNum && !finished">
       View Story
     </button>
 
