@@ -41,7 +41,8 @@ export default {
         this.focusInput();
     },
     viewStory() {
-      (this.story = this.story.concat(this.previous)), (this.finished = true);
+      (this.story = this.story.concat(this.previous)),
+      (this.finished = true);
     },
     focusInput() {
       nextTick(() => {
@@ -109,3 +110,26 @@ export default {
     </router-link>
   </div>
 </template>
+
+<style scoped>
+.invisibleInk {
+  display: inline;
+  filter: opacity(100);
+  transition: opacity 900ms ease-in-out;
+  color: #56e1f0;
+}
+
+.notransition {
+  transition: none !important;
+}
+
+.ink {
+  display: inline;
+  color: #56e1f0;
+}
+
+.storytest {
+  opacity: 0.1;
+  display: inline;
+}
+</style>
