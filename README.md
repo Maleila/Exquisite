@@ -12,6 +12,9 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 1. Decompose `Room.vue` from `Exquisite.vue`
 
+**Dennis**
+
+1. Figure out why the things aren't actually deployed
 ## Resources
 
 1. [Vue router tutorial from vueschool](https://vueschool.io/lessons/creating-the-project-with-vite-vite-only)
