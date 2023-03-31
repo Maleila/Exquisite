@@ -23,7 +23,15 @@ export default {
         (this.story = ""),
         (this.previous = "");
     },
+    edit(e) {
+      this.current = e.target.textContent;
+      document.getElementById("editable").innerHTML = document.getElementById("editable").getAttribute("placeholder");
+      this.submitStory()
+    },
     submitStory() {
+      console.log("submitting story");
+      console.log(this.current);
+
       this.invis = true;
       setTimeout(() => this.transition(), 900);
     },
@@ -31,10 +39,10 @@ export default {
       this.count++;
       (this.story = this.story.concat(this.previous + " ")),
         //remove transition for resetting opacity to 1, then re-add after the story is updated
-        document.getElementById("prev").classList.add("notransition"),
-        (document.getElementById("prev").style.opacity = 1),
-        document.getElementById("prev").offsetHeight,
-        document.getElementById("prev").classList.remove("notransition"),
+        // document.getElementById("prev").classList.add("notransition"),
+        // (document.getElementById("prev").style.opacity = 1),
+        // document.getElementById("prev").offsetHeight,
+        // document.getElementById("prev").classList.remove("notransition"),
         (this.invis = false),
         (this.previous = this.current),
         (this.current = ""),
@@ -49,7 +57,7 @@ export default {
         // Without the try and catch: Error message is: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'focus')
         // Need a try and catch block b/c you can only access the ref after the component is mounted. So the first render this.$ref.storyInput is going to be null and raise a promise error. This try and catch block doesn't change the overall logic of this method and only serves as a way to reduce any errors on console. Reference: https://vuejs.org/guide/essentials/template-refs.html#accessing-the-refs
         try {
-          this.$refs.storyInput.focus(); //need this bc vue gets confused since the input field has a v-if
+          //this.$refs.storyInput.focus(); //need this bc vue gets confused since the input field has a v-if
         } catch (ex) {
           // Print out the error message, commented out to avoid clustering the console
           console.log("Error detected: " + ex);
@@ -71,8 +79,7 @@ export default {
     <h2 v-if="!finished && count <= playerNum">
       Player {{ count }}/{{ playerNum }}:
       <br />
-      <!--<div v-if="count == 1">Start the story!</div>-->
-      <div class="storytest">{{ story }}</div>
+      <!--<div class="storytest">{{ story }}</div>
       <div
         id="prev"
         class="invisibleInk"
@@ -82,13 +89,26 @@ export default {
         v-if="count > 0"
       >
         {{ previous + " " }}
-      </div>
-      <!--Add your sentence: {{ current }}-->
-      <div class="ink">
+      </div>-->
+      
+      <div class="story">
+        {{story}}
+        <span class="previous-sentence"  :style="{
+          opacity: invis ? 0.2 : 1,
+        }"
+        v-if="count > 0">
+        {{ previous + " " }}
+        </span>
+        <span class="new-text" id = "editable" placeholder = "" contenteditable @keydown.enter="edit">
+            edit this text!
+        </span>
+    </div>
+
+      <!--<div class="ink">
         {{ current }}
       </div>
       <br />
-      <input v-model="current" @keydown.enter="submitStory" ref="storyInput" />
+      <input v-model="current" @keydown.enter="submitStory" ref="storyInput" />-->
     </h2>
 
     <button v-if="!finished && count <= playerNum" @click="submitStory">
@@ -112,6 +132,24 @@ export default {
 </template>
 
 <style scoped>
+
+.story {
+    color: #ccc;
+    text-align: left !important;
+}
+
+.story .previous-sentence {
+  color: black;
+  text-align: left !important;
+}
+
+.story .new-text {
+    color: black;
+    text-align: left !important;
+}
+.story .new-text:focus-visible {
+    outline: none !important;
+}
 .invisibleInk {
   display: inline;
   filter: opacity(100);

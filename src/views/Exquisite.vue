@@ -70,7 +70,6 @@ export default {
 
 <template>
   <div class="start">
-    <!-- <h1>Exquisite Corpse</h1> -->
     <h2 v-if="count == 0">Number of players: {{ players }}</h2>
     <!--<input v-if= "count == 0" v-model.number="players" @keydown.enter = "count++ , ishidden = false">-->
     <!--Looks like it's going to be more involved to check the type so this can be a temporary fix,
@@ -91,7 +90,6 @@ export default {
     <h2 v-if="!ishidden && count <= players">
       Player {{ count }}/{{ players }}:
       <br />
-      <!--<div v-if="count == 1">Start the story!</div>-->
       <div class="storytest">{{ story }}</div>
       <div
         id="prev"
@@ -103,7 +101,6 @@ export default {
       >
         {{ previous + " " }}
       </div>
-      <!--Add your sentence: {{ current }}-->
       <div class="ink">
         {{ current }}
       </div>
