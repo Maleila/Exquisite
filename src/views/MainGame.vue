@@ -1,13 +1,18 @@
 <script>
 import { nextTick } from "vue";
+import contenteditable from 'vue-contenteditable';
+
 export default {
+  components : {
+    contenteditable
+  },
   mounted() {
     //called when a component is added (ex when the page loads)
     this.focusInput();
   },
   data() {
     return {
-      current: "",
+      current: " ",
       count: 1,
       finished: false,
       story: "",
@@ -17,40 +22,32 @@ export default {
   },
   methods: {
     reset() {
-      (this.current = ""),
-        (this.count = 1),
-        (this.finished = false),
-        (this.story = ""),
-        (this.previous = "");
-    },
-    edit(e) {
-      this.current = e.target.textContent;
-      document.getElementById("editable").innerHTML = document.getElementById("editable").getAttribute("placeholder");
-      this.submitStory()
+      this.current = "";
+      this.count = 1;
+      this.finished = false;
+      this.story = "";
+      this.previous = "";
     },
     submitStory() {
-      console.log("submitting story");
-      console.log(this.current);
-
       this.invis = true;
       setTimeout(() => this.transition(), 900);
     },
     transition() {
       this.count++;
-      (this.story = this.story.concat(this.previous + " ")),
+      this.story = this.story.concat(this.previous + " ");
         //remove transition for resetting opacity to 1, then re-add after the story is updated
-        // document.getElementById("prev").classList.add("notransition"),
-        // (document.getElementById("prev").style.opacity = 1),
-        // document.getElementById("prev").offsetHeight,
-        // document.getElementById("prev").classList.remove("notransition"),
-        (this.invis = false),
-        (this.previous = this.current),
-        (this.current = ""),
-        this.focusInput();
+      document.getElementById("prev").classList.add("notransition");
+      document.getElementById("prev").style.opacity = 1;
+      document.getElementById("prev").offsetHeight;
+      document.getElementById("prev").classList.remove("notransition");
+      this.invis = false;
+      this.previous = this.current;
+      this.current = "";
+      this.focusInput();
     },
     viewStory() {
-      (this.story = this.story.concat(this.previous)),
-      (this.finished = true);
+      this.story = this.story.concat(this.previous);
+      this.finished = true;
     },
     focusInput() {
       nextTick(() => {
@@ -79,36 +76,22 @@ export default {
     <h2 v-if="!finished && count <= playerNum">
       Player {{ count }}/{{ playerNum }}:
       <br />
-      <!--<div class="storytest">{{ story }}</div>
-      <div
-        id="prev"
-        class="invisibleInk"
-        :style="{
-          opacity: invis ? 0.2 : 1,
-        }"
-        v-if="count > 0"
-      >
-        {{ previous + " " }}
-      </div>-->
-      
       <div class="story">
-        {{story}}
-        <span class="previous-sentence"  :style="{
+        <span class="invisible">
+          {{story}}
+        </span>
+        <span class="previous-sentence" id="prev" :style="{
           opacity: invis ? 0.2 : 1,
         }"
         v-if="count > 0">
         {{ previous + " " }}
         </span>
-        <span class="new-text" id = "editable" placeholder = "" contenteditable @keydown.enter="edit">
-            edit this text!
-        </span>
+        <!--unforunately if there's no placeholder the contenteditable just disappears (cause it's a span, doesn't
+        happen if you change the tag to div) - we'll have to work out how to make a less obstrusive placeholder -->
+        <!--<span v-if="count <2"> Start here! </span>-->
+        <contenteditable tag="div" class="new-text" id="editable" ref="storyInput" :no-nl="true" :no-html="true" v-model="current" @keydown.enter="submitStory">
+        </contenteditable>
     </div>
-
-      <!--<div class="ink">
-        {{ current }}
-      </div>
-      <br />
-      <input v-model="current" @keydown.enter="submitStory" ref="storyInput" />-->
     </h2>
 
     <button v-if="!finished && count <= playerNum" @click="submitStory">
@@ -134,12 +117,18 @@ export default {
 <style scoped>
 
 .story {
-    color: #ccc;
+    color: black;
     text-align: left !important;
+}
+
+.story .invisible {
+  opacity: 0.1;
 }
 
 .story .previous-sentence {
   color: black;
+  filter: opacity(100);
+  transition: opacity 900ms ease-in-out;
   text-align: left !important;
 }
 
@@ -150,24 +139,7 @@ export default {
 .story .new-text:focus-visible {
     outline: none !important;
 }
-.invisibleInk {
-  display: inline;
-  filter: opacity(100);
-  transition: opacity 900ms ease-in-out;
-  color: #56e1f0;
-}
-
 .notransition {
   transition: none !important;
-}
-
-.ink {
-  display: inline;
-  color: #56e1f0;
-}
-
-.storytest {
-  opacity: 0.1;
-  display: inline;
 }
 </style>
