@@ -7,7 +7,7 @@ import router from "./router";
 // Comment these two lines
 import "../public/main.css";
 import "../public/css/home.css";
+import "../public/css/mainGame.css";
+import "../public/css/room.css";
 
-createApp(App)
-    .use(router)
-    .mount("#app");
+createApp(App).use(router).mount("#app");

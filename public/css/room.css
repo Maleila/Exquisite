@@ -1,0 +1,18 @@
+.room h1 {
+  color: #707070;
+
+  font-size: 4em;
+  font-weight: 900;
+  line-height: 0.4em;
+}
+
+.room h2 {
+  color: #707070;
+  font-size: 1.5em;
+  font-weight: 200;
+  line-height: 0.4em;
+}
+
+.room .empty {
+  height: 5em;
+}

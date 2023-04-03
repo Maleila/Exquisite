@@ -5,14 +5,14 @@
   line-height: 0.4em;
 }
 
-.button {
+.title .button {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.button button {
+.title .button button {
   color: #707070;
   font-family: inherit;
   font-size: 1.5rem;
@@ -24,22 +24,10 @@
   transition: 0.3s;
 }
 
-.button button:hover {
+.title .button button:hover {
   text-decoration: underline;
 }
 
-/* button:hover {
-  background: linear-gradient(
-    45deg,
-    #707070,
-    #e2e2e2
-  );
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
-  color: #ffffff;
-} */
-
-.empty {
+.title .empty {
   height: 5em;
 }

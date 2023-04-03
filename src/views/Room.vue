@@ -1,6 +1,7 @@
 <template>
-  <div class="text-page">
+  <div class="room">
     <h1>Room</h1>
+    <div class="empty"></div>
     <div>
       <h2>Number of players: {{ playerNum }}</h2>
 
