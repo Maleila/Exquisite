@@ -1,0 +1,52 @@
+.game-play h1 {
+  color: #434343;
+
+  font-size: 4em;
+  font-weight: 900;
+  line-height: 0.4em;
+}
+
+.game-play p {
+  color: #434343;
+  font-size: 1.2em;
+  font-weight: 200;
+}
+
+/* .room .back-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+  } */
+
+.game-play .close-image img {
+  width: 30px;
+  height: auto;
+}
+
+.game-play .empty {
+  height: 2em;
+}
+
+.game-play .button {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.game-play button {
+  color: #434343;
+  font-family: inherit;
+  font-size: 1.5rem;
+  font-weight: 100;
+  margin-bottom: 2.2rem;
+  border: none;
+  background: none;
+  letter-spacing: 0.1em;
+  transition: 0.3s;
+}
+
+.game-play button:hover {
+  text-decoration: underline;
+}

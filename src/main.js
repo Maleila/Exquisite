@@ -9,5 +9,6 @@ import "../public/main.css";
 import "../public/css/home.css";
 import "../public/css/mainGame.css";
 import "../public/css/room.css";
+import "../public/css/gamePlay.css";
 
 createApp(App).use(router).mount("#app");

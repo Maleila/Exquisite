@@ -1,10 +1,10 @@
 <script>
 import { nextTick } from "vue";
-import contenteditable from 'vue-contenteditable';
+import contenteditable from "vue-contenteditable";
 
 export default {
-  components : {
-    contenteditable
+  components: {
+    contenteditable,
   },
   mounted() {
     //called when a component is added (ex when the page loads)
@@ -35,7 +35,7 @@ export default {
     transition() {
       this.count++;
       this.story = this.story.concat(this.previous + " ");
-        //remove transition for resetting opacity to 1, then re-add after the story is updated
+      //remove transition for resetting opacity to 1, then re-add after the story is updated
       document.getElementById("prev").classList.add("notransition");
       document.getElementById("prev").style.opacity = 1;
       document.getElementById("prev").offsetHeight;
@@ -78,21 +78,33 @@ export default {
       <br />
       <div class="story">
         <span class="invisible">
-          {{story}}
+          {{ story }}
         </span>
-        <span class="previous-sentence" id="prev" :style="{
-          opacity: invis ? 0.2 : 1,
-        }"
-        v-if="count > 0">
-        {{ previous + " " }}
-        <contenteditable tag="div" class="new-text" id="editable" ref="storyInput" :no-nl="true" :no-html="true" v-model="current" @keydown.enter="submitStory">
-        </contenteditable>
+        <span
+          class="previous-sentence"
+          id="prev"
+          :style="{
+            opacity: invis ? 0.2 : 1,
+          }"
+          v-if="count > 0"
+        >
+          {{ previous + " " }}
+          <contenteditable
+            tag="div"
+            class="new-text"
+            id="editable"
+            ref="storyInput"
+            :no-nl="true"
+            :no-html="true"
+            v-model="current"
+            @keydown.enter="submitStory"
+          >
+          </contenteditable>
         </span>
         <!--unforunately if there's no placeholder the contenteditable just disappears (cause it's a span, doesn't
         happen if you change the tag to div) - we'll have to work out how to make a less obstrusive placeholder -->
         <!--<span v-if="count <2"> Start here! </span>-->
-        
-    </div>
+      </div>
     </h2>
 
     <!-- <button v-if="!finished && count <= playerNum" @click="submitStory">
@@ -110,16 +122,21 @@ export default {
     </button>
 
     <router-link to="/" custom v-slot="{ navigate }">
-      <button @click="navigate" role="link" v-if="finished && count > playerNum">Back</button>
+      <button
+        @click="navigate"
+        role="link"
+        v-if="finished && count > playerNum"
+      >
+        Back
+      </button>
     </router-link>
   </div>
 </template>
 
 <style scoped>
-
 .story {
-    color: black;
-    text-align: left !important;
+  color: black;
+  text-align: left !important;
 }
 
 .story .invisible {
@@ -134,11 +151,11 @@ export default {
 }
 
 .story .new-text {
-    color: black;
-    text-align: left !important;
+  color: black;
+  text-align: left !important;
 }
 .story .new-text:focus-visible {
-    outline: none !important;
+  outline: none !important;
 }
 .notransition {
   transition: none !important;

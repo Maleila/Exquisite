@@ -1,5 +1,5 @@
 <template>
-  <div class="text-page">
+  <div class="game-play">
     <h1>Gameplay</h1>
     <p>
       <b>To begin a local game,</b> assemble a group of friends around a table
@@ -13,8 +13,10 @@
       since we don't know the details yet).
     </p>
 
-    <router-link to="/" custom v-slot="{ navigate }">
-      <button @click="navigate" role="link">Back</button>
-    </router-link>
+    <div class="close-image">
+      <router-link to="/" custom v-slot="{ navigate }">
+        <img src="@/assets/close.svg" @click="navigate" role="link" />
+      </router-link>
+    </div>
   </div>
 </template>
