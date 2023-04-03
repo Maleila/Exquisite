@@ -6,10 +6,19 @@
   line-height: 0.4em;
 }
 
-.game-play p {
+.game-play .text p {
   color: #434343;
   font-size: 1.2em;
   font-weight: 200;
+  width: 50%;
+  text-align: center;
+  margin: auto;
+}
+
+.game-play .text {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 /* .room .back-image {
@@ -20,12 +29,8 @@
   } */
 
 .game-play .close-image img {
-  width: 30px;
+  width: 3em;
   height: auto;
-}
-
-.game-play .empty {
-  height: 2em;
 }
 
 .game-play .button {
@@ -49,4 +54,8 @@
 
 .game-play button:hover {
   text-decoration: underline;
+}
+
+.game-play .empty {
+  height: 3em;
 }
