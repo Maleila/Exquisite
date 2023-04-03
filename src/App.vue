@@ -5,8 +5,9 @@ import HelloWorld from "./views/Exquisite.vue";
 
 <template>
   <br />
-  <transition name="slide" mode="out-in">
-    <router-view></router-view>
-  </transition>
-  <!-- <router-view /> -->
+  <router-view v-slot="{ Component }">
+    <transition name="page-slide" mode="out-in">
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
