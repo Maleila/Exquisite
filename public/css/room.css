@@ -1,5 +1,5 @@
 .room h1 {
-  color: #707070;
+  color: #434343;
 
   font-size: 4em;
   font-weight: 900;
@@ -7,10 +7,50 @@
 }
 
 .room h2 {
-  color: #707070;
-  font-size: 1.5em;
+  color: #434343;
+  font-size: 2em;
   font-weight: 200;
   line-height: 0.4em;
+}
+
+.room p {
+  color: #434343;
+  font-size: 4em;
+  font-weight: 900;
+  line-height: 0.4em;
+}
+
+.room .send-all {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* .room .back-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+} */
+
+.room .back-image img {
+  width: 30px;
+  height: auto;
+}
+
+/* .room .send-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+} */
+
+.room .send-image img {
+  width: 30px;
+  height: auto;
+  transform: rotate(180deg);
 }
 
 .room .empty {
@@ -25,7 +65,7 @@
 }
 
 .room button {
-  color: #707070;
+  color: #434343;
   font-family: inherit;
   font-size: 1.5rem;
   font-weight: 100;

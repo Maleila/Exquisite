@@ -7,25 +7,43 @@
 
     <div class="empty"></div>
 
-    <h2>{{ playerNum }}</h2>
+    <p>{{ playerNum }}</p>
 
     <div class="empty"></div>
 
-    <select v-model="playerNum">
+    <div class="selection-bar">
+      <select v-model="playerNum">
+        <option disabled value="">Select number of players</option>
+        <option v-for="n in maxPlayers" :value="n">{{ n }}</option>
+      </select>
+    </div>
+
+    <!-- <select v-model="playerNum">
       <option disabled value="">Select number of players</option>
       <option v-for="n in maxPlayers" :value="n">{{ n }}</option>
-    </select>
+    </select> -->
 
     <div class="empty"></div>
 
-    <router-link to="/maingame" custom>
+    <!-- <router-link to="/maingame" custom>
       <button @click="startGame()" role="link">START</button>
-    </router-link>
-    <div class="back-button"></div>
-    <router-link to="/" custom v-slot="{ navigate }">
+    </router-link> -->
+
+    <!-- <router-link to="/" custom v-slot="{ navigate }">
       <button @click="navigate" role="link">BACK</button>
-    </router-link>
-    <!-- <div class="empty"></div> -->
+    </router-link> -->
+    <div class="send-all">
+      <div class="back-image">
+        <router-link to="/" custom v-slot="{ navigate }">
+          <img src="@/assets/back.svg" @click="navigate" role="link" />
+        </router-link>
+      </div>
+      <div class="send-image">
+        <router-link to="/maingame" custom>
+          <img src="@/assets/back.svg" @click="startGame()" role="link" />
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
