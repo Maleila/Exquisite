@@ -19,6 +19,10 @@
       <router-link to="/gameplay" custom v-slot="{ navigate }">
         <button @click="navigate" role="link">GAMEPLAY</button>
       </router-link>
+
+      <router-link to="/test" custom v-slot="{ navigate }">
+        <button @click="navigate" role="link">TEST</button>
+      </router-link>
     </div>
   </div>
 </template>
