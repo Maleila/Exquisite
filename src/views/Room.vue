@@ -23,7 +23,7 @@
     </router-link>
     <div class="back-button"></div>
     <router-link to="/" custom v-slot="{ navigate }">
-      <button @click="navigate" role="link">-></button>
+      <button @click="navigate" role="link">BACK</button>
     </router-link>
     <!-- <div class="empty"></div> -->
   </div>

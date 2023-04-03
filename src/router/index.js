@@ -23,7 +23,7 @@ const routes = [
 // Create a router instance
 const router = createRouter({
   history: createWebHistory(), // Create historys
-  routes,
+  routes: routes,
 });
 
 export default router;

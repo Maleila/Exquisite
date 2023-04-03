@@ -5,7 +5,8 @@ import HelloWorld from "./views/Exquisite.vue";
 
 <template>
   <br />
-  <div class="cotainer">
-    <router-view />
-  </div>
+  <transition name="slide" mode="out-in">
+    <router-view></router-view>
+  </transition>
+  <!-- <router-view /> -->
 </template>
