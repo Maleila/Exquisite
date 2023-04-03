@@ -31,6 +31,17 @@ export default {
     submitStory() {
       this.invis = true;
       setTimeout(() => this.transition(), 900);
+      var sample = document.getElementById("editable");
+      sample.style.color = "red";
+      sample.style.fontFamily = "Impact,Charcoal,sans-serif";
+      var random = Math.floor(Math.random() * 3);
+      if (random == 0) {
+        sample.style.fontFamily = "Impact,Charcoal,sans-serif";
+      } else if (random == 1) {
+        sample.style.fontFamily = "Lucida Console, Courier New, monospace";
+      } else {
+        sample.style.fontFamily = "Arial, Helvetica, sans-serif";
+      }
     },
     transition() {
       this.count++;
