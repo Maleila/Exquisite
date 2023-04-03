@@ -109,9 +109,9 @@ export default {
       Play Again
     </button>
 
-    <!-- <router-link to="/" custom v-slot="{ navigate }">
-      <button @click="navigate" role="link">Back</button>
-    </router-link> -->
+    <router-link to="/" custom v-slot="{ navigate }">
+      <button @click="navigate" role="link" v-if="finished && count > playerNum">Back</button>
+    </router-link>
   </div>
 </template>
 
