@@ -85,18 +85,19 @@ export default {
         }"
         v-if="count > 0">
         {{ previous + " " }}
+        <contenteditable tag="div" class="new-text" id="editable" ref="storyInput" :no-nl="true" :no-html="true" v-model="current" @keydown.enter="submitStory">
+        </contenteditable>
         </span>
         <!--unforunately if there's no placeholder the contenteditable just disappears (cause it's a span, doesn't
         happen if you change the tag to div) - we'll have to work out how to make a less obstrusive placeholder -->
         <!--<span v-if="count <2"> Start here! </span>-->
-        <contenteditable tag="div" class="new-text" id="editable" ref="storyInput" :no-nl="true" :no-html="true" v-model="current" @keydown.enter="submitStory">
-        </contenteditable>
+        
     </div>
     </h2>
 
-    <button v-if="!finished && count <= playerNum" @click="submitStory">
+    <!-- <button v-if="!finished && count <= playerNum" @click="submitStory">
       Submit
-    </button>
+    </button> -->
 
     <button @click="viewStory" v-if="count > playerNum && !finished">
       View Story
@@ -109,7 +110,7 @@ export default {
     </button>
 
     <router-link to="/" custom v-slot="{ navigate }">
-      <button @click="navigate" role="link">Back</button>
+      <button @click="navigate" role="link" v-if="finished && count > playerNum">Back</button>
     </router-link>
   </div>
 </template>
