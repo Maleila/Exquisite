@@ -54,7 +54,7 @@ export default {
       this.invis = false;
       this.previous = this.current;
       this.current = "";
-      this.focusInput();
+      //this.focusInput();
     },
     viewStory() {
       this.story = this.story.concat(this.previous);
@@ -95,10 +95,11 @@ export default {
           opacity: invis ? 0.2 : 1,
         }"
         v-if="count > 0">
-        {{ previous }}
+        {{ previous + " "}}
+      </span>
         <contenteditable tag="span" class="new-text" id="editable" ref="storyInput" :no-nl="true" :no-html="true" v-model="current" @keydown.enter="submitStory">
         </contenteditable>
-        </span>
+       
     </div>
     </h2>
 
