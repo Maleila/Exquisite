@@ -10,11 +10,11 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 Instructions of firebase deployment. These commands shall be run on cmd/terminal, under the path of the repo.
 
-1. Download firebase CLI:  '''npm install -g firebase-tools'''
-2. Login to firebase:   '''firebase login'''
+1. Download firebase CLI:  ```npm install -g firebase-tools```
+2. Login to firebase:   ```firebase login```
 3. After making changes to the project and you would like to deploy it to the host, run:
-'''npm run build'''
-4. Deploy to firebase:  '''firebase deploy'''
+```npm run build```
+4. Deploy to firebase:  ```firebase deploy```
 
 ## TODO List
 
