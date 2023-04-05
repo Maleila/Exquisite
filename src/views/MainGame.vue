@@ -1,6 +1,8 @@
 <script>
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
+import { ref as dbRef, set } from 'firebase/database';
+import { useDatabase, useDatabaseObject } from 'vuefire';
 
 export default {
   components: {
@@ -11,6 +13,9 @@ export default {
     this.focusInput();
   },
   data() {
+    const db = useDatabase();
+    const testThinger = dbRef(db, 'testThinger');
+    // set(testThinger, "hi!");
     return {
       current: "",
       count: 1,
@@ -18,6 +23,7 @@ export default {
       story: "",
       previous: "",
       invis: false,
+      testFirebaseThinger: useDatabaseObject(testThinger),
     };
   },
   methods: {
@@ -84,6 +90,8 @@ export default {
 
 <template>
   <div class="start">
+    <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1>
+
     <h2 v-if="!finished && count <= playerNum">
       Player {{ count }}/{{ playerNum }}:
       <br />
