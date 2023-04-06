@@ -13,9 +13,9 @@ export default {
     this.focusInput();
   },
   data() {
-    const db = useDatabase();
-    const testThinger = dbRef(db, 'testThinger');
-    set(testThinger, "hi!");
+    // const db = useDatabase();
+    // const testThinger = dbRef(db, 'testThinger');
+    // set(testThinger, "hi!"); //testing firebase stuff
     return {
       current: "",
       count: 1,
@@ -23,7 +23,7 @@ export default {
       story: "",
       previous: "",
       invis: false,
-      testFirebaseThinger: useDatabaseObject(testThinger),
+      //testFirebaseThinger: useDatabaseObject(testThinger),//testing firebase stuff
     };
   },
   methods: {
@@ -37,17 +37,7 @@ export default {
     submitStory() {
       this.invis = true;
       setTimeout(() => this.transition(), 900);
-      var sample = document.getElementById("editable");
-      sample.style.color = "red";
-      sample.style.fontFamily = "Impact,Charcoal,sans-serif";
-      var random = Math.floor(Math.random() * 3);
-      if (random == 0) {
-        sample.style.fontFamily = "Impact,Charcoal,sans-serif";
-      } else if (random == 1) {
-        sample.style.fontFamily = "Lucida Console, Courier New, monospace";
-      } else {
-        sample.style.fontFamily = "Arial, Helvetica, sans-serif";
-      }
+      
     },
     transition() {
       this.count++;
@@ -59,7 +49,22 @@ export default {
       document.getElementById("prev").classList.remove("notransition");
       this.invis = false;
       this.previous = this.current;
+      // const db = useDatabase();
+      // const roomCodeFB = dbRef(db, roomCode);
+      // // const playerMessageFB = dbRef(db, roomCodeFB/player);
+      // set(roomCodeFB , this.previous) //testing firebase stuff
       this.current = "";
+      var sample = document.getElementById("editable");
+      sample.style.color = "red";
+      sample.style.fontFamily = "Impact,Charcoal,sans-serif";
+      var random = Math.floor(Math.random() * 3);
+      if (random == 0) {
+        sample.style.fontFamily = "Impact,Charcoal,sans-serif";
+      } else if (random == 1) {
+        sample.style.fontFamily = "Lucida Console, Courier New, monospace";
+      } else {
+        sample.style.fontFamily = "Arial, Helvetica, sans-serif";
+      }
       //this.focusInput();
     },
     viewStory() {
@@ -84,6 +89,10 @@ export default {
       type: Number,
       required: true,
     },
+    // roomCode: {
+    //   type: Number,
+    //   required: true,
+    // }, //want to transfer room info from Room.vue to MainGame // doesn't work
   },
 };
 </script>
@@ -91,12 +100,16 @@ export default {
 <template>
   <div class="start">
     <!--Problem line leave uncommented-->
-    <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1>
+    <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
+    <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
 
     <h2 v-if="!finished && count <= playerNum">
+    
+      
       Player {{ count }}/{{ playerNum }}:
       <br />
       <div class="story">
+        
         <span class="invisible">
           {{ story }}
         </span>
