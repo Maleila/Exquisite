@@ -11,3 +11,12 @@ import HelloWorld from "./views/Exquisite.vue";
     </transition>
   </router-view>
 </template>
+
+<style>
+   body {
+     background-image: url('./assets/clean paper.jpeg');
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: cover;
+   }
+ </style>

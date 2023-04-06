@@ -15,7 +15,7 @@ export default {
   data() {
     const db = useDatabase();
     const testThinger = dbRef(db, 'testThinger');
-    // set(testThinger, "hi!");
+    set(testThinger, "hi!");
     return {
       current: "",
       count: 1,
@@ -90,6 +90,7 @@ export default {
 
 <template>
   <div class="start">
+    <!--Problem line leave uncommented-->
     <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1>
 
     <h2 v-if="!finished && count <= playerNum">
