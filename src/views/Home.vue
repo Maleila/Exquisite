@@ -1,7 +1,9 @@
 <template>
-  <div class="title">
-    <h1>Exquisite</h1>
-    <h1>Corpse</h1>
+  <div class="home">
+    <div class="title">
+      <h1>Exquisite</h1>
+    </div>
+
     <div class="empty"></div>
     <div class="button">
       <router-link to="/room" custom v-slot="{ navigate }">

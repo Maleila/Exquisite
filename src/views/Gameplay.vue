@@ -4,7 +4,7 @@
     <h1>Gameplay</h1>
     <div class="empty"></div>
     <div class="text">
-      <p>
+      <p style="font-size: 2em; font-family: Desyre">
         <b>To begin a local game,</b> assemble a group of friends around a table
         and choose the corresponding number of players. After the first player
         hits submit, pass the laptop to the next player. Make sure not to let

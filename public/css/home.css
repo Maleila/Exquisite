@@ -1,18 +1,23 @@
-.title h1 {
+.home h1 {
   color: #707070;
-  font-size: 6em;
-  font-weight: 900;
-  line-height: 0.4em;
+  font-family: "CalorieRegular";
+  font-size: 22em;
+  line-height: 0em;
 }
 
-.title .button {
+.home .title {
+  position: relative;
+  top: -5em;
+}
+
+.home .button {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.title .button button {
+.home .button button {
   color: #434343;
   font-family: inherit;
   font-size: 1.5rem;
@@ -24,10 +29,10 @@
   transition: 0.3s;
 }
 
-.title .button button:hover {
+.home .button button:hover {
   text-decoration: underline;
 }
 
-.title .empty {
-  height: 5em;
+.home .empty {
+  height: 1em;
 }

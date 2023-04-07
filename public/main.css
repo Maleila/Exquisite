@@ -69,3 +69,18 @@ h1 {
     background-color: #f9f9f9;
   }
 }
+
+@font-face {
+  font-family: "CalorieRegular";
+  src: url("fonts/CalorieRegular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Loremipsum";
+  src: url("fonts/Loremipsum.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Desyre";
+  src: url("fonts/Desyre.woff") format("woff");
+}
