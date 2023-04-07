@@ -65,7 +65,7 @@ export default {
       } else {
         sample.style.fontFamily = "Arial, Helvetica, sans-serif";
       }
-      //this.focusInput();
+      this.focusInput();
     },
     viewStory() {
       this.story = this.story.concat(this.previous);
@@ -76,7 +76,7 @@ export default {
         // Without the try and catch: Error message is: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'focus')
         // Need a try and catch block b/c you can only access the ref after the component is mounted. So the first render this.$ref.storyInput is going to be null and raise a promise error. This try and catch block doesn't change the overall logic of this method and only serves as a way to reduce any errors on console. Reference: https://vuejs.org/guide/essentials/template-refs.html#accessing-the-refs
         try {
-          //this.$refs.storyInput.focus(); //need this bc vue gets confused since the input field has a v-if
+          this.$refs.storyInput.focus(); //need this bc vue gets confused since the input field has a v-if
         } catch (ex) {
           // Print out the error message, commented out to avoid clustering the console
           console.log("Error detected: " + ex);
@@ -119,7 +119,7 @@ export default {
         v-if="count > 0">
         {{ previous + " "}}
       </span>
-        <contenteditable tag="span" class="new-text" id="editable" ref="storyInput" :no-nl="true" :no-html="true" v-model="current" @keydown.enter="submitStory">
+        <contenteditable tag="span" tabindex = "1" class="new-text" id="editable" ref="storyInput" :no-nl="true" :no-html="true" v-model="current" @keydown.enter="submitStory">
         </contenteditable>
        
     </div>
@@ -153,11 +153,23 @@ export default {
 
 <style scoped>
 
+h3 {
+  text-align: left !important;
+}
+
 #editable:after {
   content: "";
   display: inline-block;
   width: 2em;
 }
+
+/* #editable:after {
+    content: '|';
+    animation-name:blink;
+    animation-duration:.8s;
+    animation-iteration-count:infinite;
+    animation-timing-function:ease;
+} */
 .story {
   color: black;
   text-align: left !important;
@@ -184,4 +196,9 @@ export default {
 .notransition {
   transition: none !important;
 }
+
+/* @keyframes blink {
+  0% { opacity: 1 }
+  100% { opacity: 0 }
+} */
 </style>
