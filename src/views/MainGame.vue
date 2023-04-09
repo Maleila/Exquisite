@@ -23,6 +23,7 @@ export default {
       story: "",
       previous: "",
       invis: false,
+      mutable: true,
       //testFirebaseThinger: useDatabaseObject(testThinger),//testing firebase stuff
     };
   },
@@ -37,6 +38,7 @@ export default {
     },
     submitStory() {
       this.invis = true;
+      this.mutable = false;
       setTimeout(() => this.transition(), 900);
     },
     transition() {
@@ -65,6 +67,7 @@ export default {
       } else {
         sample.style.fontFamily = "Arial, Helvetica, sans-serif";
       }
+      this.mutable = true;
       this.focusInput();
     },
     viewStory() {
@@ -120,7 +123,7 @@ export default {
         v-if="count > 0">
         {{ previous + " "}}
       </span>
-        <contenteditable tag="div" class="new-text" id="editable" ref="storyInput" :no-nl="true" :no-html="true" v-model="current" @keydown.enter="submitStory">
+        <contenteditable tag="div" :contenteditable="mutable" class="new-text" id="editable" ref="storyInput" :no-nl="true" :no-html="true" v-model="current" @keydown.enter="submitStory">
         </contenteditable>
     </div>
     </h2>
