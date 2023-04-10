@@ -1,12 +1,12 @@
 <script>
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
-import { ref as dbRef, set } from 'firebase/database';
-import { useDatabase, useDatabaseObject } from 'vuefire';
+import { ref as dbRef, set } from "firebase/database";
+import { useDatabase, useDatabaseObject } from "vuefire";
 
 export default {
   components: {
-    contenteditable
+    contenteditable,
   },
   mounted() {
     //called when a component is added (ex when the page loads)
@@ -103,7 +103,7 @@ export default {
 </script>
 
 <template>
-  <div class="start">
+  <div class="main-game">
     <!--Problem line leave uncommented-->
     <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
     <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
@@ -116,7 +116,6 @@ export default {
       Player {{ count }}/{{ playerNum }}:
       <br />
       <div class="story">
-        
         <span class="invisible">
           {{ story }}
         </span>
@@ -132,15 +131,17 @@ export default {
     </div>
     </h2>
 
-    <button v-if="!finished && count <= playerNum" @click="submitStory">
+    <!-- <button v-if="!finished && count <= playerNum" @click="submitStory">
       Submit
-    </button>
+    </button> -->
 
     <button @click="viewStory" v-if="count > playerNum && !finished">
       View Story
     </button>
 
-    <h3 v-if="finished && count > playerNum">{{ story }}</h3>
+    <div class="text">
+      <h3 v-if="finished && count > playerNum">{{ story }}</h3>
+    </div>
     <br />
     <button @click="reset" v-if="finished && count > playerNum">
       Play Again
@@ -159,7 +160,6 @@ export default {
 </template>
 
 <style scoped>
-
 h3 {
   text-align: left !important;
 }
