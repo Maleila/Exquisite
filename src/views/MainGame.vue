@@ -13,9 +13,8 @@ export default {
     this.focusInput();
   },
   data() {
-    // const db = useDatabase();
-    // const testThinger = dbRef(db, 'testThinger');
-    // set(testThinger, "hi!"); //testing firebase stuff
+    
+    const db = useDatabase();
     return {
       current: "",
       count: 1,
@@ -26,6 +25,7 @@ export default {
       mutable: true,
       //testFirebaseThinger: useDatabaseObject(testThinger),//testing firebase stuff
     };
+    
   },
   methods: {
     reset() {
@@ -51,10 +51,11 @@ export default {
       document.getElementById("prev").classList.remove("notransition");
       this.invis = false;
       this.previous = this.current;
-      // const db = useDatabase();
-      // const roomCodeFB = dbRef(db, roomCode);
-      // // const playerMessageFB = dbRef(db, roomCodeFB/player);
-      // set(roomCodeFB , this.previous) //testing firebase stuff
+      const db = useDatabase();
+      const messageFB = dbRef(db, this.roomCode + "/" + "player" + ((this.count) - 1));
+      // const playerMessageFB = dbRef(db, roomCodeFB/player);
+      set(messageFB , this.previous) //testing firebase stuff
+      
       this.current = "";
       var sample = document.getElementById("editable");
       sample.style.color = "red";
@@ -93,10 +94,10 @@ export default {
       type: Number,
       required: true,
     },
-    // roomCode: {
-    //   type: Number,
-    //   required: true,
-    // }, //want to transfer room info from Room.vue to MainGame // doesn't work
+    roomCode: {
+      type: String,
+      required: false,
+    }, //want to transfer room info from Room.vue to MainGame // doesn't work
   },
 };
 </script>
@@ -107,7 +108,9 @@ export default {
     <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
     <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
 
-    <h2 v-if="!finished && count <= playerNum">
+    roomCode={{ roomCode }} / playerNum={{ playerNum }}
+
+  <h2 v-if="!finished && count <= playerNum">
     
       
       Player {{ count }}/{{ playerNum }}:
@@ -117,6 +120,7 @@ export default {
         <span class="invisible">
           {{ story }}
         </span>
+        
         <span class="previous-sentence" id="prev" :style="{
           opacity: invis ? 0.2 : 1,
         }"

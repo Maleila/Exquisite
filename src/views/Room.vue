@@ -1,7 +1,9 @@
 <script>
 import MainGame from "@/views/MainGame.vue";
-import { ref as dbRef, set } from 'firebase/database';
+import { ref as dbRef, set , onDisconnect} from 'firebase/database';
 import { useDatabase, useDatabaseObject } from 'vuefire';
+
+// export {roomCode}
 
 export default {
   components: {
@@ -21,8 +23,7 @@ export default {
   methods: {
     startGame() {
       const { playerNum, roomCode } = this;
-      this.$router.push({ name: "MainGame", query: { playerNum,roomCode } });
-      
+      this.$router.push({ name: "MainGame", query: { playerNum, roomCode } });
     },
     submitCode() {
       const db = useDatabase();
@@ -30,6 +31,8 @@ export default {
       set(roomCodeFB, {
         players: this.playerNum,
       });
+      // roomCodeFB.onDisconnect().remove();
+      
       // const { roomCode } = this.roomCode;
       // this.$router.push({ name: "MainGame", query: { roomCode } });
 }
