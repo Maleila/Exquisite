@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div class="text-page">
     <h1>About</h1>
     <p>
@@ -25,29 +25,4 @@
       <button @click="navigate" role="link">Back</button>
     </router-link>
   </div>
-</template> -->
-
-<template>
-  <div class="text-page">
-    <h1>About</h1>
-    <p style="font-family: Avenir">This is an example sentence of Font.</p>
-    <p style="font-family: Roboto">This is an example sentence of Font.</p>
-    <p style="font-family: Times New Roman">
-      This is an example sentence of Font.
-    </p>
-    <p style="font-size: 4em; font-family: myfont">
-      This is an example sentence of Font.
-    </p>
-    <router-link to="/" custom v-slot="{ navigate }">
-      <button @click="navigate" role="link">Back</button>
-    </router-link>
-  </div>
 </template>
-
-<style>
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap");
-@font-face {
-  font-family: "myfont";
-  src: url("fonts/CalorieRegular.woff") format("woff");
-}
-</style>

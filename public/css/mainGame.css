@@ -1,0 +1,25 @@
+.main-game .text {
+  width: 80%;
+  margin: 0 auto;
+  text-align: left;
+  font-family: Desyre;
+  font-size: 2em;
+}
+
+.main-game .title {
+  /* font-family: Desyre; */
+  font-size: 2em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 200;
+  text-align: left;
+}
+
+.main-game .prompt {
+  color: #484848;
+  font-size: 0.8em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 100;
+  text-align: left;
+}

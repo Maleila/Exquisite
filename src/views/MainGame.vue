@@ -1,12 +1,12 @@
 <script>
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
-import { ref as dbRef, set } from 'firebase/database';
-import { useDatabase, useDatabaseObject } from 'vuefire';
+import { ref as dbRef, set } from "firebase/database";
+import { useDatabase, useDatabaseObject } from "vuefire";
 
 export default {
   components: {
-    contenteditable
+    contenteditable,
   },
   mounted() {
     //called when a component is added (ex when the page loads)
@@ -102,30 +102,46 @@ export default {
 </script>
 
 <template>
-  <div class="start">
+  <div class="main-game">
     <!--Problem line leave uncommented-->
     <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
     <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
 
     <h2 v-if="!finished && count <= playerNum">
-    
-      
-      Player {{ count }}/{{ playerNum }}:
+      <div class="title">Player {{ count }} of {{ playerNum }}</div>
+      <div class="prompt">
+        Please write down your sentence, and press ENTER to sumbit
+      </div>
       <br />
       <div class="story">
-        
         <span class="invisible">
           {{ story }}
         </span>
-        <span class="previous-sentence" id="prev" :style="{
-          opacity: invis ? 0.2 : 1,
-        }"
-        v-if="count > 0">
-        {{ previous + " "}}
-      </span>
-        <contenteditable tag="div" :contenteditable="mutable" class="new-text" id="editable" ref="storyInput" :no-nl="true" :no-html="true" v-model="current" @keydown.enter="submitStory">
-        </contenteditable>
-    </div>
+        <span
+          class="previous-sentence"
+          id="prev"
+          :style="{
+            opacity: invis ? 0.2 : 1,
+          }"
+          v-if="count > 0"
+        >
+          {{ previous + " " }}
+        </span>
+        <div class="text">
+          <contenteditable
+            tag="div"
+            :contenteditable="mutable"
+            class="new-text"
+            id="editable"
+            ref="storyInput"
+            :no-nl="true"
+            :no-html="true"
+            v-model="current"
+            @keydown.enter="submitStory"
+          >
+          </contenteditable>
+        </div>
+      </div>
     </h2>
 
     <button v-if="!finished && count <= playerNum" @click="submitStory">
@@ -136,7 +152,9 @@ export default {
       View Story
     </button>
 
-    <h3 v-if="finished && count > playerNum">{{ story }}</h3>
+    <div class="text">
+      <h3 v-if="finished && count > playerNum">{{ story }}</h3>
+    </div>
     <br />
     <button @click="reset" v-if="finished && count > playerNum">
       Play Again
@@ -155,7 +173,6 @@ export default {
 </template>
 
 <style scoped>
-
 h3 {
   text-align: left !important;
 }
