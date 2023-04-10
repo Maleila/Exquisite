@@ -144,9 +144,9 @@ export default {
       </div>
     </h2>
 
-    <button v-if="!finished && count <= playerNum" @click="submitStory">
+    <!-- <button v-if="!finished && count <= playerNum" @click="submitStory">
       Submit
-    </button>
+    </button> -->
 
     <button @click="viewStory" v-if="count > playerNum && !finished">
       View Story
