@@ -1,8 +1,9 @@
 .home h1 {
   color: #484848;
   font-family: "CalorieRegular";
-  font-size: 22em;
-  line-height: 0em;
+  font-size: 50vh;
+  line-height: 35vh;
+  margin: 0;
 }
 
 .home .title {
@@ -34,5 +35,5 @@
 }
 
 .home .empty {
-  height: 1em;
+  height: 12vh;
 }

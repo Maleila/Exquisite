@@ -1,8 +1,6 @@
 <template>
   <div class="home">
-    <div class="title">
-      <h1>Exquisite</h1>
-    </div>
+    <h1>Exquisite</h1>
 
     <div class="empty"></div>
     <div class="button">
