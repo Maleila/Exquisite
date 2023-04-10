@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, parseQuery } from "vue-router";
 import Home from "@/views/Home.vue"; //.vue is necessary for Vite
 import About from "@/views/About.vue";
 import Gameplay from "@/views/Gameplay.vue";
@@ -16,7 +16,10 @@ const routes = [
     path: "/maingame",
     name: "MainGame",
     component: MainGame,
-    props: (route) => ({ playerNum: parseInt(route.query.playerNum, 10) }),
+    props: (route) => ({
+      playerNum: parseInt(route.query.playerNum, 10),
+      roomCode: route.query.roomCode,
+    }),
   },
 ];
 
