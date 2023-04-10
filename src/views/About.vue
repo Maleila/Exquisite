@@ -25,4 +25,24 @@
       <button @click="navigate" role="link">Back</button>
     </router-link>
   </div>
+
+  <!-- <button class="ink-button">
+    <span class="ink-button-text">START</span>
+  </button> -->
 </template>
+
+<!-- <style>
+.ink-button {
+  background-image: url("@/assets/ink.png");
+  background-size: cover;
+  border: none;
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.ink-button-text {
+  color: white;
+  font-size: 24px;
+}
+</style> -->
