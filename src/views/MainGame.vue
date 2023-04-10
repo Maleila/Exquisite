@@ -108,12 +108,15 @@ export default {
     <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
     <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
 
-    roomCode={{ roomCode }} / playerNum={{ playerNum }}
+  
 
   <h2 v-if="!finished && count <= playerNum">
-    
+    roomCode={{ roomCode }} / playerNum={{ playerNum }}
+    <div class="title">Player {{ count }} of {{ playerNum }}</div>
+       <div class="prompt">
+         Please write down your sentence, and press ENTER to sumbit
+       </div>
       
-      Player {{ count }}/{{ playerNum }}:
       <br />
       <div class="story">
         <span class="invisible">
