@@ -3,6 +3,9 @@ import MainGame from "@/views/MainGame.vue";
 import { ref as dbRef, set , onDisconnect} from 'firebase/database';
 import { useDatabase, useDatabaseObject } from 'vuefire';
 import Host from './Host.vue';
+//import JoinRoom from './JoinRoom.vue';
+
+
 
 // export {roomCode}
 
@@ -10,6 +13,7 @@ export default {
   components: {
     MainGame,
     Host,
+    //JoinRoom,
   },
   data() {
     // const db = useDatabase();
@@ -18,6 +22,8 @@ export default {
       playerNum: 1,
       maxPlayers: 6,
       roomCode: "",
+      hostName: "",
+      message: "",
       //testFirebaseThinger: useDatabaseObject(testThinger),
     }; 
   },
@@ -26,10 +32,13 @@ export default {
     startGame() {
       const { playerNum, roomCode } = this;
       if (this.roomCode == ""){
-        alert("Create a room code");
+        alert("Create room code");
       } else {
         this.$router.push({ name: "MainGame", query: { playerNum, roomCode } });
       }
+    },
+    enterName() {
+      this.message = this.hostName;
     },
     submitCode() {
       const db = useDatabase();
@@ -54,7 +63,16 @@ export default {
     <!-- <h1>Room</h1> -->
     <!-- <div class="empty"></div> -->
     
-    <Host />
+    <div id="enterName">
+    <h2>Name</h2>
+    <input v-model="hostName">
+    <br>
+    <button @click="enterName">
+      Go
+    </button>
+    {{ message }}
+    </div>
+    <!-- <JoinRoom /> -->
     <div>
       <h2>Create room code: </h2>
       <input id = "roomForm" v-model="roomCode" @keydown.enter="submitCode()" />
@@ -112,11 +130,11 @@ export default {
 </template>
 
 <style scoped>
-.error {
+/* .error {
   border-style: solid;
   border-width: 2px;
   border-color: red;
   background:pink;
-}
+} */
 </style>
 

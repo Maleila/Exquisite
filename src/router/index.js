@@ -5,12 +5,16 @@ import Gameplay from "@/views/Gameplay.vue";
 import Exquisite from "@/views/Exquisite.vue";
 import Room from "@/views/Room.vue";
 import MainGame from "@/views/MainGame.vue";
+import Host from "@/views/Host.vue";
+import JoinRoom from "@/views/JoinRoom.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home }, // Tell the router to render home component when the home route is visited
   { path: "/about", name: "About", component: About },
   { path: "/game", name: "Game", component: Exquisite },
   { path: "/gameplay", name: "Gameplay", component: Gameplay },
+  { path: "/host", name: "Host", component: Host },
+  { path: "/joinroom", name: "JoinRoom", component: JoinRoom },
   { path: "/room", name: "Room", component: Room },
   {
     path: "/maingame",
