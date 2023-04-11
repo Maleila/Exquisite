@@ -25,10 +25,15 @@ export default {
   methods: {
     startGame() {
       const { playerNum, roomCode } = this;
-      this.$router.push({ name: "MainGame", query: { playerNum, roomCode } });
+      if (this.roomCode == ""){
+        alert("Create a room code");
+      } else {
+        this.$router.push({ name: "MainGame", query: { playerNum, roomCode } });
+      }
     },
     submitCode() {
       const db = useDatabase();
+      
       const roomCodeFB = dbRef(db, this.roomCode);
       set(roomCodeFB, {
         players: this.playerNum,
@@ -52,7 +57,7 @@ export default {
     <Host />
     <div>
       <h2>Create room code: </h2>
-      <input v-model="roomCode" @keydown.enter="submitCode()" />
+      <input id = "roomForm" v-model="roomCode" @keydown.enter="submitCode()" />
       <br>
     <br>
     </div>
@@ -105,4 +110,13 @@ export default {
     </div>
   </div>
 </template>
+
+<style scoped>
+.error {
+  border-style: solid;
+  border-width: 2px;
+  border-color: red;
+  background:pink;
+}
+</style>
 

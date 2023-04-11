@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 import { nextTick } from "vue";
 export default {
   mounted() {
@@ -66,15 +66,15 @@ export default {
     },
   },
 };
-</script>
+</script> -->
 
-<template>
+<!-- <template>
   <div class="start">
-    <h2 v-if="count == 0">Number of players: {{ players }}</h2>
+    <h2 v-if="count == 0">Number of players: {{ players }}</h2> -->
     <!--<input v-if= "count == 0" v-model.number="players" @keydown.enter = "count++ , ishidden = false">-->
     <!--Looks like it's going to be more involved to check the type so this can be a temporary fix,
     although it limits the number of players-->
-    <select v-if="count == 0" v-model="players">
+    <!-- <select v-if="count == 0" v-model="players">
       <option disabled value="">Select number of players</option>
       <option>1</option>
       <option>2</option>
@@ -149,4 +149,8 @@ export default {
   opacity: 0.1;
   display: inline;
 }
-</style>
+</style> -->
+<template>
+  <h1>Join room</h1>
+  <h2>Enter room code</h2>
+</template>
