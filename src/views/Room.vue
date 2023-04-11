@@ -2,12 +2,14 @@
 import MainGame from "@/views/MainGame.vue";
 import { ref as dbRef, set , onDisconnect} from 'firebase/database';
 import { useDatabase, useDatabaseObject } from 'vuefire';
+import Host from './Host.vue';
 
 // export {roomCode}
 
 export default {
   components: {
     MainGame,
+    Host,
   },
   data() {
     // const db = useDatabase();
@@ -47,6 +49,7 @@ export default {
     <!-- <h1>Room</h1> -->
     <!-- <div class="empty"></div> -->
     
+    <Host />
     <div>
       <h2>Create room code: </h2>
       <input v-model="roomCode" @keydown.enter="submitCode()" />
