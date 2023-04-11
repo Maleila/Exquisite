@@ -55,7 +55,7 @@ export default {
       const messageFB = dbRef(db, this.roomCode + "/" + "player" + ((this.count) - 1));
       // const playerMessageFB = dbRef(db, roomCodeFB/player);
       set(messageFB , this.previous) //testing firebase stuff
-      
+
       this.current = "";
       // var sample = document.getElementById("editable");
       // sample.style.color = "red";
@@ -106,12 +106,10 @@ export default {
   <div class="main-game">
     <!--Problem line leave uncommented-->
     <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
-    <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
-
-  
+    <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> --> 
 
   <h2 v-if="!finished && count <= playerNum">
-    roomCode={{ roomCode }} / playerNum={{ playerNum }}
+ 
     <div class="title">Player {{ count }} of {{ playerNum }}</div>
        <div class="prompt">
          Please write down your sentence, and press ENTER to sumbit
@@ -144,6 +142,7 @@ export default {
             @keydown.enter="submitStory"
           >
           </contenteditable>
+          <br>
       </div>
     </h2>
 
