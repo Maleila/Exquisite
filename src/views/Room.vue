@@ -2,7 +2,6 @@
 import MainGame from "@/views/MainGame.vue";
 import { ref as dbRef, set , onDisconnect} from 'firebase/database';
 import { useDatabase, useDatabaseObject } from 'vuefire';
-import Host from './Host.vue';
 //import JoinRoom from './JoinRoom.vue';
 
 
@@ -12,7 +11,6 @@ import Host from './Host.vue';
 export default {
   components: {
     MainGame,
-    Host,
     //JoinRoom,
   },
   data() {
@@ -23,35 +21,45 @@ export default {
       maxPlayers: 6,
       roomCode: "",
       hostName: "",
-      message: "",
+      submit:false,
       //testFirebaseThinger: useDatabaseObject(testThinger),
     }; 
   },
 
   methods: {
-    startGame() {
-      const { playerNum, roomCode } = this;
-      if (this.roomCode == ""){
-        alert("Create room code");
-      } else {
-        this.$router.push({ name: "MainGame", query: { playerNum, roomCode } });
-      }
-    },
-    enterName() {
-      this.message = this.hostName;
-    },
-    submitCode() {
+    startRoom() {
+
+      const {roomCode } = this;
+      this.$router.push({ name: "LoadingPage", query: { roomCode } });
       const db = useDatabase();
       
       const roomCodeFB = dbRef(db, this.roomCode);
       set(roomCodeFB, {
-        players: this.playerNum,
+        host: this.hostName,
+        created: true,
       });
+      roomCodeFB.onDisconnect().remove();
+    },
+    submitCode() {
+      const { playerNum, roomCode } = this;
+      if (this.hostName == ""){
+        alert("Add your name");
+      }
+      else if (this.roomCode == ""){
+        alert("Create room code");
+      } else {
+        this.submit = true;
+      }
+      // const db = useDatabase();
+      
+      // const roomCodeFB = dbRef(db, this.roomCode);
+      // set(roomCodeFB, {
+      //   host: this.hostName,
       // roomCodeFB.onDisconnect().remove();
       
       // const { roomCode } = this.roomCode;
       // this.$router.push({ name: "MainGame", query: { roomCode } });
-}
+    }
   },
 };
 </script>
@@ -67,15 +75,12 @@ export default {
     <h2>Name</h2>
     <input v-model="hostName">
     <br>
-    <button @click="enterName">
-      Go
-    </button>
-    {{ message }}
+    
     </div>
     <!-- <JoinRoom /> -->
     <div>
       <h2>Create room code: </h2>
-      <input id = "roomForm" v-model="roomCode" @keydown.enter="submitCode()" />
+      <input id = "roomForm" v-model="roomCode"/>
       <br>
     <br>
     </div>
@@ -95,11 +100,11 @@ export default {
       </select>
     </div>
 
+    
+
     <!-- <button @click="submitCode()" >
       Submit Room
     </button> -->
-
-    <div class="response">{{}}</div>
 
     <!-- <select v-model="playerNum">
       <option disabled value="">Select number of players</option>
@@ -120,11 +125,20 @@ export default {
           <img src="@/assets/back.svg" @click="navigate" role="link" />
         </router-link>
       </div>
-      <div class="send-image">
-        <router-link to="/maingame" custom>
-          <img src="@/assets/back.svg" @click="startGame() , submitCode()" role="link" />
-        </router-link>
+      <button v-if="submit == false" @click="submitCode">
+      Submit
+      </button>
+      <div v-if="submit">
+      {{hostName}}, room has been created: {{roomCode}}
+      <router-link to="/loadingpage" custom v-slot="{ navigate }">
+          <button @click="startRoom" role="link">Loading Players</button>
+      </router-link>
       </div>
+      <!-- <div class="send-image">
+        <router-link to="/loadingpage" custom v-slot="{ navigate }">
+          <button @click="startRoom() , navigate" role="link">Loading Players</button>
+        </router-link>
+      </div> -->
     </div>
   </div>
 </template>
