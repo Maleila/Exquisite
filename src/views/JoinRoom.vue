@@ -4,11 +4,13 @@ export default {
     return {
       playerName: "",
       roomCodeJoin: "",
-      submit: false,
     }
   },
   methods: {
-    
+    joinLobby() {
+      const { playerName, roomCodeJoin } = this;
+      this.$router.push({ name: "Lobby", query: { playerName, roomCodeJoin } });
+    }
   }
 }
 </script>
@@ -21,18 +23,14 @@ export default {
     <h2>Name</h2>
     <input v-model="playerName">
     <br>
-    <button @click="enterRoom, submit = true">
+    <button @click="joinLobby">
       Go
-    </button>
-    <div v-if="submit">
-    {{playerName}} has joined {{ roomCodeJoin }}
-    </div>
-    
+    </button>    
   </div>
 </template>
 
 <style scoped>
-h2 {
+/* h2 {
    font: ; 
-}
+} */
 </style>

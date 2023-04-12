@@ -7,6 +7,7 @@ import Room from "@/views/Room.vue";
 import MainGame from "@/views/MainGame.vue";
 import Host from "@/views/Host.vue";
 import JoinRoom from "@/views/JoinRoom.vue";
+import Lobby from "@/views/Lobby.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home }, // Tell the router to render home component when the home route is visited
@@ -23,6 +24,15 @@ const routes = [
     props: (route) => ({
       playerNum: parseInt(route.query.playerNum, 10),
       roomCode: route.query.roomCode,
+    }),
+  },
+  {
+    path: "/lobby",
+    name: "Lobby",
+    component: Lobby,
+    props: (route) => ({
+      playerName: route.query.playerName,
+      roomCodeJoin: route.query.roomCodeJoin,
     }),
   },
 ];
