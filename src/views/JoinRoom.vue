@@ -28,16 +28,15 @@ export default {
         else if (this.playerName == ""){
             alert("Add your name");
         } else {
-            const db = useDatabase();
-            const roomFB = dbRef(db, this.roomCode + "/created");
-            const roomDB = useDatabaseObject(roomFB);
-            //const hostFB = dbRef(db, this.roomCode + "/host");
-            console.log("room:" + roomDB)
+            // const db = useDatabase();
+            // const roomFB = dbRef(db, this.roomCode + "/created");
+            // const roomDB = useDatabaseObject(roomFB);
+            // //const hostFB = dbRef(db, this.roomCode + "/host");
+            // console.log("room:" + roomDB)
             // if (roomFB.$value == undefined){
             //     alert("Invalid room")
             // } else {
-            // this.submit = true;
-            // }
+            this.submit = true;
         }
     }
   }
