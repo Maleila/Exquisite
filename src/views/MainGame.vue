@@ -45,10 +45,18 @@ export default {
       this.count++;
       this.story = this.story.concat(this.previous + " ");
       //remove transition for resetting opacity to 1, then re-add after the story is updated
-      document.getElementById("prev").classList.add("notransition");
-      document.getElementById("prev").style.opacity = 1;
-      document.getElementById("prev").offsetHeight;
-      document.getElementById("prev").classList.remove("notransition");
+      var prev = document.getElementById("prev")
+      prev.classList.add("notransition");
+      prev.style.opacity = 0.5;
+      prev.offsetHeight;
+      prev.classList.remove("notransition");
+
+      var editable = document.getElementById("editable")
+      editable.classList.add("notransition");
+      editable.style.opacity = 1;
+      editable.offsetHeight;
+      editable.classList.remove("notransition");
+
       this.invis = false;
       this.previous = this.current;
       const db = useDatabase();
@@ -124,7 +132,7 @@ export default {
           class="previous-sentence"
           id="prev"
           :style="{
-            opacity: invis ? 0.2 : 1,
+            opacity: invis ? 0.01 : 0.5,
           }"
           v-if="count > 0"
         >
@@ -132,6 +140,9 @@ export default {
         </span>
           <contenteditable
             tag="div"
+            :style="{
+              opacity: invis ? 0.5 : 1,
+            }"
             :contenteditable="mutable"
             class="new-text"
             id="editable"
@@ -190,7 +201,7 @@ h3 {
 }
 
 .story .invisible {
-  opacity: 0.1;
+  opacity: 0.01;
 }
 
 .story .previous-sentence {
@@ -202,6 +213,8 @@ h3 {
 
 .story .new-text {
   color: black;
+  filter: opacity(100);
+  transition: opacity 900ms ease-in-out;
   text-align: left !important;
   display: inline-block;
 }

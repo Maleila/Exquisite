@@ -1,6 +1,10 @@
 <script>
+import { ref as dbRef, set } from "firebase/database";
+import { useDatabase, useDatabaseObject } from "vuefire";
+
 export default {
   data() {
+    const db = useDatabase();
     return {
       playerName: "",
       roomCodeJoin: "",
@@ -8,6 +12,10 @@ export default {
   },
   methods: {
     joinLobby() {
+      const db = useDatabase();
+      const roomCodeFB = dbRef(db, this.roomCodeJoin);
+      set(roomCodeFB , {player: this.playerName});
+      
       const { playerName, roomCodeJoin } = this;
       this.$router.push({ name: "Lobby", query: { playerName, roomCodeJoin } });
     }
