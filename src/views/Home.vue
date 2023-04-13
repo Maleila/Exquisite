@@ -4,7 +4,7 @@
 
     <div class="empty"></div>
     <div class="button">
-      <router-link to="/room" custom v-slot="{ navigate }">
+      <router-link to="/localRoom" custom v-slot="{ navigate }">
         <button @click="navigate" role="link">LOCAL</button>
       </router-link>
 

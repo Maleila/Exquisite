@@ -1,8 +1,6 @@
 <script>
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
-import { ref as dbRef, set } from "firebase/database";
-import { useDatabase, useDatabaseObject } from "vuefire";
 
 export default {
   components: {
@@ -13,8 +11,6 @@ export default {
     this.focusInput();
   },
   data() {
-    
-    const db = useDatabase();
     return {
       current: "",
       count: 1,
@@ -23,7 +19,6 @@ export default {
       previous: "",
       invis: false,
       mutable: true,
-      //testFirebaseThinger: useDatabaseObject(testThinger),//testing firebase stuff
     };
     
   },
@@ -46,24 +41,19 @@ export default {
       this.story = this.story.concat(this.previous + " ");
       //remove transition for resetting opacity to 1, then re-add after the story is updated
       var prev = document.getElementById("prev")
-       prev.classList.add("notransition");
-       prev.style.opacity = 0.5;
-       prev.offsetHeight;
-       prev.classList.remove("notransition");
+      prev.classList.add("notransition");
+      prev.style.opacity = 0.5;
+      prev.offsetHeight;
+      prev.classList.remove("notransition");
 
-       var editable = document.getElementById("editable")
-       editable.classList.add("notransition");
-       editable.style.opacity = 1;
-       editable.offsetHeight;
-       editable.classList.remove("notransition");
+      var editable = document.getElementById("editable")
+      editable.classList.add("notransition");
+      editable.style.opacity = 1;
+      editable.offsetHeight;
+      editable.classList.remove("notransition");
 
       this.invis = false;
       this.previous = this.current;
-      const db = useDatabase();
-      const messageFB = dbRef(db, this.roomCode + "/" + "player" + ((this.count) - 1));
-      // const playerMessageFB = dbRef(db, roomCodeFB/player);
-      set(messageFB , this.previous) //testing firebase stuff
-      
       this.current = "";
       // var sample = document.getElementById("editable");
       // sample.style.color = "red";
@@ -102,25 +92,16 @@ export default {
       type: Number,
       required: true,
     },
-    roomCode: {
-      type: String,
-      required: false,
-    }, //want to transfer room info from Room.vue to MainGame // doesn't work
   },
 };
 </script>
 
 <template>
   <div class="main-game">
-    <!--Problem line leave uncommented-->
-    <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
-    <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
-
   <h2 v-if="!finished && count <= playerNum">
-    roomCode={{ roomCode }} / playerNum={{ playerNum }}
     <div class="title">Player {{ count }} of {{ playerNum }}</div>
        <div class="prompt">
-         Please write down your sentence, and press ENTER to sumbit
+         ENTER to submit
        </div>
       
       <br />
@@ -132,7 +113,7 @@ export default {
           class="previous-sentence"
           id="prev"
           :style="{
-            opacity: invis ? 0.01 : 5,
+            opacity: invis ? 0.01 : 0.5,
           }"
           v-if="count > 0"
         >
@@ -156,6 +137,7 @@ export default {
       </div>
     </h2>
 
+    <!--Add back in for clarity-->
     <!-- <button v-if="!finished && count <= playerNum" @click="submitStory">
       Submit
     </button> -->
