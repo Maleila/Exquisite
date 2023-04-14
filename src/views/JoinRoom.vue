@@ -1,6 +1,7 @@
 <script>
 import { ref as dbRef, set , onDisconnect} from 'firebase/database';
 import { useDatabase, useDatabaseObject } from 'vuefire';
+import { getAuth } from "firebase/auth";
 
 export default {
   data() {
@@ -16,9 +17,13 @@ export default {
     this.$router.push({ name: "LoadingPage", query: { roomCode } });
     const db = useDatabase();
 
-    
-    const roomCodeFB = dbRef(db, this.roomCode + "/player");
-    set(roomCodeFB, this.playerName);
+    // const auth = getAuth();
+    // const user = auth.currentUser;
+    // const uid = user.uid;
+
+    const playersFB = dbRef(db, this.roomCode + "/players/" + this.playerName);
+      set(playersFB, "");
+
 
     },
     enterRoom(){

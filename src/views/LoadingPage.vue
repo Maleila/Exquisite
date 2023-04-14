@@ -32,10 +32,8 @@ export default {
 <template>
   Room Code: {{ roomCode }}
   <div id="LoadingPlayers">
-    <h2>Host</h2>
-    {{ host.$value }}
-    <br />
     <h2>Players</h2>
+    {{}}
     <!-- <div v-if="player.$value != undefined"> {{player.$value}} </div> -->
     <br />
     <router-link to="/maingame" custom>

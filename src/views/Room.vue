@@ -2,6 +2,9 @@
 import MainGame from "@/views/MainGame.vue";
 import { ref as dbRef, set , onDisconnect} from 'firebase/database';
 import { useDatabase, useDatabaseObject } from 'vuefire';
+import { getAuth } from "firebase/auth";
+
+
 //import JoinRoom from './JoinRoom.vue';
 
 
@@ -35,10 +38,19 @@ export default {
       
       const roomCodeFB = dbRef(db, this.roomCode);
       set(roomCodeFB, {
-        host: this.hostName,
         created: true,
       });
-      roomCodeFB.onDisconnect().remove();
+
+      // const auth = getAuth();
+      // const user = auth.currentUser;
+      // const uid = user.uid;
+
+      const playersFB = dbRef(db, this.roomCode + "/players/" + this.hostName);
+      set(playersFB, "");
+
+      // const hostFB = dbRef(db, this.roomCode + "/" + this.hostName);
+      // set(hostFB, "");
+      // roomCodeFB.onDisconnect().remove();
     },
     submitCode() {
       const { playerNum, roomCode } = this;
