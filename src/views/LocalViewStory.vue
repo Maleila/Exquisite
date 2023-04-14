@@ -10,20 +10,34 @@ export default {
 </script>
 
 <template>
-  <div class="local-view-story">
-    <div class="story">{{ story }}</div>
+  <div class="empty"></div>
+  <div class="story">{{ story }}</div>
+  <div class="empty"></div>
+  <router-link to="/" custom v-slot="{ navigate }">
+    <button @click="navigate" role="link">Back</button>
+  </router-link>
+  <!-- <div class="close-image">
     <router-link to="/" custom v-slot="{ navigate }">
-      <button @click="navigate" role="link">Back</button>
+      <img src="@/assets/close.svg" @click="navigate" role="link" />
     </router-link>
-  </div>
+  </div> -->
 </template>
 
 <style>
-.local-view-story .story {
+.story {
   width: 80%;
   margin: 0 auto;
   text-align: left;
   font-family: Desyre;
-  font-size: 2em;
+  font-size: 3em;
+}
+
+.empty {
+  height: 10vh;
+}
+
+.close-image {
+  width: 1em;
+  height: auto;
 }
 </style>
