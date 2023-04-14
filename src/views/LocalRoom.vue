@@ -22,7 +22,9 @@ export default {
 
 <template>
   <div class="local-room">
-    <h2>Players</h2>
+    <div class="empty"></div>
+    <div class="title">Room Settings</div>
+    <div class="prompt">Number of Players</div>
 
     <div class="selection-bar">
       <select v-model="playerNum">
@@ -31,8 +33,7 @@ export default {
       </select>
     </div>
 
-    <p>{{ playerNum }}</p>
-    <!-- <p>ONE</p> -->
+    <div class="number">{{ playerNum }}</div>
 
     <div class="send-all">
       <div class="back-image">

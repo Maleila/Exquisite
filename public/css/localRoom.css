@@ -6,20 +6,43 @@
   line-height: 0.4em;
 }
 
-.local-room h2 {
-  color: #434343;
-  font-size: 2em;
+.local-room .title {
+  font-size: 3em;
+  width: 80%;
+  margin: 0 auto;
   font-weight: 200;
-  line-height: 0.4em;
+  text-align: left;
 }
 
-.local-room p {
+.local-room .prompt {
+  color: #484848;
+  font-size: 1.2em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 100;
+  text-align: left;
+}
+
+.local-room .selection-bar {
+  color: #484848;
+  font-size: 1.2em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 100;
+  text-align: left;
+}
+
+.local-room .number {
   color: #434343;
   /* font-family: "CalorieRegular"; */
   font-family: Desyre;
   font-size: 15em;
   font-weight: 900;
-  line-height: 0.4em;
+  /* line-height: 0.4em; */
+}
+
+.local-room .empty {
+  height: 10vh;
 }
 
 .local-room .send-all {
@@ -30,33 +53,15 @@
   align-items: center;
 }
 
-/* .room .back-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 10px;
-  } */
-
 .local-room .back-image img {
   width: 30px;
   height: auto;
 }
 
-/* .room .send-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 10px;
-  } */
-
 .local-room .send-image img {
   width: 30px;
   height: auto;
   transform: rotate(180deg);
-}
-
-.local-room .empty {
-  height: 2em;
 }
 
 .local-room .button {
