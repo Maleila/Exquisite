@@ -52,6 +52,10 @@ export default {
       // set(hostFB, "");
       // roomCodeFB.onDisconnect().remove();
     },
+    randRoomCode(){
+      var row_password = Array(5).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+      this.roomCode = row_password;
+    },
     submitCode() {
       const { playerNum, roomCode } = this;
       if (this.hostName == ""){
@@ -91,8 +95,10 @@ export default {
     </div>
     <!-- <JoinRoom /> -->
     <div>
-      <h2>Create room code: </h2>
-      <input id = "roomForm" v-model="roomCode"/>
+      <h2>Generate room code: </h2>
+      <button @click="randRoomCode">Generate</button>
+      <br>
+      {{roomCode}}
       <br>
     <br>
     </div>

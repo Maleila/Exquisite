@@ -13,17 +13,23 @@ export default {
   },
   methods: {
     submitPlayer() {
-    const { playerName, roomCode } = this;
-    this.$router.push({ name: "LoadingPage", query: { roomCode } });
-    const db = useDatabase();
+        if (this.roomCode == ""){
+            alert("Input room code");
+        }
+        else if (this.playerName == ""){
+            alert("Add your name");
+        } else {
+            const { playerName, roomCode } = this;
+            this.$router.push({ name: "LoadingPage", query: { roomCode } });
+            const db = useDatabase();
 
-    // const auth = getAuth();
-    // const user = auth.currentUser;
-    // const uid = user.uid;
+            // const auth = getAuth();
+            // const user = auth.currentUser;
+            // const uid = user.uid;
 
-    const playersFB = dbRef(db, this.roomCode + "/players/" + this.playerName);
-      set(playersFB, "");
-
+            const playersFB = dbRef(db, this.roomCode + "/players/" + this.playerName);
+            set(playersFB, "");
+        }
 
     },
     enterRoom(){
@@ -57,7 +63,7 @@ export default {
     <h2>Name</h2>
     <input v-model="playerName">
     <br>
-    <button @click="enterRoom">
+    <button v-if="!submit" @click="enterRoom">
       Go
     </button>
     <div v-if="submit">
