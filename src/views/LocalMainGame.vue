@@ -1,10 +1,12 @@
 <script>
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
+import LocalViewStory from "@/views/LocalViewStory.vue";
 
 export default {
   components: {
     contenteditable,
+    LocalViewStory,
   },
   mounted() {
     //called when a component is added (ex when the page loads)
@@ -22,6 +24,11 @@ export default {
     };
   },
   methods: {
+    passStory() {
+      this.story = this.story.concat(this.previous);
+      const { story } = this;
+      this.$router.push({ name: "LocalViewStory", query: { story } });
+    },
     reset() {
       this.current = "";
       this.count = 1;
@@ -134,14 +141,21 @@ export default {
       </div>
     </h2>
 
-    <!--Add back in for clarity-->
-    <!-- <button v-if="!finished && count <= playerNum" @click="submitStory">
-      Submit
-    </button> -->
+    <div class="view-story">
+      <router-link to="/localviewstory" custom>
+        <button
+          v-if="count > playerNum && !finished"
+          @click="passStory"
+          role="link"
+        >
+          View Story
+        </button>
+      </router-link>
+    </div>
 
-    <button @click="viewStory" v-if="count > playerNum && !finished">
+    <!-- <button @click="viewStory" v-if="count > playerNum && !finished">
       View Story
-    </button>
+    </button> -->
 
     <div class="story">
       <h3 v-if="finished && count > playerNum">{{ story }}</h3>

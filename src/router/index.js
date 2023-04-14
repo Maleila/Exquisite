@@ -10,6 +10,7 @@ import JoinRoom from "@/views/JoinRoom.vue";
 import LoadingPage from "@/views/LoadingPage.vue";
 import LocalRoom from "@/views/LocalRoom.vue";
 import LocalMainGame from "@/views/LocalMainGame.vue";
+import LocalViewStory from "@/views/LocalViewStory.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home }, // Tell the router to render home component when the home route is visited
@@ -18,16 +19,24 @@ const routes = [
   { path: "/gameplay", name: "Gameplay", component: Gameplay },
   { path: "/host", name: "Host", component: Host },
   { path: "/joinroom", name: "JoinRoom", component: JoinRoom },
-  { 
-    path: "/loadingpage", 
-    name: "LoadingPage", 
+  {
+    path: "/localviewstory",
+    name: "LocalViewStory",
+    component: LocalViewStory,
+    props: (route) => ({
+      story: route.query.story,
+    }),
+  },
+  {
+    path: "/loadingpage",
+    name: "LoadingPage",
     component: LoadingPage,
     props: (route) => ({
       roomCode: route.query.roomCode,
-    }), 
+    }),
   },
   { path: "/room", name: "Room", component: Room },
-  { path: "/localRoom", name: "LocalRoom", component: LocalRoom },
+  { path: "/localroom", name: "LocalRoom", component: LocalRoom },
   {
     path: "/maingame",
     name: "MainGame",
@@ -38,8 +47,8 @@ const routes = [
     }),
   },
   {
-    path: "/localGame",
-    name: "localGame",
+    path: "/localgame",
+    name: "LocalGame",
     component: LocalMainGame,
     props: (route) => ({
       playerNum: parseInt(route.query.playerNum, 10),
