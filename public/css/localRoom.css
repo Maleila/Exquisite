@@ -1,0 +1,83 @@
+.local-room h1 {
+  color: #434343;
+
+  font-size: 4em;
+  font-weight: 900;
+  line-height: 0.4em;
+}
+
+.local-room h2 {
+  color: #434343;
+  font-size: 2em;
+  font-weight: 200;
+  line-height: 0.4em;
+}
+
+.local-room p {
+  color: #434343;
+  /* font-family: "CalorieRegular"; */
+  font-family: Desyre;
+  font-size: 15em;
+  font-weight: 900;
+  line-height: 0.4em;
+}
+
+.local-room .send-all {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* .room .back-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+  } */
+
+.local-room .back-image img {
+  width: 30px;
+  height: auto;
+}
+
+/* .room .send-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+  } */
+
+.local-room .send-image img {
+  width: 30px;
+  height: auto;
+  transform: rotate(180deg);
+}
+
+.local-room .empty {
+  height: 2em;
+}
+
+.local-room .button {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.local-room button {
+  color: #434343;
+  font-family: inherit;
+  font-size: 1.5rem;
+  font-weight: 100;
+  margin-bottom: 2.2rem;
+  border: none;
+  background: none;
+  letter-spacing: 0.1em;
+  transition: 0.3s;
+}
+
+.local-room button:hover {
+  text-decoration: underline;
+}
