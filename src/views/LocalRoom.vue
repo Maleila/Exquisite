@@ -14,7 +14,7 @@ export default {
   methods: {
     startRoom() {
       const { playerNum } = this;
-      this.$router.push({ name: "localGame", query: { playerNum } });
+      this.$router.push({ name: "LocalGame", query: { playerNum } });
     },
   },
 };
@@ -22,8 +22,10 @@ export default {
 
 <template>
   <div class="local-room">
-    <h2>Players</h2>
+    <div class="empty"></div>
+    <div class="title">Room Settings</div>
 
+    <div class="prompt">Number of Players</div>
     <div class="selection-bar">
       <select v-model="playerNum">
         <option disabled value="">Select number of players</option>
@@ -31,8 +33,7 @@ export default {
       </select>
     </div>
 
-    <p>{{ playerNum }}</p>
-    <!-- <p>ONE</p> -->
+    <div class="number">{{ playerNum }}</div>
 
     <div class="send-all">
       <div class="back-image">
@@ -41,7 +42,7 @@ export default {
         </router-link>
       </div>
       <div class="send-image">
-        <router-link to="/localGame" custom v-slot="{ navigate }">
+        <router-link to="/localGame" custom>
           <img src="@/assets/back.svg" @click="startRoom" role="link" />
         </router-link>
       </div>

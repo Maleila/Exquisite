@@ -4,7 +4,7 @@
 
     <div class="empty"></div>
     <div class="button">
-      <router-link to="/localRoom" custom v-slot="{ navigate }">
+      <router-link to="/localroom" custom v-slot="{ navigate }">
         <button @click="navigate" role="link">LOCAL</button>
       </router-link>
 
@@ -22,12 +22,3 @@
     </div>
   </div>
 </template>
-
-<!-- <style>
-body {
-  background-image: url("../assets/cleanPaper.jpeg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-</style> -->

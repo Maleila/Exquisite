@@ -23,3 +23,23 @@
   font-weight: 100;
   text-align: left;
 }
+
+.main-game .view-story {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.main-game .view-story button {
+  background-color: transparent;
+  /* border: none; */
+  border-radius: 20px;
+  /* font-family: CalorieRegular; */
+  font-family: inherit;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  font-size: 2em;
+  padding: 10px 20px;
+}
