@@ -20,7 +20,6 @@ export default {
       invis: false,
       mutable: true,
     };
-    
   },
   methods: {
     reset() {
@@ -40,13 +39,13 @@ export default {
       this.count++;
       this.story = this.story.concat(this.previous + " ");
       //remove transition for resetting opacity to 1, then re-add after the story is updated
-      var prev = document.getElementById("prev")
+      var prev = document.getElementById("prev");
       prev.classList.add("notransition");
       prev.style.opacity = 0.5;
       prev.offsetHeight;
       prev.classList.remove("notransition");
 
-      var editable = document.getElementById("editable")
+      var editable = document.getElementById("editable");
       editable.classList.add("notransition");
       editable.style.opacity = 1;
       editable.offsetHeight;
@@ -98,12 +97,10 @@ export default {
 
 <template>
   <div class="main-game">
-  <h2 v-if="!finished && count <= playerNum">
-    <div class="title">Player {{ count }} of {{ playerNum }}</div>
-       <div class="prompt">
-         ENTER to submit
-       </div>
-      
+    <h2 v-if="!finished && count <= playerNum">
+      <div class="title">Player {{ count }} of {{ playerNum }}</div>
+      <div class="prompt">ENTER to submit</div>
+
       <br />
       <div class="story">
         <span class="invisible">
@@ -119,21 +116,21 @@ export default {
         >
           {{ previous + " " }}
         </span>
-          <contenteditable
-            tag="div"
-            :style="{
-              opacity: invis ? 0.5 : 1,
-            }"
-            :contenteditable="mutable"
-            class="new-text"
-            id="editable"
-            ref="storyInput"
-            :no-nl="true"
-            :no-html="true"
-            v-model="current"
-            @keydown.enter="submitStory"
-          >
-          </contenteditable>
+        <contenteditable
+          tag="div"
+          :style="{
+            opacity: invis ? 0.5 : 1,
+          }"
+          :contenteditable="mutable"
+          class="new-text"
+          id="editable"
+          ref="storyInput"
+          :no-nl="true"
+          :no-html="true"
+          v-model="current"
+          @keydown.enter="submitStory"
+        >
+        </contenteditable>
       </div>
     </h2>
 
