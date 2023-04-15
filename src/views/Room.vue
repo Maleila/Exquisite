@@ -31,26 +31,34 @@ export default {
 
   methods: {
     startRoom() {
+      if (this.hostName == ""){
+        alert("Add your name");
+      }
+      else if (this.roomCode == ""){
+        alert("Create room code");
+      } else {
+        const {roomCode } = this;
+        this.$router.push({ name: "LoadingPage", query: { roomCode } });
+        const db = useDatabase();
+        
+        const roomCodeFB = dbRef(db, this.roomCode);
+        set(roomCodeFB, {
+          created: true,
+        });
 
-      const {roomCode } = this;
-      this.$router.push({ name: "LoadingPage", query: { roomCode } });
-      const db = useDatabase();
+        // const auth = getAuth();
+        // const user = auth.currentUser;
+        // const uid = user.uid;
+
+        const playersFB = dbRef(db, this.roomCode + "/players/" + this.hostName);
+        set(playersFB, "");
+
+        // const hostFB = dbRef(db, this.roomCode + "/" + this.hostName);
+        // set(hostFB, "");
+        // roomCodeFB.onDisconnect().remove();
+      }
+
       
-      const roomCodeFB = dbRef(db, this.roomCode);
-      set(roomCodeFB, {
-        created: true,
-      });
-
-      // const auth = getAuth();
-      // const user = auth.currentUser;
-      // const uid = user.uid;
-
-      const playersFB = dbRef(db, this.roomCode + "/players/" + this.hostName);
-      set(playersFB, "");
-
-      // const hostFB = dbRef(db, this.roomCode + "/" + this.hostName);
-      // set(hostFB, "");
-      // roomCodeFB.onDisconnect().remove();
     },
     randRoomCode(){
       var row_password = Array(5).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');

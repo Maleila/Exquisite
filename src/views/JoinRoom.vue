@@ -30,7 +30,6 @@ export default {
             const playersFB = dbRef(db, this.roomCode + "/players/" + this.playerName);
             set(playersFB, "");
         }
-
     },
     enterRoom(){
         if (this.roomCode == ""){
