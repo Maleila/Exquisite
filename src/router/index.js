@@ -42,7 +42,7 @@ const routes = [
     name: "MainGame",
     component: MainGame,
     props: (route) => ({
-      // playerNum: parseInt(route.query.playerNum, 10),
+      //playerNum: parseInt(route.query.playerNum, 10),
       roomCode: route.query.roomCode,
     }),
   },
@@ -52,6 +52,8 @@ const routes = [
     component: LocalMainGame,
     props: (route) => ({
       playerNum: parseInt(route.query.playerNum, 10),
+      playerNames: route.query.playerNames,
+      rounds: parseInt(route.query.rounds, 10),
     }),
   },
 ];

@@ -98,6 +98,14 @@ export default {
       type: Number,
       required: true,
     },
+    playerNames: {
+      type: Array,
+      required: true,
+    },
+    rounds: {
+      type: Number,
+      required: true,
+    },
   },
 };
 </script>
@@ -105,7 +113,7 @@ export default {
 <template>
   <div class="main-game">
     <h2 v-if="!finished && count <= playerNum">
-      <div class="title">Player {{ count }} of {{ playerNum }}</div>
+      <div class="title">Player {{ count }} of {{ playerNum }}: {{ playerNames[count-1] }}</div>
       <div class="prompt">ENTER to submit</div>
 
       <br />

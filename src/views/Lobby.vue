@@ -1,7 +1,5 @@
 <script>
 export default {
-  components: {
-  },
   data() {
     return {
       playerNames: [],
@@ -11,7 +9,6 @@ export default {
   },
   methods: {
     addPlayer() {
-        console.log(this.playerNum)
         if(this.playerNum == 1) {
             this.playerNames[0] = this.name;
         } else {
@@ -25,19 +22,18 @@ export default {
 </script>
 
 <template>
-<div>
-Players:
-</div>
-<li v-for="item in playerNames">
-  {{ item }}
-</li>
+    <div>
+    Players:
+    </div>
+    <li v-for="item in playerNames">
+        {{ item }}
+    </li>
 
-<input v-model="name">
-<br>
-<button @click="addPlayer">Add</button>
-<br>
-<button @click="$emit('setPlayers', playerNames)">Start</button>
-
+    <input v-model="name">
+    <br>
+    <button @click="addPlayer">Add</button>
+    <br>
+    <button @click="$emit('setPlayers', playerNames)">Start</button>
 </template>
 
 <style>
