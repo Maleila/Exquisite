@@ -1,14 +1,25 @@
 <script>
-import { ref as dbRef, set , onDisconnect} from 'firebase/database';
+import { ref as dbRef, set , onDisconnect, onValue} from 'firebase/database';
 import { useDatabase, useDatabaseObject } from 'vuefire';
 import { getAuth } from "firebase/auth";
 
 export default {
   data() {
+    const db = useDatabase();
+    const firebaseDB = dbRef(db, "/");
+
+
+    onValue(firebaseDB, (snapshot) => {
+        const data = snapshot.val();
+        const roomCodeData = Object.keys(data);
+        this.roomCodes = roomCodeData;
+    })
+
     return {
       playerName: "",
       roomCode: "",
       submit: false,
+      roomCodes: "",
     }
   },
   methods: {
@@ -18,7 +29,10 @@ export default {
         }
         else if (this.playerName == ""){
             alert("Add your name");
-        } else {
+        } else if (!(this.roomCodes).includes(this.roomCode)) {
+            alert("Invalid room code");
+        }
+        else {
             const { playerName, roomCode } = this;
             this.$router.push({ name: "LoadingPage", query: { roomCode } });
             const db = useDatabase();
@@ -37,15 +51,10 @@ export default {
         }
         else if (this.playerName == ""){
             alert("Add your name");
-        } else {
-            // const db = useDatabase();
-            // const roomFB = dbRef(db, this.roomCode + "/created");
-            // const roomDB = useDatabaseObject(roomFB);
-            // //const hostFB = dbRef(db, this.roomCode + "/host");
-            // console.log("room:" + roomDB)
-            // if (roomFB.$value == undefined){
-            //     alert("Invalid room")
-            // } else {
+        } else if (!(this.roomCodes).includes(this.roomCode)) {
+            alert("Invalid room code");
+        }
+        else {
             this.submit = true;
         }
     }
@@ -58,6 +67,7 @@ export default {
   <div id="enterRoom">
     <h2>Room Code</h2>
     {{roomCode}}
+    <br>
     <input v-model="roomCode">
     <h2>Name</h2>
     <input v-model="playerName">
