@@ -2,6 +2,8 @@
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
 import LocalViewStory from "@/views/LocalViewStory.vue";
+import { ref as dbRef, set } from "firebase/database";
+import { useDatabase, useDatabaseObject } from "vuefire";
 
 export default {
   components: {
@@ -13,6 +15,7 @@ export default {
     this.focusInput();
   },
   data() {
+    const db = useDatabase();
     return {
       current: "",
       count: 1,
@@ -61,6 +64,15 @@ export default {
       this.invis = false;
       this.previous = this.current;
       this.current = "";
+
+      if(this.remote) {
+        const db = useDatabase();
+        const index = (parseInt(this.count) - 2);
+        console.log(index);
+        const messageFB = dbRef(db, this.roomCode + "/players/" + this.playerNames[index]);
+        set(messageFB , this.previous)
+      }
+      
       // var sample = document.getElementById("editable");
       // sample.style.color = "red";
       // sample.style.fontFamily = "Impact,Charcoal,sans-serif";
@@ -106,6 +118,18 @@ export default {
       type: Number,
       required: true,
     },
+    remote: {
+      type: Boolean,
+      required: true,
+    },
+    host: {
+      type: Boolean,
+      required: true,
+    },
+    roomCode: {
+      type: String,
+      required: true,
+    }
   },
 };
 </script>
@@ -113,6 +137,7 @@ export default {
 <template>
   <div class="main-game">
     <h2 v-if="!finished && count <= playerNum">
+      <div v-if="remote"> roomCode={{ roomCode }} </div>
       <div class="title">Player {{ count }} of {{ playerNum }}: {{ playerNames[count-1] }}</div>
       <div class="prompt">ENTER to submit</div>
 

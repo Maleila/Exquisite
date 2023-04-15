@@ -59,8 +59,8 @@ export default {
       this.addPlayers = true;
     },
     startGame() {
-      const { playerNum, playerNames, rounds } = this;
-      this.$router.push({ name: "LocalGame", query: { playerNum, playerNames, rounds } });
+      const { playerNum, playerNames, rounds, remote, host, roomCode } = this;
+      this.$router.push({ name: "LocalGame", query: { playerNum, playerNames, rounds, remote, host, roomCode} });
     },
   },
   props: {

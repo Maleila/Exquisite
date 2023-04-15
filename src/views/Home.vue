@@ -19,7 +19,7 @@
         <button @click="navigate, startLocal()" role="link">LOCAL</button>
       </router-link>
 
-      <router-link to="/host" custom v-slot="{ navigate }">
+      <router-link to="/remote" custom v-slot="{ navigate }">
         <button @click="navigate" role="link">REMOTE</button>
       </router-link>
 

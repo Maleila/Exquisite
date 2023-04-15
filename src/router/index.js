@@ -5,7 +5,7 @@ import Gameplay from "@/views/Gameplay.vue";
 import Exquisite from "@/views/Exquisite.vue";
 import Room from "@/views/Room.vue";
 import MainGame from "@/views/MainGame.vue";
-import Host from "@/views/Host.vue";
+import Remote from "@/views/Remote.vue";
 import JoinRoom from "@/views/JoinRoom.vue";
 import LoadingPage from "@/views/LoadingPage.vue";
 import LocalRoom from "@/views/LocalRoom.vue";
@@ -17,7 +17,7 @@ const routes = [
   { path: "/about", name: "About", component: About },
   { path: "/game", name: "Game", component: Exquisite },
   { path: "/gameplay", name: "Gameplay", component: Gameplay },
-  { path: "/host", name: "Host", component: Host },
+  { path: "/remote", name: "Remote", component: Remote },
   { path: "/joinroom", name: "JoinRoom", component: JoinRoom },
   {
     path: "/localviewstory",
@@ -61,6 +61,9 @@ const routes = [
       playerNum: parseInt(route.query.playerNum, 10),
       playerNames: route.query.playerNames,
       rounds: parseInt(route.query.rounds, 10),
+      remote: route.query.remote === "true",
+      host: route.query.host === "true",
+      roomCode: route.query.roomCode,
     }),
   },
 ];
