@@ -1,11 +1,22 @@
+<script>
+  export default {
+    methods: {
+      startLocal() {
+        const remote = false;
+        const host = false;
+        this.$router.push({ name: "LocalRoom", query: { remote , host} });
+      }
+    }
+  }
+</script>
+
 <template>
   <div class="home">
     <h1>Exquisite</h1>
-
     <div class="empty"></div>
     <div class="button">
       <router-link to="/localroom" custom v-slot="{ navigate }">
-        <button @click="navigate" role="link">LOCAL</button>
+        <button @click="navigate, startLocal()" role="link">LOCAL</button>
       </router-link>
 
       <router-link to="/host" custom v-slot="{ navigate }">

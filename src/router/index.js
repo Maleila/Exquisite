@@ -36,7 +36,14 @@ const routes = [
     }),
   },
   { path: "/room", name: "Room", component: Room },
-  { path: "/localroom", name: "LocalRoom", component: LocalRoom },
+  { path: "/localroom",
+    name: "LocalRoom",
+    component: LocalRoom,
+    props: (route) => ({
+      remote: route.query.remote === "true",
+      host: route.query.host === "true",
+    }),
+  },
   {
     path: "/maingame",
     name: "MainGame",
