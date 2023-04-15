@@ -1,20 +1,35 @@
 <script>
-import MainGame from "@/views/MainGame.vue";
+import Rounds from "@/views/Rounds.vue";
+import Lobby from "@/views/Lobby.vue";
 
 export default {
   components: {
-    MainGame,
+    Rounds,
+    Lobby,
   },
   data() {
     return {
       playerNum: 1,
-      maxPlayers: 6,
+      playerNames: [],
+      rounds: 1,
+      addPlayers: false,
+      roundSelect: true,
     };
   },
   methods: {
-    startRoom() {
-      const { playerNum } = this;
-      this.$router.push({ name: "LocalGame", query: { playerNum } });
+    setRounds(rounds) {
+      this.rounds = rounds;
+      this.roundSelect = false;
+      this.addPlayers = true;
+    },
+    setPlayers(playerNames) {
+      this.playerNames = playerNames;
+      this.playerNum = this.playerNames.length;
+      this.startGame();
+    },
+    startGame() {
+      const { playerNum, playerNames, rounds } = this;
+      this.$router.push({ name: "LocalGame", query: { playerNum, playerNames, rounds } });
     },
   },
 };
@@ -22,18 +37,14 @@ export default {
 
 <template>
   <div class="local-room">
-    <div class="empty"></div>
-    <div class="title">Room Settings</div>
+    <div class="empty"></div> <!--what is this for??-->
+    <div class="title">Game Settings</div>
 
-    <div class="prompt">Number of Players</div>
-    <div class="selection-bar">
-      <select v-model="playerNum">
-        <option disabled value="">Select number of players</option>
-        <option v-for="n in maxPlayers" :value="n">{{ n }}</option>
-      </select>
+    <Rounds v-if="roundSelect" @setRounds="setRounds"/>
+    <div v-if="addPlayers">
+      Rounds: {{ rounds }}
+      <Lobby @setPlayers = "setPlayers"/>
     </div>
-
-    <div class="number">{{ playerNum }}</div>
 
     <div class="send-all">
       <div class="back-image">
@@ -41,11 +52,11 @@ export default {
           <img src="@/assets/back.svg" @click="navigate" role="link" />
         </router-link>
       </div>
-      <div class="send-image">
+      <!--<div class="send-image">
         <router-link to="/localGame" custom>
           <img src="@/assets/back.svg" @click="startRoom" role="link" />
         </router-link>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
