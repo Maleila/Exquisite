@@ -3,7 +3,7 @@ import { ref as dbRef, set , onDisconnect, onValue} from 'firebase/database';
 import { useDatabase, useDatabaseObject } from 'vuefire';
 
 export default {
-  data() {
+  mounted() {
     const db = useDatabase();
     const firebaseDB = dbRef(db, "/");
 
@@ -12,6 +12,17 @@ export default {
         const roomCodeData = Object.keys(data);
         this.roomCodes = roomCodeData;
     })
+
+  },
+  data() {
+    // const db = useDatabase();
+    // const firebaseDB = dbRef(db, "/");
+
+    // onValue(firebaseDB, (snapshot) => {
+    //     const data = snapshot.val();
+    //     const roomCodeData = Object.keys(data);
+    //     this.roomCodes = roomCodeData;
+    // })
 
     return {
       playerName: "",
