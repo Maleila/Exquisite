@@ -3,7 +3,7 @@ import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
 import LocalViewStory from "@/views/LocalViewStory.vue";
 import { useDatabase, useDatabaseObject } from "vuefire";
-import { ref as dbRef, set , onDisconnect, onValue} from 'firebase/database';
+import { ref as dbRef, set, onDisconnect, onValue } from "firebase/database";
 
 export default {
   components: {
@@ -20,13 +20,13 @@ export default {
     const currentFB = dbRef(db, this.roomCode + "/gameAttributes/");
 
     onValue(currentFB, (snapshot) => {
-        const data = snapshot.val();
-        const currentPlayerFB = Object.values(data);
-        this.currentPlayer = currentPlayerFB[0];
-        //console.log(currentPlayerFB);
-        console.log("current according to fb " + this.currentPlayer);
-        console.log("this player: " + this.thisPlayer);
-    })
+      const data = snapshot.val();
+      const currentPlayerFB = Object.values(data);
+      this.currentPlayer = currentPlayerFB[0];
+      //console.log(currentPlayerFB);
+      console.log("current according to fb " + this.currentPlayer);
+      console.log("this player: " + this.thisPlayer);
+    });
 
     return {
       current: "",
@@ -59,17 +59,23 @@ export default {
       setTimeout(() => this.transition(), 900);
     },
     transition() {
-      if(this.remote) {
+      if (this.remote) {
         const db = useDatabase();
-        const messageFB = dbRef(db, this.roomCode + "/players/" + this.thisPlayer);
+        const messageFB = dbRef(
+          db,
+          this.roomCode + "/players/" + this.thisPlayer
+        );
         set(messageFB, this.current);
-        if(this.count <= this.playerNum) {
-          const attributesFB = dbRef(db, this.roomCode + "/gameAttributes/current");
+        if (this.count <= this.playerNum) {
+          const attributesFB = dbRef(
+            db,
+            this.roomCode + "/gameAttributes/current"
+          );
           const next = parseInt(this.playerNames.indexOf(this.thisPlayer)) + 1;
           console.log("next index:" + next);
           console.log("next name: " + this.playerNames[next]);
           set(attributesFB, this.playerNames[next]);
-        }  
+        }
       }
       this.count++;
       this.story = this.story.concat(this.previous + " ");
@@ -150,7 +156,7 @@ export default {
     thisPlayer: {
       type: String,
       required: true,
-    }
+    },
   },
 };
 </script>
@@ -158,12 +164,14 @@ export default {
 <template>
   <div class="main-game">
     <h2 v-if="!finished && count <= playerNum">
-      <div v-if="remote"> roomCode={{ roomCode }} </div>
+      <div v-if="remote">roomCode={{ roomCode }}</div>
       <div v-if="!remote || thisPlayer == currentPlayer">Your turn!</div>
-      <div class="title">Player {{ count }} of {{ playerNum }}: {{ playerNames[count-1] }}</div>
+      <div class="title">
+        Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
+      </div>
       <div class="prompt">ENTER to submit</div>
 
-      <br/>
+      <br />
       <div class="story">
         <span class="invisible">
           {{ story }}
@@ -271,5 +279,51 @@ h3 {
 }
 .notransition {
   transition: none !important;
+}
+
+.main-game .story {
+  width: 80%;
+  margin: 0 auto;
+  text-align: left;
+  font-family: Desyre;
+  font-size: 2em;
+}
+
+.main-game .title {
+  /* font-family: Desyre; */
+  font-size: 2em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 200;
+  text-align: left;
+}
+
+.main-game .prompt {
+  color: #484848;
+  font-size: 0.8em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 100;
+  text-align: left;
+}
+
+.main-game .view-story {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.main-game .view-story button {
+  background-color: transparent;
+  /* border: none; */
+  border-radius: 20px;
+  /* font-family: CalorieRegular; */
+  font-family: inherit;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  font-size: 2em;
+  padding: 10px 20px;
 }
 </style>

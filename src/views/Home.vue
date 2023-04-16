@@ -1,13 +1,13 @@
 <script>
-  export default {
-    methods: {
-      startLocal() {
-        const remote = false;
-        const host = false;
-        this.$router.push({ name: "LocalRoom", query: { remote , host} });
-      }
-    }
-  }
+export default {
+  methods: {
+    startLocal() {
+      const remote = false;
+      const host = false;
+      this.$router.push({ name: "LocalRoom", query: { remote, host } });
+    },
+  },
+};
 </script>
 
 <template>
@@ -33,3 +33,45 @@
     </div>
   </div>
 </template>
+
+<style>
+.home h1 {
+  color: #484848;
+  font-family: "CalorieRegular";
+  font-size: 50vh;
+  line-height: 35vh;
+  margin: 0;
+}
+
+.home .title {
+  position: relative;
+  top: -5em;
+}
+
+.home .button {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.home .button button {
+  color: #434343;
+  font-family: inherit;
+  font-size: 1.5rem;
+  font-weight: 100;
+  margin-bottom: 2.2rem;
+  border: none;
+  background: none;
+  letter-spacing: 0.1em;
+  transition: 0.3s;
+}
+
+.home .button button:hover {
+  text-decoration: underline;
+}
+
+.home .empty {
+  height: 17vh;
+}
+</style>

@@ -13,7 +13,6 @@ export default {
     this.focusInput();
   },
   data() {
-    
     const db = useDatabase();
     return {
       current: "",
@@ -25,7 +24,6 @@ export default {
       mutable: true,
       //testFirebaseThinger: useDatabaseObject(testThinger),//testing firebase stuff
     };
-    
   },
   methods: {
     reset() {
@@ -45,25 +43,28 @@ export default {
       this.count++;
       this.story = this.story.concat(this.previous + " ");
       //remove transition for resetting opacity to 1, then re-add after the story is updated
-      var prev = document.getElementById("prev")
-       prev.classList.add("notransition");
-       prev.style.opacity = 0.5;
-       prev.offsetHeight;
-       prev.classList.remove("notransition");
+      var prev = document.getElementById("prev");
+      prev.classList.add("notransition");
+      prev.style.opacity = 0.5;
+      prev.offsetHeight;
+      prev.classList.remove("notransition");
 
-       var editable = document.getElementById("editable")
-       editable.classList.add("notransition");
-       editable.style.opacity = 1;
-       editable.offsetHeight;
-       editable.classList.remove("notransition");
+      var editable = document.getElementById("editable");
+      editable.classList.add("notransition");
+      editable.style.opacity = 1;
+      editable.offsetHeight;
+      editable.classList.remove("notransition");
 
       this.invis = false;
       this.previous = this.current;
       const db = useDatabase();
-      const messageFB = dbRef(db, this.roomCode + "/" + "player" + ((this.count) - 1));
+      const messageFB = dbRef(
+        db,
+        this.roomCode + "/" + "player" + (this.count - 1)
+      );
       // const playerMessageFB = dbRef(db, roomCodeFB/player);
-      set(messageFB , this.previous) //testing firebase stuff
-      
+      set(messageFB, this.previous); //testing firebase stuff
+
       this.current = "";
       // var sample = document.getElementById("editable");
       // sample.style.color = "red";
@@ -116,13 +117,13 @@ export default {
     <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
     <!-- <h1>Firebase says: {{ testFirebaseThinger.$value }}</h1> -->
 
-  <h2 v-if="!finished && count <= playerNum">
-    roomCode={{ roomCode }} / playerNum={{ playerNum }}
-    <div class="title">Player {{ count }} of {{ playerNum }}</div>
-       <div class="prompt">
-         Please write down your sentence, and press ENTER to sumbit
-       </div>
-      
+    <h2 v-if="!finished && count <= playerNum">
+      roomCode={{ roomCode }} / playerNum={{ playerNum }}
+      <div class="title">Player {{ count }} of {{ playerNum }}</div>
+      <div class="prompt">
+        Please write down your sentence, and press ENTER to sumbit
+      </div>
+
       <br />
       <div class="story">
         <span class="invisible">
@@ -138,21 +139,21 @@ export default {
         >
           {{ previous + " " }}
         </span>
-          <contenteditable
-            tag="div"
-            :style="{
-              opacity: invis ? 0.5 : 1,
-            }"
-            :contenteditable="mutable"
-            class="new-text"
-            id="editable"
-            ref="storyInput"
-            :no-nl="true"
-            :no-html="true"
-            v-model="current"
-            @keydown.enter="submitStory"
-          >
-          </contenteditable>
+        <contenteditable
+          tag="div"
+          :style="{
+            opacity: invis ? 0.5 : 1,
+          }"
+          :contenteditable="mutable"
+          class="new-text"
+          id="editable"
+          ref="storyInput"
+          :no-nl="true"
+          :no-html="true"
+          v-model="current"
+          @keydown.enter="submitStory"
+        >
+        </contenteditable>
       </div>
     </h2>
 
@@ -223,5 +224,51 @@ h3 {
 }
 .notransition {
   transition: none !important;
+}
+
+.main-game .story {
+  width: 80%;
+  margin: 0 auto;
+  text-align: left;
+  font-family: Desyre;
+  font-size: 2em;
+}
+
+.main-game .title {
+  /* font-family: Desyre; */
+  font-size: 2em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 200;
+  text-align: left;
+}
+
+.main-game .prompt {
+  color: #484848;
+  font-size: 0.8em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 100;
+  text-align: left;
+}
+
+.main-game .view-story {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.main-game .view-story button {
+  background-color: transparent;
+  /* border: none; */
+  border-radius: 20px;
+  /* font-family: CalorieRegular; */
+  font-family: inherit;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  font-size: 2em;
+  padding: 10px 20px;
 }
 </style>
