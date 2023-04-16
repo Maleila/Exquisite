@@ -64,6 +64,7 @@ const routes = [
       remote: route.query.remote === "true",
       host: route.query.host === "true",
       roomCode: route.query.roomCode,
+      thisPlayer: route.query.thisPlayer,
     }),
   },
 ];

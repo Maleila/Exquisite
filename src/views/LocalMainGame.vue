@@ -129,6 +129,10 @@ export default {
     roomCode: {
       type: String,
       required: true,
+    },
+    thisPlayer: {
+      type: String,
+      required: true,
     }
   },
 };

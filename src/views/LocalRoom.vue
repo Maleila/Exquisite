@@ -19,6 +19,7 @@ export default {
     return {
       playerNum: 1,
       playerNames: [],
+      thisPlayer: "",
       rounds: 1,
       addPlayers: false,
       roundSelect: true,
@@ -48,8 +49,10 @@ export default {
         created: true,
       });
     },
-    setPlayers(playerNames) {
-      this.playerNames = playerNames;
+    setPlayers(playerInfo) {
+      this.playerNames = playerInfo[1];
+      this.thisPlayer = this.playerNames[playerInfo[0]];
+      console.log(this.thisPlayer);
       this.playerNum = this.playerNames.length;
       this.startGame();
     },
@@ -59,8 +62,8 @@ export default {
       this.addPlayers = true;
     },
     startGame() {
-      const { playerNum, playerNames, rounds, remote, host, roomCode } = this;
-      this.$router.push({ name: "LocalGame", query: { playerNum, playerNames, rounds, remote, host, roomCode} });
+      const { playerNum, playerNames, rounds, remote, host, roomCode, thisPlayer } = this;
+      this.$router.push({ name: "LocalGame", query: { playerNum, playerNames, rounds, remote, host, roomCode, thisPlayer} });
     },
   },
   props: {

@@ -17,6 +17,7 @@ export default {
 
     return {
       playerNames: [],
+      playerInfo: [0], //index 0 is index of THIS player in playerNames, index 1 is playerNames -- this array is used to pass both back to parent component
       players: "",
       playerNum: 1,
       name: "",
@@ -36,9 +37,12 @@ export default {
             const db = useDatabase();
             const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
             set(playersFB, "");
+            this.playerInfo[0] = this.players.indexOf(this.name);
+            //console.log(this.playerInfo[0]);
             this.addOk = false;
             this.playerNames = this.players;
         }
+        this.playerInfo[1] = this.playerNames;
         this.name = "";
     }
   },
@@ -75,7 +79,7 @@ export default {
     <br>
     <button v-if= "addOk" @click="addPlayer">Add</button>
     <br>
-    <button @click="$emit('setPlayers', playerNames)">Start</button>
+    <button @click="$emit('setPlayers', playerInfo)">Start</button>
 </template>
 
 <style>
