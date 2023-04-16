@@ -2,8 +2,8 @@
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
 import LocalViewStory from "@/views/LocalViewStory.vue";
-import { ref as dbRef, set } from "firebase/database";
 import { useDatabase, useDatabaseObject } from "vuefire";
+import { ref as dbRef, set , onDisconnect, onValue} from 'firebase/database';
 
 export default {
   components: {
@@ -13,11 +13,24 @@ export default {
   mounted() {
     //called when a component is added (ex when the page loads)
     this.focusInput();
+    console.log("players: " + this.playerNames);
   },
   data() {
     const db = useDatabase();
+    const currentFB = dbRef(db, this.roomCode + "/gameAttributes/");
+
+    onValue(currentFB, (snapshot) => {
+        const data = snapshot.val();
+        const currentPlayerFB = Object.values(data);
+        this.currentPlayer = currentPlayerFB[0];
+        //console.log(currentPlayerFB);
+        console.log("current according to fb " + this.currentPlayer);
+        console.log("this player: " + this.thisPlayer);
+    })
+
     return {
       current: "",
+      currentPlayer: "",
       count: 1,
       finished: false,
       story: "",
@@ -46,6 +59,18 @@ export default {
       setTimeout(() => this.transition(), 900);
     },
     transition() {
+      if(this.remote) {
+        const db = useDatabase();
+        const messageFB = dbRef(db, this.roomCode + "/players/" + this.thisPlayer);
+        set(messageFB, this.current);
+        if(this.count <= this.playerNum) {
+          const attributesFB = dbRef(db, this.roomCode + "/gameAttributes/current");
+          const next = parseInt(this.playerNames.indexOf(this.thisPlayer)) + 1;
+          console.log("next index:" + next);
+          console.log("next name: " + this.playerNames[next]);
+          set(attributesFB, this.playerNames[next]);
+        }  
+      }
       this.count++;
       this.story = this.story.concat(this.previous + " ");
       //remove transition for resetting opacity to 1, then re-add after the story is updated
@@ -65,14 +90,6 @@ export default {
       this.previous = this.current;
       this.current = "";
 
-      if(this.remote) {
-        const db = useDatabase();
-        const index = (parseInt(this.count) - 2);
-        console.log(index);
-        const messageFB = dbRef(db, this.roomCode + "/players/" + this.playerNames[index]);
-        set(messageFB , this.previous)
-      }
-      
       // var sample = document.getElementById("editable");
       // sample.style.color = "red";
       // sample.style.fontFamily = "Impact,Charcoal,sans-serif";
@@ -142,10 +159,11 @@ export default {
   <div class="main-game">
     <h2 v-if="!finished && count <= playerNum">
       <div v-if="remote"> roomCode={{ roomCode }} </div>
+      <div v-if="!remote || thisPlayer == currentPlayer">Your turn!</div>
       <div class="title">Player {{ count }} of {{ playerNum }}: {{ playerNames[count-1] }}</div>
       <div class="prompt">ENTER to submit</div>
 
-      <br />
+      <br/>
       <div class="story">
         <span class="invisible">
           {{ story }}

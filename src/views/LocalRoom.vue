@@ -12,8 +12,8 @@ export default {
     JoinRoom,
   },
   mounted() {
-    console.log("remote:" + this.remote);
-    console.log("host: " + this.host);
+    // console.log("remote: " + this.remote);
+    // console.log("host: " + this.host);
   },
   data() {
     return {
@@ -29,8 +29,8 @@ export default {
   },
   methods: {
     setRounds(rounds) {
-      console.log("remote:" + this.remote);
-      console.log("host: " + this.host);
+      // console.log("remote:" + this.remote);
+      // console.log("host: " + this.host);
       this.rounds = rounds;
       this.roundSelect = false;
       this.addPlayers = true;
@@ -51,6 +51,7 @@ export default {
     },
     setPlayers(playerInfo) {
       this.playerNames = playerInfo[1];
+      console.log("player names: " + this.playerNames);
       this.thisPlayer = this.playerNames[playerInfo[0]];
       console.log(this.thisPlayer);
       this.playerNum = this.playerNames.length;
@@ -62,6 +63,14 @@ export default {
       this.addPlayers = true;
     },
     startGame() {
+      if(this.remote) {
+        const db = useDatabase();
+        
+        const attributesFB = dbRef(db, this.roomCode + "/gameAttributes/");
+        set(attributesFB, {
+          current: this.playerNames[0],
+        });
+      }
       const { playerNum, playerNames, rounds, remote, host, roomCode, thisPlayer } = this;
       this.$router.push({ name: "LocalGame", query: { playerNum, playerNames, rounds, remote, host, roomCode, thisPlayer} });
     },

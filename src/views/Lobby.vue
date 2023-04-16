@@ -3,17 +3,28 @@ import { ref as dbRef, set , onDisconnect, onValue} from 'firebase/database';
 import { useDatabase, useDatabaseObject } from 'vuefire';
 
 export default {
+    mounted() {
+        const db = useDatabase();
+        const playersfb = dbRef(db, this.roomCode + "/players");
+
+        onValue(playersfb, (snapshot) => {
+            const data = snapshot.val();
+            const playersData = Object.keys(data);
+            this.players = playersData;
+            console.log(this.players);
+        })
+    },
   data() {
-    const db = useDatabase();
-    const playersfb = dbRef(db, this.roomCode + "/players");
+    // const db = useDatabase();
+    // const playersfb = dbRef(db, this.roomCode + "/players");
 
-    onValue(playersfb, (snapshot) => {
-        const data = snapshot.val();
-        const playersData = Object.keys(data);
-        this.players = playersData;
-    })
+    // onValue(playersfb, (snapshot) => {
+    //     const data = snapshot.val();
+    //     const playersData = Object.keys(data);
+    //     this.players = playersData;
+    // })
 
-    const firebaseDB = dbRef(db, "/");
+    //const firebaseDB = dbRef(db, "/");
 
     return {
       playerNames: [],
@@ -33,17 +44,20 @@ export default {
                 this.playerNames[this.playerNum-1] = this.name;
             }
             this.playerNum++;
+            this.playerInfo[1] = this.playerNames;
         } else {
             const db = useDatabase();
             const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
             set(playersFB, "");
             this.playerInfo[0] = this.players.indexOf(this.name);
-            //console.log(this.playerInfo[0]);
             this.addOk = false;
-            this.playerNames = this.players;
         }
-        this.playerInfo[1] = this.playerNames;
         this.name = "";
+    },
+    finalize() {
+        if(this.remote) {
+            this.playerInfo[1] = this.players;
+        }
     }
   },
   props: {
@@ -79,7 +93,7 @@ export default {
     <br>
     <button v-if= "addOk" @click="addPlayer">Add</button>
     <br>
-    <button @click="$emit('setPlayers', playerInfo)">Start</button>
+    <button @click="finalize(), $emit('setPlayers', playerInfo)">Start</button>
 </template>
 
 <style>
