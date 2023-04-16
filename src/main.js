@@ -7,7 +7,6 @@ import "../public/css/home.css";
 import "../public/css/mainGame.css";
 import "../public/css/room.css";
 import "../public/css/gamePlay.css";
-import "../public/css/about.css";
 import "../public/css/localRoom.css";
 
 import { initializeApp } from "firebase/app";
