@@ -50,13 +50,6 @@
   text-align: center;
 }
 
-/* .room .back-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 10px;
-  } */
-
 .game-play .back img {
   width: 3em;
   height: auto;

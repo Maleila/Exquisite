@@ -1,8 +1,3 @@
-<script setup>
-import Exquisite from "./views/Exquisite.vue";
-import HelloWorld from "./views/Exquisite.vue";
-</script>
-
 <template>
   <br />
   <router-view v-slot="{ Component }">
@@ -13,10 +8,10 @@ import HelloWorld from "./views/Exquisite.vue";
 </template>
 
 <style>
-   body {
-     background-image: url('./assets/clean paper.jpeg');
-     background-repeat: no-repeat;
-     background-position: center;
-     background-size: cover;
-   }
- </style>
+body {
+  background-image: url("./assets/clean paper.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+</style>

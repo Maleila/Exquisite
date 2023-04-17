@@ -115,7 +115,9 @@ export default {
 <template>
   <div class="local-room">
     <div class="empty"></div>
-    <!--what is this for??-->
+    <!--what is this for?? 
+        Reply from Eric: a very dumb but easy way to format the layout 
+        (basically add an empty box on screen) -->
 
     <JoinRoom
       v-if="remote && !host && enterCode"
@@ -124,11 +126,12 @@ export default {
 
     <div v-if="(remote && host) || !remote" class="settings">
       <div class="title">Game Settings</div>
+
       <Rounds v-if="roundSelect" @setRounds="setRounds" />
     </div>
 
     <div v-if="addPlayers">
-      Rounds: {{ rounds }}
+      <div class="prompt">Rounds: {{ rounds }}</div>
       <div v-if="remote">Room Code: {{ roomCode }}</div>
       <Lobby
         :roomCode="roomCode"
@@ -138,17 +141,10 @@ export default {
       />
     </div>
 
-    <div class="send-all">
-      <div class="back-image">
-        <router-link to="/" custom v-slot="{ navigate }">
-          <img src="@/assets/back.svg" @click="navigate" role="link" />
-        </router-link>
-      </div>
-      <!--<div class="send-image">
-        <router-link to="/localGame" custom>
-          <img src="@/assets/back.svg" @click="startRoom" role="link" />
-        </router-link>
-      </div>-->
+    <div class="back">
+      <router-link to="/" custom v-slot="{ navigate }">
+        <button @click="navigate" role="link">Back</button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -163,83 +159,18 @@ export default {
 }
 
 .local-room .title {
-  font-size: 3em;
+  font-size: 6vh;
   width: 80%;
   margin: 0 auto;
   font-weight: 200;
   text-align: center;
 }
 
-.local-room .prompt {
-  color: #484848;
-  font-size: 1.2em;
-  width: 80%;
-  margin: 0 auto;
-  font-weight: 100;
-  text-align: center;
-}
-
-.local-room .selection-bar {
-  color: #484848;
-  font-size: 1.2em;
-  width: 80%;
-  margin: 0 auto;
-  font-weight: 100;
-  text-align: center;
-}
-
-.local-room .number {
-  color: #434343;
-  /* font-family: "CalorieRegular"; */
-  font-family: Desyre;
-  font-size: 15em;
-  font-weight: 900;
-  /* line-height: 0.4em; */
-}
-
 .local-room .empty {
-  height: 10vh;
+  height: 15 vh;
 }
 
-.local-room .send-all {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 1rem;
-  align-items: center;
-}
-
-.local-room .back-image img {
-  width: 30px;
-  height: auto;
-}
-
-.local-room .send-image img {
-  width: 30px;
-  height: auto;
-  transform: rotate(180deg);
-}
-
-.local-room .button {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.local-room button {
-  color: #434343;
-  font-family: inherit;
-  font-size: 1.5rem;
-  font-weight: 100;
-  margin-bottom: 2.2rem;
-  border: none;
-  background: none;
-  letter-spacing: 0.1em;
-  transition: 0.3s;
-}
-
-.local-room button:hover {
-  text-decoration: underline;
+.local-room .prompt {
+  font-size: 2vh;
 }
 </style>

@@ -1,3 +1,13 @@
+<script>
+import InkButton from "@/views/InkButton.vue";
+
+export default {
+  components: {
+    InkButton,
+  },
+};
+</script>
+
 <template>
   <div class="about">
     <div class="back">
@@ -31,11 +41,8 @@
       collaboration in Exquisite!
     </div>
     <div class="empty"></div>
-    <!-- <div class="back">
-      <router-link to="/" custom v-slot="{ navigate }">
-        <img src="@/assets/close.svg" @click="navigate" role="link" />
-      </router-link>
-    </div> -->
+
+    <InkButton />
     <!-- <div class="back">
       <router-link to="/" custom v-slot="{ navigate }">
         <button @click="navigate" role="link">Back</button>
