@@ -58,12 +58,12 @@ export default {
 .home .button button {
   color: #434343;
   font-family: inherit;
-  font-size: 1.5rem;
+  font-size: 2.5vh;
   font-weight: 100;
-  margin-bottom: 2.2rem;
+  margin-bottom: 3.5vh;
   border: none;
   background: none;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.3vh;
   transition: 0.3s;
 }
 

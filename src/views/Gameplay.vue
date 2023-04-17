@@ -18,7 +18,7 @@
       </p>
     </div>
     <div class="empty"></div>
-    <div class="close-image">
+    <div class="back">
       <router-link to="/" custom v-slot="{ navigate }">
         <img src="@/assets/close.svg" @click="navigate" role="link" />
       </router-link>
@@ -57,7 +57,7 @@
     padding: 10px;
   } */
 
-.game-play .close-image img {
+.game-play .back img {
   width: 3em;
   height: auto;
 }
