@@ -15,10 +15,12 @@
       The original game relied on a template (i.e, "The adjective noun adverb
       verb the adjective noun"), but the game can also be played by folding down
       the paper after each turn so that a given contributer sees only the
-      previous sentence. Though the game began as a diversion, the surrealists
-      also saw it as a way to unlock creativity and construct as a group that
-      which was impossible to form individually. Years later, surrealist Andre
-      Breton reflected that
+      previous sentence.
+      <br />
+      <br />
+      Though the game began as a diversion, the surrealists also saw it as a way
+      to unlock creativity and construct as a group that which was impossible to
+      form individually. Years later, surrealist Andre Breton reflected that
       <b
         >"Finally, with the Exquisite Corpse we had at our command an infallible
         way of holding the critical intellect in abeyance, and of fully
