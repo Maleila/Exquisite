@@ -14,8 +14,7 @@ export default {
     //called when a component is added (ex when the page loads)
     this.focusInput();
     console.log("players: " + this.playerNames);
-  },
-  data() {
+    
     const db = useDatabase();
     const currentFB = dbRef(db, this.roomCode + "/gameAttributes/");
 
@@ -27,6 +26,19 @@ export default {
       console.log("current according to fb " + this.currentPlayer);
       console.log("this player: " + this.thisPlayer);
     });
+  },
+  data() {
+    // const db = useDatabase();
+    // const currentFB = dbRef(db, this.roomCode + "/gameAttributes/");
+
+    // onValue(currentFB, (snapshot) => {
+    //   const data = snapshot.val();
+    //   const currentPlayerFB = Object.values(data);
+    //   this.currentPlayer = currentPlayerFB[0];
+    //   //console.log(currentPlayerFB);
+    //   console.log("current according to fb " + this.currentPlayer);
+    //   console.log("this player: " + this.thisPlayer);
+    // });
 
     return {
       current: "",
@@ -166,8 +178,11 @@ export default {
     <h2 v-if="!finished && count <= playerNum">
       <div v-if="remote">roomCode={{ roomCode }}</div>
       <div v-if="!remote || thisPlayer == currentPlayer">Your turn!</div>
-      <div class="title">
+      <div v-if="!remote" class="title">
         Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
+      </div>
+      <div v-if="remote" class="title">
+        Player {{ count }} of {{ playerNum }}: {{ currentPlayer }}
       </div>
       <div class="prompt">ENTER to submit</div>
 
