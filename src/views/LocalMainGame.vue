@@ -71,7 +71,7 @@ export default {
             db,
             this.roomCode + "/gameAttributes/current"
           );
-          const next = parseInt(this.playerNames.indexOf(this.thisPlayer)) + 1;
+          const next = parseInt(this.playerNames.indexOf(this.currentPlayer)) + 1;
           console.log("next index:" + next);
           console.log("next name: " + this.playerNames[next]);
           set(attributesFB, this.playerNames[next]);

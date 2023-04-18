@@ -98,6 +98,7 @@ export default {
         this.started = start[1];
         console.log(this.started);
         if(this.started == true) {
+          this.finalizePlayers();
           this.onStart();
         }
       });
