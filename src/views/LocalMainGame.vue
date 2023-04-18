@@ -16,7 +16,7 @@ export default {
     console.log("players: " + this.playerNames);
     
     const db = useDatabase();
-    const currentFB = dbRef(db, this.roomCode + "/gameAttributes/");
+    const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
 
     onValue(currentFB, (snapshot) => {
       const data = snapshot.val();
@@ -28,18 +28,6 @@ export default {
     });
   },
   data() {
-    // const db = useDatabase();
-    // const currentFB = dbRef(db, this.roomCode + "/gameAttributes/");
-
-    // onValue(currentFB, (snapshot) => {
-    //   const data = snapshot.val();
-    //   const currentPlayerFB = Object.values(data);
-    //   this.currentPlayer = currentPlayerFB[0];
-    //   //console.log(currentPlayerFB);
-    //   console.log("current according to fb " + this.currentPlayer);
-    //   console.log("this player: " + this.thisPlayer);
-    // });
-
     return {
       current: "",
       currentPlayer: "",
@@ -78,7 +66,7 @@ export default {
           this.roomCode + "/players/" + this.thisPlayer
         );
         set(messageFB, this.current);
-        if (this.count <= this.playerNum) {
+        if (this.count < this.playerNum) {
           const attributesFB = dbRef(
             db,
             this.roomCode + "/gameAttributes/current"

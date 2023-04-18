@@ -15,20 +15,8 @@ export default {
     });
   },
   data() {
-    // const db = useDatabase();
-    // const playersfb = dbRef(db, this.roomCode + "/players");
-
-    // onValue(playersfb, (snapshot) => {
-    //     const data = snapshot.val();
-    //     const playersData = Object.keys(data);
-    //     this.players = playersData;
-    // })
-
-    //const firebaseDB = dbRef(db, "/");
-
     return {
       playerNames: [],
-      playerInfo: [0], //index 0 is index of THIS player in playerNames, index 1 is playerNames -- this array is used to pass both back to parent component
       players: "",
       playerNum: 1,
       name: "",
@@ -44,20 +32,15 @@ export default {
           this.playerNames[this.playerNum - 1] = this.name;
         }
         this.playerNum++;
-        this.playerInfo[1] = this.playerNames;
       } else {
+        console.log("adding player...")
         const db = useDatabase();
         const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
         set(playersFB, "");
-        this.playerInfo[0] = this.players.indexOf(this.name);
+        this.playerNames[0] = this.name;
         this.addOk = false;
       }
       this.name = "";
-    },
-    finalize() {
-      if (this.remote) {
-        this.playerInfo[1] = this.players;
-      }
     },
   },
   props: {
@@ -89,9 +72,12 @@ export default {
 
   <input v-model="name" />
   <br />
-  <button v-if="addOk" @click="addPlayer">Add</button>
+  <!--If local game, Add button only adds player-->
+  <button v-if="addOk && !remote" @click="addPlayer">Add</button>
+  <!--If remote game, Add button adds player and sends player info back to parent component-->
+  <button v-if="addOk && remote" @click="addPlayer(), $emit('setPlayers', playerNames)">AddRemote</button>
   <br />
-  <button @click="finalize(), $emit('setPlayers', playerInfo)">Start</button>
+  <button v-if="!remote" @click="$emit('setPlayers', playerNames)">Start</button>
 </template>
 
 <style>

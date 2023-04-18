@@ -12,18 +12,18 @@ export default {
     JoinRoom,
   },
   mounted() {
-    // console.log("remote: " + this.remote);
-    // console.log("host: " + this.host);
   },
   data() {
     return {
       playerNum: 1,
       playerNames: [],
+      playersFB: [],
       thisPlayer: "",
       rounds: 1,
       addPlayers: false,
       roundSelect: true,
       enterCode: true,
+      started: false,
       roomCode: "",
     };
   },
@@ -53,29 +53,74 @@ export default {
       set(roomCodeFB, {
         created: true,
       });
+
+      const attributesFB = dbRef(db, this.roomCode + "/gameAttributes/current");
+      set(attributesFB, "");
+
+      const startedFB = dbRef(db, this.roomCode + "/gameAttributes/started");
+      set(startedFB, false);
     },
-    setPlayers(playerInfo) {
-      this.playerNames = playerInfo[1];
+    setPlayers(playerNames) {
+      const db = useDatabase(); //only for remote - add if
+      const playersfb = dbRef(db, this.roomCode + "/players");
+
+      onValue(playersfb, (snapshot) => {
+        const data = snapshot.val();
+        const playersData = Object.keys(data);
+        this.playersFB = playersData;
+      });
+
+      this.thisPlayer = playerNames[0];
+      console.log("this player: " + this.thisPlayer);
+      if(!this.remote) {
+        this.playerNames = playerNames;
+      } else {
+        this.playerNames = this.playersFB;
+      }
       console.log("player names: " + this.playerNames);
-      this.thisPlayer = this.playerNames[playerInfo[0]];
-      console.log(this.thisPlayer);
       this.playerNum = this.playerNames.length;
-      this.startGame();
+      if(!this.remote) {
+        this.startGame();
+      }
     },
     enterRoomCode(roomCode) {
       this.roomCode = roomCode;
       this.enterCode = false;
       this.addPlayers = true;
+
+      const db = useDatabase();
+      const startedFB = dbRef(db, this.roomCode + "/gameAttributes");
+      
+      onValue(startedFB, (snapshot) => {
+        console.log("onValue for start called");
+        const data = snapshot.val();
+        const start = Object.values(data);
+        this.started = start[1];
+        console.log(this.started);
+        if(this.started == true) {
+          this.onStart();
+        }
+      });
     },
-    startGame() {
+    finalizePlayers() {
+      this.playerNames = this.playersFB;
+      this.playerNum = this.playerNames.length;
+      console.log("final players: " + this.playerNames)
+    },
+    startGame() { //if you're the host or playing locally
       if (this.remote) {
+        this.finalizePlayers();
         const db = useDatabase();
 
-        const attributesFB = dbRef(db, this.roomCode + "/gameAttributes/");
-        set(attributesFB, {
-          current: this.playerNames[0],
-        });
+        const attributesFB = dbRef(db, this.roomCode + "/gameAttributes/current");
+        set(attributesFB, this.playerNames[0]);
+
+        const startedFB = dbRef(db, this.roomCode + "/gameAttributes/started");
+        set(startedFB, true);
       }
+      this.onStart();
+    },
+    onStart(){
       const {
         playerNum,
         playerNames,
@@ -115,9 +160,6 @@ export default {
 <template>
   <div class="local-room">
     <div class="empty"></div>
-    <!--what is this for?? 
-        Reply from Eric: a very dumb but easy way to format the layout 
-        (basically add an empty box on screen) -->
 
     <JoinRoom
       v-if="remote && !host && enterCode"
@@ -140,6 +182,7 @@ export default {
         @setPlayers="setPlayers"
       />
     </div>
+    <button v-if="host" @click="startGame()">Start</button>
 
     <div class="back">
       <router-link to="/" custom v-slot="{ navigate }">
