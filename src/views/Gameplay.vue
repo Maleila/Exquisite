@@ -1,84 +1,63 @@
+<script>
+import InkButton from "@/views/InkButton.vue";
+
+export default {
+  components: {
+    InkButton,
+  },
+};
+</script>
+
 <template>
-  <div class="game-play">
-    <div class="empty"></div>
-    <h1>Gameplay</h1>
+  <div class="gameplay">
+    <div class="title">Gameplay</div>
     <div class="empty"></div>
     <div class="text">
-      <p style="font-size: 2em; font-family: Desyre">
-        <b>To begin a local game,</b> assemble a group of friends around a table
-        and choose the corresponding number of players. After the first player
-        hits submit, pass the laptop to the next player. Make sure not to let
-        other players view the screen until their turn!
-        <br />
-        <br />
-        <b>To begin a remote game,</b> click "Remote" to generate a room code
-        which you can share with friends. After everyone has joined, the game
-        can begin with each player on their own device. (I'll edit this one
-        later since we don't know the details yet).
-      </p>
+      <b>To begin a local game,</b> assemble a group of friends around a table
+      and choose the corresponding number of players. After the first player
+      hits submit, pass the laptop to the next player. Make sure not to let
+      other players view the screen until their turn!
+      <br />
+      <br />
+      <b>To begin a remote game,</b> click "Remote" to generate a room code
+      which you can share with friends. After everyone has joined, the game can
+      begin with each player on their own device. (I'll edit this one later
+      since we don't know the details yet).
     </div>
     <div class="empty"></div>
-    <div class="back">
-      <router-link to="/" custom v-slot="{ navigate }">
-        <img src="@/assets/close.svg" @click="navigate" role="link" />
-      </router-link>
-    </div>
+    <div class="back"><InkButton /></div>
   </div>
 </template>
 
 <style>
-.game-play h1 {
-  color: #434343;
-
-  font-size: 4em;
-  font-weight: 900;
-  line-height: 0.4em;
-}
-
-.game-play .text p {
-  color: #434343;
-  font-size: 1.2em;
-  font-weight: 200;
+.gameplay .title {
+  color: #484848;
+  /* font-family: Desyre; */
+  font-family: "CalorieRegular";
+  font-size: 8em;
   width: 80%;
-  text-align: center;
-  margin: auto;
-}
-
-.game-play .text {
-  width: 100%;
   margin: 0 auto;
-  text-align: center;
+  font-weight: 200;
+  text-align: left;
+  line-height: 20vh;
 }
-
-.game-play .back img {
-  width: 3em;
-  height: auto;
+.gameplay .text {
+  color: #484848;
+  /* font-family: Desyre; */
+  /* font-family: "CalorieRegular"; */
+  font-size: 1.2em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 200;
+  text-align: left;
+  line-height: 1.7em;
 }
-
-.game-play .button {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: space-between;
+.gameplay .empty {
+  height: 1vh;
 }
-
-.game-play button {
-  color: #434343;
-  font-family: inherit;
-  font-size: 1.5rem;
-  font-weight: 100;
-  margin-bottom: 2.2rem;
-  border: none;
-  background: none;
-  letter-spacing: 0.1em;
-  transition: 0.3s;
-}
-
-.game-play button:hover {
-  text-decoration: underline;
-}
-
-.game-play .empty {
-  height: 3em;
+.gameplay .back {
+  transform: scale(0.8);
+  width: 30%;
+  float: right;
 }
 </style>

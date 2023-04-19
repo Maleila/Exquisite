@@ -10,7 +10,6 @@ export default {
 
 <template>
   <div class="about">
-    <div class="empty"></div>
     <div class="title">About</div>
     <div class="empty"></div>
     <div class="text">
@@ -47,35 +46,33 @@ export default {
 
 <style>
 .about .title {
-  font-family: Desyre;
-  /* font-family: "CalorieRegular"; */
-  font-size: 7vh;
+  color: #484848;
+  /* font-family: Desyre; */
+  font-family: "CalorieRegular";
+  font-size: 8em;
   width: 80%;
   margin: 0 auto;
   font-weight: 200;
   text-align: left;
+  line-height: 20vh;
 }
 .about .text {
+  color: #484848;
   /* font-family: Desyre; */
   /* font-family: "CalorieRegular"; */
-  font-size: 2.5vh;
+  font-size: 1.2em;
   width: 80%;
   margin: 0 auto;
   font-weight: 200;
   text-align: left;
-  line-height: 4.5vh;
+  line-height: 1.7em;
 }
 .about .empty {
-  height: 3vh;
+  height: 0.5vh;
 }
 .about .back {
-  /* font-family: Desyre; */
-  /* font-family: "CalorieRegular"; */
-  font-size: 2vh;
-  width: 95%;
-  margin: 0 auto;
-  font-weight: 200;
-  text-align: right;
-  line-height: 4.5vh;
+  transform: scale(0.8);
+  width: 30%;
+  float: right;
 }
 </style>
