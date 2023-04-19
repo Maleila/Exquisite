@@ -1,5 +1,5 @@
 <script>
-import { ref as dbRef, set, onDisconnect, onValue } from "firebase/database";
+import { ref as dbRef, set, onDisconnect, onValue ,update} from "firebase/database";
 import { useDatabase, useDatabaseObject } from "vuefire";
 
 export default {
@@ -13,8 +13,18 @@ export default {
       this.players = playersData;
       console.log(this.players);
     });
+
+    const playerNumfb = dbRef(db, this.roomCode + "/gameAttributes/count");
+
+    onValue(playerNumfb, (snapshot) => {
+      const data = snapshot.val();
+      this.playerNum = data;
+    });
+
   },
   data() {
+    
+    
     return {
       playerNames: [],
       players: "",
@@ -25,18 +35,20 @@ export default {
   },
   methods: {
     addPlayer() {
+      this.playerNum++;
       if (!this.remote) {
         if (this.playerNum == 1) {
           this.playerNames[0] = this.name;
         } else {
           this.playerNames[this.playerNum - 1] = this.name;
         }
-        this.playerNum++;
       } else {
         console.log("adding player...")
         const db = useDatabase();
         const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
         set(playersFB, "");
+        const playerNumFB = dbRef(db, this.roomCode + "/gameAttributes/count");
+        set(playerNumFB, this.playerNum)
         this.playerNames[0] = this.name;
         this.addOk = false;
       }

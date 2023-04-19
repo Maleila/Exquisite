@@ -166,11 +166,11 @@ export default {
     <h2 v-if="!finished && count <= playerNum">
       <div v-if="remote">roomCode={{ roomCode }}</div>
       <div v-if="!remote || thisPlayer == currentPlayer">Your turn!</div>
-      <div v-if="!remote" class="title">
+      <!-- <div v-if="!remote" class="title">
         Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
-      </div>
+      </div> -->
       <div v-if="remote" class="title">
-        Player {{ count }} of {{ playerNum }}: {{ currentPlayer }}
+        Player : {{ currentPlayer }}
       </div>
       <div class="prompt">ENTER to submit</div>
 
@@ -205,6 +205,9 @@ export default {
         >
         </contenteditable>
       </div>
+
+      <!-- </div> -->
+      
     </h2>
 
     <div class="view-story">
