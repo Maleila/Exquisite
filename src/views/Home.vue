@@ -43,11 +43,6 @@ export default {
   margin: 0;
 }
 
-.home .title {
-  position: relative;
-  top: -5em;
-}
-
 .home .button {
   display: flex;
   align-items: center;
