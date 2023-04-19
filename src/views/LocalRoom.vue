@@ -29,8 +29,6 @@ export default {
   },
   methods: {
     setRounds(rounds) {
-      // console.log("remote:" + this.remote);
-      // console.log("host: " + this.host);
       this.rounds = rounds;
       this.roundSelect = false;
       this.addPlayers = true;
@@ -92,11 +90,9 @@ export default {
       const startedFB = dbRef(db, this.roomCode + "/gameAttributes");
       
       onValue(startedFB, (snapshot) => {
-        console.log("onValue for start called");
         const data = snapshot.val();
         const start = Object.values(data);
         this.started = start[1];
-        console.log(this.started);
         if(this.started == true) {
           this.finalizePlayers();
           this.onStart();

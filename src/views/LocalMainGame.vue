@@ -13,7 +13,6 @@ export default {
   mounted() {
     //called when a component is added (ex when the page loads)
     this.focusInput();
-    console.log("players: " + this.playerNames);
     
     const db = useDatabase();
     const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
@@ -22,8 +21,7 @@ export default {
       const data = snapshot.val();
       const currentPlayerFB = Object.values(data);
       this.currentPlayer = currentPlayerFB[0];
-      this.zcount = currentPlayerFB[-1];
-      //console.log(currentPlayerFB);
+      this.zcount = currentPlayerFB[2];
       console.log("current according to fb " + this.currentPlayer);
       console.log("this player: " + this.thisPlayer);
     });
@@ -45,7 +43,7 @@ export default {
       previous: "",
       invis: false,
       mutable: true,
-      zcount: "",
+      zcount: 0,
     };
   },
   methods: {
@@ -75,7 +73,10 @@ export default {
           this.roomCode + "/players/" + this.thisPlayer
         );
         set(messageFB, this.current);
-        if (this.count < this.playerNum) {
+        const zcountFB = dbRef(db, this.roomCode + "/gameAttributes/zcount");
+        this.zcount++;
+        set(zcountFB, this.zcount);
+        if (this.zcount < this.playerNum) {
           const attributesFB = dbRef(
             db,
             this.roomCode + "/gameAttributes/current"
@@ -88,6 +89,7 @@ export default {
       }
       this.count++;
       this.story = this.story.concat(this.previous + " ");
+
       //remove transition for resetting opacity to 1, then re-add after the story is updated
       var prev = document.getElementById("prev");
       prev.classList.add("notransition");
@@ -172,12 +174,12 @@ export default {
 
 <template>
   <div class="main-game">
-    <h2 v-if="!finished && count <= playerNum">
+    <h2 v-if="!finished && count <= playerNum && zcount < playerNum">
       <div v-if="remote">roomCode={{ roomCode }}</div>
       <div v-if="!remote || thisPlayer == currentPlayer">Your turn!</div>
-      <!-- <div v-if="!remote" class="title">
+      <div v-if="!remote" class="title">
         Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
-      </div> -->
+      </div>
       <!-- <div v-if="remote" class="title">
         Player : {{ currentPlayer }}
       </div> -->
@@ -187,7 +189,7 @@ export default {
       </div>
 
       <div v-if="!remote || thisPlayer == currentPlayer">
-      
+
       <div class="prompt">ENTER to submit</div>
 
       <br />
@@ -222,15 +224,12 @@ export default {
         </contenteditable>
       </div>
       </div>
-
-      <!-- </div> -->
-      
     </h2>
 
     <div class="view-story">
       <router-link to="/localviewstory" custom>
         <button
-          v-if="count > zcount"
+          v-if="count > playerNum && !finished || remote && zcount >= playerNum"
           @click="passStory"
           role="link"
         >

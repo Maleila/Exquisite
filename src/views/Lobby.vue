@@ -16,15 +16,13 @@ export default {
 
     const playerNumfb = dbRef(db, this.roomCode + "/gameAttributes/zcount");
 
-    onValue(playerNumfb, (snapshot) => {
-      const data = snapshot.val();
-      this.playerNum = data;
-    });
+    // onValue(playerNumfb, (snapshot) => {
+    //   const data = snapshot.val();
+    //   this.playerNum = data;
+    // });
 
   },
   data() {
-    
-    
     return {
       playerNames: [],
       players: "",
@@ -37,10 +35,10 @@ export default {
     addPlayer() {
       this.playerNum++;
       if (!this.remote) {
-        if (this.playerNum == 1) {
+        if (this.playerNum == 2) {
           this.playerNames[0] = this.name;
         } else {
-          this.playerNames[this.playerNum - 1] = this.name;
+          this.playerNames[this.playerNum - 2] = this.name;
         }
       } else {
         console.log("adding player...")
@@ -48,7 +46,7 @@ export default {
         const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
         set(playersFB, "");
         const playerNumFB = dbRef(db, this.roomCode + "/gameAttributes/zcount");
-        set(playerNumFB, this.playerNum)
+        set(playerNumFB, 0)
         this.playerNames[0] = this.name;
         this.addOk = false;
       }
