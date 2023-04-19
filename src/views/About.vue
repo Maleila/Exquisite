@@ -10,11 +10,6 @@ export default {
 
 <template>
   <div class="about">
-    <div class="back">
-      <router-link to="/" custom v-slot="{ navigate }">
-        <img src="@/assets/close.svg" @click="navigate" role="link" />
-      </router-link>
-    </div>
     <div class="empty"></div>
     <div class="title">About</div>
     <div class="empty"></div>
@@ -41,8 +36,7 @@ export default {
       collaboration in Exquisite!
     </div>
     <div class="empty"></div>
-
-    <InkButton />
+    <div class="back"><InkButton /></div>
     <!-- <div class="back">
       <router-link to="/" custom v-slot="{ navigate }">
         <button @click="navigate" role="link">Back</button>
@@ -55,7 +49,7 @@ export default {
 .about .title {
   font-family: Desyre;
   /* font-family: "CalorieRegular"; */
-  font-size: 6vh;
+  font-size: 7vh;
   width: 80%;
   margin: 0 auto;
   font-weight: 200;
@@ -64,7 +58,7 @@ export default {
 .about .text {
   /* font-family: Desyre; */
   /* font-family: "CalorieRegular"; */
-  font-size: 2vh;
+  font-size: 2.5vh;
   width: 80%;
   margin: 0 auto;
   font-weight: 200;
@@ -72,7 +66,7 @@ export default {
   line-height: 4.5vh;
 }
 .about .empty {
-  height: 3.5vh;
+  height: 3vh;
 }
 .about .back {
   /* font-family: Desyre; */
@@ -83,9 +77,5 @@ export default {
   font-weight: 200;
   text-align: right;
   line-height: 4.5vh;
-}
-.about .back img {
-  width: 5vh;
-  height: auto;
 }
 </style>
