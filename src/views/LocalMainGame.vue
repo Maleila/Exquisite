@@ -22,10 +22,18 @@ export default {
       const data = snapshot.val();
       const currentPlayerFB = Object.values(data);
       this.currentPlayer = currentPlayerFB[0];
+      this.zcount = currentPlayerFB[-1];
       //console.log(currentPlayerFB);
       console.log("current according to fb " + this.currentPlayer);
       console.log("this player: " + this.thisPlayer);
     });
+
+    //const currTyperFB = dbRef(db, this.roomCode + "/players/" + this.currentPlayer);
+
+    // onValue(currTyperFB, (snapshot) => {
+    //   const data = snapshot.val();
+    //   const currentPlayerFB = 
+    // });
   },
   data() {
     return {
@@ -37,6 +45,7 @@ export default {
       previous: "",
       invis: false,
       mutable: true,
+      zcount: "",
     };
   },
   methods: {
@@ -169,9 +178,16 @@ export default {
       <!-- <div v-if="!remote" class="title">
         Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
       </div> -->
-      <div v-if="remote" class="title">
+      <!-- <div v-if="remote" class="title">
         Player : {{ currentPlayer }}
+      </div> -->
+
+      <div v-if="remote && thisPlayer != currentPlayer" >
+      Hi {{thisPlayer}}, {{currentPlayer}} is typing ....
       </div>
+
+      <div v-if="!remote || thisPlayer == currentPlayer">
+      
       <div class="prompt">ENTER to submit</div>
 
       <br />
@@ -205,6 +221,7 @@ export default {
         >
         </contenteditable>
       </div>
+      </div>
 
       <!-- </div> -->
       
@@ -213,7 +230,7 @@ export default {
     <div class="view-story">
       <router-link to="/localviewstory" custom>
         <button
-          v-if="count > playerNum && !finished"
+          v-if="count > zcount"
           @click="passStory"
           role="link"
         >
