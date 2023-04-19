@@ -14,7 +14,7 @@ export default {
       console.log(this.players);
     });
 
-    const playerNumfb = dbRef(db, this.roomCode + "/gameAttributes/count");
+    const playerNumfb = dbRef(db, this.roomCode + "/gameAttributes/zcount");
 
     onValue(playerNumfb, (snapshot) => {
       const data = snapshot.val();
@@ -47,7 +47,7 @@ export default {
         const db = useDatabase();
         const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
         set(playersFB, "");
-        const playerNumFB = dbRef(db, this.roomCode + "/gameAttributes/count");
+        const playerNumFB = dbRef(db, this.roomCode + "/gameAttributes/zcount");
         set(playerNumFB, this.playerNum)
         this.playerNames[0] = this.name;
         this.addOk = false;
