@@ -38,7 +38,7 @@ export default {
 .home h1 {
   color: #484848;
   font-family: "CalorieRegular";
-  font-size: 50vh;
+  font-size: 55vh;
   line-height: 35vh;
   margin: 0;
 }
@@ -58,7 +58,7 @@ export default {
 .home .button button {
   color: #434343;
   font-family: inherit;
-  font-size: 2.5vh;
+  font-size: 3vh;
   font-weight: 100;
   margin-bottom: 3.5vh;
   border: none;
@@ -72,6 +72,6 @@ export default {
 }
 
 .home .empty {
-  height: 17vh;
+  height: 18vh;
 }
 </style>
