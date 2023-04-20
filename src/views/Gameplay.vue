@@ -45,7 +45,7 @@ export default {
   color: #484848;
   /* font-family: Desyre; */
   /* font-family: "CalorieRegular"; */
-  font-size: 1.2em;
+  font-size: 1.1em;
   width: 80%;
   margin: 0 auto;
   font-weight: 200;
@@ -53,7 +53,7 @@ export default {
   line-height: 1.7em;
 }
 .gameplay .empty {
-  height: 1vh;
+  height: 4vh;
 }
 .gameplay .back {
   transform: scale(0.8);

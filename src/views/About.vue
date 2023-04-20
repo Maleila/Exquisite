@@ -36,11 +36,6 @@ export default {
     </div>
     <div class="empty"></div>
     <div class="back"><InkButton /></div>
-    <!-- <div class="back">
-      <router-link to="/" custom v-slot="{ navigate }">
-        <button @click="navigate" role="link">Back</button>
-      </router-link>
-    </div> -->
   </div>
 </template>
 
@@ -60,7 +55,7 @@ export default {
   color: #484848;
   /* font-family: Desyre; */
   /* font-family: "CalorieRegular"; */
-  font-size: 1.2em;
+  font-size: 1.1em;
   width: 80%;
   margin: 0 auto;
   font-weight: 200;

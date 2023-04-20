@@ -64,6 +64,7 @@ export default {
 
 .home .button button:hover {
   text-decoration: underline;
+  filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
 }
 
 .home .empty {
