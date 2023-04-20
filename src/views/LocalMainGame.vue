@@ -2,6 +2,7 @@
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
 import LocalViewStory from "@/views/LocalViewStory.vue";
+import InkButtonVS from "@/views/InkButtonVS.vue";
 import { useDatabase, useDatabaseObject } from "vuefire";
 import { ref as dbRef, set, onDisconnect, onValue } from "firebase/database";
 
@@ -9,6 +10,7 @@ export default {
   components: {
     contenteditable,
     LocalViewStory,
+    InkButtonVS,
   },
   mounted() {
     //called when a component is added (ex when the page loads)
@@ -227,22 +229,14 @@ export default {
     </h2>
 
     <div class="view-story">
-      <router-link to="/localviewstory" custom>
-        <button
-          v-if="
-            (count > playerNum && !finished) || (remote && zcount >= playerNum)
-          "
-          @click="passStory"
-          role="link"
-        >
-          View Story
-        </button>
-      </router-link>
+      <InkButtonVS
+        v-if="
+          (count > playerNum && !finished) || (remote && zcount >= playerNum)
+        "
+        @click="passStory"
+        role="link"
+      />
     </div>
-
-    <!-- <button @click="viewStory" v-if="count > playerNum && !finished">
-      View Story
-    </button> -->
 
     <div class="story">
       <h3 v-if="finished && count > playerNum">{{ story }}</h3>
@@ -326,6 +320,7 @@ h3 {
   justify-content: center;
   align-items: center;
   height: 80vh;
+  transform: scale(2);
 }
 
 .main-game .view-story button {
