@@ -39,14 +39,14 @@ export default {
   margin: 0 auto;
   font-weight: 200;
   text-align: left;
-  line-height: 20vh;
+  line-height: 21vh;
   filter: drop-shadow(1px 2px 1px rgb(0 0 0 / 0.3));
 }
 .gameplay .text {
   color: #484848;
   /* font-family: Desyre; */
   /* font-family: "CalorieRegular"; */
-  font-size: 1.2em;
+  font-size: 1.1em;
   width: 80%;
   margin: 0 auto;
   font-weight: 200;
