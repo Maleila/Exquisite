@@ -27,13 +27,6 @@ export default {
       console.log("current according to fb " + this.currentPlayer);
       console.log("this player: " + this.thisPlayer);
     });
-
-    //const currTyperFB = dbRef(db, this.roomCode + "/players/" + this.currentPlayer);
-
-    // onValue(currTyperFB, (snapshot) => {
-    //   const data = snapshot.val();
-    //   const currentPlayerFB =
-    // });
   },
   data() {
     return {
@@ -50,7 +43,23 @@ export default {
   },
   methods: {
     passStory() {
-      this.story = this.story.concat(this.previous);
+      if(!this.remote) {
+        this.story = this.story.concat(this.previous);
+      } else {
+        //should maybe move this to data? not sure
+        const db = useDatabase();
+        const playersfb = dbRef(db, this.roomCode + "/players");
+        onValue(playersfb, (snapshot) => {
+          const data = snapshot.val();
+          const storyFB = Object.values(data);
+          console.log(storyFB);
+          this.story = "";
+          for(let i = 0; i < storyFB.length; i++) {
+            this.story = this.story.concat(storyFB[i] + " ");
+            console.log("story: " + this.story)
+          }
+        });
+      }
       const { story } = this;
       this.$router.push({ name: "LocalViewStory", query: { story } });
     },
