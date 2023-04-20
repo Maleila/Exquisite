@@ -50,6 +50,7 @@ export default {
   font-weight: 200;
   text-align: left;
   line-height: 20vh;
+  filter: drop-shadow(1px 2px 1px rgb(0 0 0 / 0.3));
 }
 .about .text {
   color: #484848;
