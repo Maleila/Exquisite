@@ -18,7 +18,7 @@
 .ink-button button {
   font-size: 3.5vh;
   font-weight: 100;
-  color: white;
+  color: #e1e1e1;
   background: None;
   height: 25vh;
   width: 30vh;
