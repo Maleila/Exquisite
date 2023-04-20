@@ -15,24 +15,17 @@ export default {
 </script>
 
 <template>
-  <div class="empty"></div>
-  <div class="story">{{ story }}</div>
-  <div class="empty"></div>
+  <div class="view-story">
+    <div class="empty"></div>
+    <div class="story">{{ story }}</div>
+    <div class="empty"></div>
 
-  <div class="back"><InkButtonB /></div>
-
-  <!-- <router-link to="/" custom v-slot="{ navigate }">
-    <button @click="navigate" role="link">Back</button>
-  </router-link> -->
-  <!-- <div class="close-image">
-    <router-link to="/" custom v-slot="{ navigate }">
-      <img src="@/assets/close.svg" @click="navigate" role="link" />
-    </router-link>
-  </div> -->
+    <div class="back"><InkButtonB /></div>
+  </div>
 </template>
 
 <style>
-.story {
+.view-story .story {
   width: 80%;
   margin: 0 auto;
   text-align: left;
@@ -40,12 +33,13 @@ export default {
   font-size: 3em;
 }
 
-.empty {
+.view-story .empty {
   height: 10vh;
 }
 
-.close-image {
-  width: 1em;
-  height: auto;
+.view-story .back {
+  transform: scale(0.8);
+  width: 30%;
+  float: right;
 }
 </style>
