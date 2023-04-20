@@ -106,16 +106,27 @@ export default {
     },
     startGame() { //if you're the host or playing locally
       if (this.remote) {
-        this.finalizePlayers();
         const db = useDatabase();
+        this.finalizePlayers();
+        if (this.playerNum >= 2){
 
-        const attributesFB = dbRef(db, this.roomCode + "/gameAttributes/current");
-        set(attributesFB, this.playerNames[0]);
+          const attributesFB = dbRef(db, this.roomCode + "/gameAttributes/current");
+          set(attributesFB, this.playerNames[0]);
 
-        const startedFB = dbRef(db, this.roomCode + "/gameAttributes/started");
-        set(startedFB, true);
+          const startedFB = dbRef(db, this.roomCode + "/gameAttributes/started");
+          set(startedFB, true);
+          this.onStart();
+          } else {
+            alert("Wait for more players")
+            }
       }
-      this.onStart();
+      else {
+        if (this.playerNum >= 2){
+        this.onStart();
+        } else {
+          alert("Add more players")
+        }
+      }
     },
     onStart(){
       const {
