@@ -37,6 +37,7 @@ export default {
 <style>
 .home h1 {
   filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
+  -webkit-text-stroke: 3px #484848;
   color: #484848;
   font-family: "CalorieRegular";
   font-size: 55vh;
