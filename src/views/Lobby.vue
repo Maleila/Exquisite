@@ -35,7 +35,10 @@ export default {
     addPlayer() {
       this.playerNum++;
       if (!this.remote) {
-        if (this.playerNum == 2) {
+        if (this.name == ""){
+          alert("Input your name")
+        }
+        else if (this.playerNum == 2) {
           this.playerNames[0] = this.name;
         } else {
           this.playerNames[this.playerNum - 2] = this.name;
@@ -44,7 +47,7 @@ export default {
         console.log("adding player...")
         const db = useDatabase();
         if (this.name == ""){
-          alert("Input room code")
+          alert("Input your name")
         } else {
           const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
           set(playersFB, "");
