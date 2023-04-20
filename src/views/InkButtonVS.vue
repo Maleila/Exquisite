@@ -8,7 +8,7 @@
 
 <style scoped>
 .ink-button {
-  background-image: url("../assets/ink2.svg");
+  background-image: url("../assets/inkVS.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 40vh;
@@ -36,7 +36,7 @@
   text-decoration: underline;
 }
 /* .ink-button button:hover {
-  font-size: 15vh;
-  -webkit-text-stroke: 0.5px black;
-} */
+    font-size: 15vh;
+    -webkit-text-stroke: 0.5px black;
+  } */
 </style>
