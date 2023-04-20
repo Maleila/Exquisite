@@ -43,12 +43,17 @@ export default {
       } else {
         console.log("adding player...")
         const db = useDatabase();
-        const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
-        set(playersFB, "");
-        const playerNumFB = dbRef(db, this.roomCode + "/gameAttributes/zcount");
-        set(playerNumFB, 0)
-        this.playerNames[0] = this.name;
-        this.addOk = false;
+        if (this.name == ""){
+          alert("Input room code")
+        } else {
+          const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
+          set(playersFB, "");
+          const playerNumFB = dbRef(db, this.roomCode + "/gameAttributes/zcount");
+          set(playerNumFB, 0)
+          this.playerNames[0] = this.name;
+          this.addOk = false;
+        }
+        
       }
       this.name = "";
     },
@@ -80,7 +85,8 @@ export default {
     {{ item }}
   </li>
 
-  <input v-model="name" />
+  <input v-if="addOk && !remote" @keydown.enter="addPlayer" v-model="name" />
+  <input v-if="addOk && remote" @keydown.enter="addPlayer(), $emit('setPlayers', playerNames)" v-model="name" />
   <br />
   <!--If local game, Add button only adds player-->
   <button v-if="addOk && !remote" @click="addPlayer">Add</button>

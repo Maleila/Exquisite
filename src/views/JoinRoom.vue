@@ -38,7 +38,7 @@ export default {
         }
         else if (!(this.roomCodes).includes(this.roomCode)) {
             alert("Invalid room code");
-        }
+        } 
         else {
          this.$emit('enterRoomCode', this.roomCode);
         }
@@ -53,7 +53,7 @@ export default {
     <h2>Room Code</h2>
     {{roomCode}}
     <br>
-    <input v-model="roomCode">
+    <input @keydown.enter="submitPlayer" v-model="roomCode">
     <button @click="submitPlayer">Enter Room</button>
   </div>
 </template>
