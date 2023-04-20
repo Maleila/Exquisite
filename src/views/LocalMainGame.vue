@@ -13,7 +13,7 @@ export default {
   mounted() {
     //called when a component is added (ex when the page loads)
     this.focusInput();
-    
+
     const db = useDatabase();
     const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
 
@@ -30,7 +30,7 @@ export default {
 
     // onValue(currTyperFB, (snapshot) => {
     //   const data = snapshot.val();
-    //   const currentPlayerFB = 
+    //   const currentPlayerFB =
     // });
   },
   data() {
@@ -81,7 +81,8 @@ export default {
             db,
             this.roomCode + "/gameAttributes/current"
           );
-          const next = parseInt(this.playerNames.indexOf(this.currentPlayer)) + 1;
+          const next =
+            parseInt(this.playerNames.indexOf(this.currentPlayer)) + 1;
           console.log("next index:" + next);
           console.log("next name: " + this.playerNames[next]);
           set(attributesFB, this.playerNames[next]);
@@ -184,52 +185,53 @@ export default {
         Player : {{ currentPlayer }}
       </div> -->
 
-      <div v-if="remote && thisPlayer != currentPlayer" >
-      Hi {{thisPlayer}}, {{currentPlayer}} is typing ....
+      <div v-if="remote && thisPlayer != currentPlayer">
+        Hi {{ thisPlayer }}, {{ currentPlayer }} is typing ....
       </div>
 
       <div v-if="!remote || thisPlayer == currentPlayer">
+        <div class="prompt">ENTER to submit</div>
 
-      <div class="prompt">ENTER to submit</div>
-
-      <br />
-      <div class="story">
-        <span class="invisible">
-          {{ story }}
-        </span>
-        <span
-          class="previous-sentence"
-          id="prev"
-          :style="{
-            opacity: invis ? 0.01 : 0.5,
-          }"
-          v-if="count > 0"
-        >
-          {{ previous + " " }}
-        </span>
-        <contenteditable
-          tag="div"
-          :style="{
-            opacity: invis ? 0.5 : 1,
-          }"
-          :contenteditable="mutable"
-          class="new-text"
-          id="editable"
-          ref="storyInput"
-          :no-nl="true"
-          :no-html="true"
-          v-model="current"
-          @keydown.enter="submitStory"
-        >
-        </contenteditable>
-      </div>
+        <br />
+        <div class="story">
+          <span class="invisible">
+            {{ story }}
+          </span>
+          <span
+            class="previous-sentence"
+            id="prev"
+            :style="{
+              opacity: invis ? 0.01 : 0.5,
+            }"
+            v-if="count > 0"
+          >
+            {{ previous + " " }}
+          </span>
+          <contenteditable
+            tag="div"
+            :style="{
+              opacity: invis ? 0.5 : 1,
+            }"
+            :contenteditable="mutable"
+            class="new-text"
+            id="editable"
+            ref="storyInput"
+            :no-nl="true"
+            :no-html="true"
+            v-model="current"
+            @keydown.enter="submitStory"
+          >
+          </contenteditable>
+        </div>
       </div>
     </h2>
 
     <div class="view-story">
       <router-link to="/localviewstory" custom>
         <button
-          v-if="count > playerNum && !finished || remote && zcount >= playerNum"
+          v-if="
+            (count > playerNum && !finished) || (remote && zcount >= playerNum)
+          "
           @click="passStory"
           role="link"
         >
@@ -249,16 +251,6 @@ export default {
     <button @click="reset" v-if="finished && count > playerNum">
       Play Again
     </button>
-
-    <router-link to="/" custom v-slot="{ navigate }">
-      <button
-        @click="navigate"
-        role="link"
-        v-if="finished && count > playerNum"
-      >
-        Back
-      </button>
-    </router-link>
   </div>
 </template>
 

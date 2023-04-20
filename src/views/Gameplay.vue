@@ -46,7 +46,7 @@ export default {
   color: #484848;
   /* font-family: Desyre; */
   /* font-family: "CalorieRegular"; */
-  font-size: 1.1em;
+  font-size: 1.2em;
   width: 80%;
   margin: 0 auto;
   font-weight: 200;

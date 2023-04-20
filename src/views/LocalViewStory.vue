@@ -1,10 +1,15 @@
 <script>
+import InkButton from "@/views/InkButton.vue";
+
 export default {
   props: {
     story: {
       type: String,
       required: true,
     },
+  },
+  components: {
+    InkButton,
   },
 };
 </script>
@@ -13,9 +18,12 @@ export default {
   <div class="empty"></div>
   <div class="story">{{ story }}</div>
   <div class="empty"></div>
-  <router-link to="/" custom v-slot="{ navigate }">
+
+  <div class="back"><InkButton /></div>
+
+  <!-- <router-link to="/" custom v-slot="{ navigate }">
     <button @click="navigate" role="link">Back</button>
-  </router-link>
+  </router-link> -->
   <!-- <div class="close-image">
     <router-link to="/" custom v-slot="{ navigate }">
       <img src="@/assets/close.svg" @click="navigate" role="link" />
