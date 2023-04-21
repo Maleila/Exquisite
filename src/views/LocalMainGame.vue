@@ -26,9 +26,12 @@ export default {
       this.zcount = currentPlayerFB[2];
       console.log("current according to fb " + this.currentPlayer);
       console.log("this player: " + this.thisPlayer);
+      //this.prevMessageRemote = dbRef(db, this.roomCode + "/players/" + this.currentPlayer);
     });
+    
   },
   data() {
+    
     return {
       current: "",
       currentPlayer: "",
@@ -39,6 +42,9 @@ export default {
       invis: false,
       mutable: true,
       zcount: 0,
+      storyRemote:"",
+      previousPlayer:"",
+     // prevMessageRemote: "",
     };
   },
   methods: {
@@ -98,6 +104,24 @@ export default {
           console.log("next name: " + this.playerNames[next]);
           set(attributesFB, this.playerNames[next]);
         }
+        //const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
+
+        // onValue(currentFB, (snapshot) => {
+        //   const data = snapshot.val();
+        //   const currentPlayerFB = Object.values(data);
+        //   this.zcount = currentPlayerFB[2];
+        // });
+
+
+        // const playersfb = dbRef(db, this.roomCode + "/players");
+        // onValue(playersfb, (snapshot) => {
+        //   const data = snapshot.val();
+        //   const storyFB = Object.values(data);
+        //   for(let i = 0; i < storyFB.length; i++) {
+        //     this.storyRemote = this.storyRemote.concat(storyFB[i] + " ");
+        //   }
+        //   this.previousRemote = this.previousRemote.concat(storyFB[zcountFB]+" ");
+        // });
       }
       this.count++;
       this.story = this.story.concat(this.previous + " ");
@@ -119,17 +143,6 @@ export default {
       this.previous = this.current;
       this.current = "";
 
-      // var sample = document.getElementById("editable");
-      // sample.style.color = "red";
-      // sample.style.fontFamily = "Impact,Charcoal,sans-serif";
-      // var random = Math.floor(Math.random() * 3);
-      // if (random == 0) {
-      //   sample.style.fontFamily = "Impact,Charcoal,sans-serif";
-      // } else if (random == 1) {
-      //   sample.style.fontFamily = "Lucida Console, Courier New, monospace";
-      // } else {
-      //   sample.style.fontFamily = "Arial, Helvetica, sans-serif";
-      // }
       this.mutable = true;
       this.focusInput();
     },
@@ -187,22 +200,55 @@ export default {
 <template>
   <div class="main-game">
     <h2 v-if="!finished && count <= playerNum && zcount < playerNum">
-      <div v-if="remote">roomCode={{ roomCode }}</div>
+      <div v-if="remote">number of players={{playerNum}}, roomCode={{ roomCode }}, your name={{thisPlayer}}</div>
       <div v-if="!remote || thisPlayer == currentPlayer">Your turn!</div>
       <div v-if="!remote" class="title">
         Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
       </div>
-      <!-- <div v-if="remote" class="title">
-        Player : {{ currentPlayer }}
-      </div> -->
 
       <div v-if="remote && thisPlayer != currentPlayer">
         Hi {{ thisPlayer }}, {{ currentPlayer }} is typing ....
       </div>
 
-      <div v-if="!remote || thisPlayer == currentPlayer">
+      <div v-if="remote && thisPlayer == currentPlayer">
         <div class="prompt">ENTER to submit</div>
+        
+        <br />
+        <div class="story">
+          <span class="invisible">
+            {{ storyRemote }}
+          </span>
+          <span
+            class="previous-sentence"
+            id="prev"
+            :style="{
+              opacity: invis ? 0.01 : 0.5,
+            }"
+            v-if="count > 0"
+          >
+            {{ previousRemote + " " }}
+          </span>
+          <contenteditable
+            tag="div"
+            :style="{
+              opacity: invis ? 0.5 : 1,
+            }"
+            :contenteditable="mutable"
+            class="new-text"
+            id="editable"
+            ref="storyInput"
+            :no-nl="true"
+            :no-html="true"
+            v-model="current"
+            @keydown.enter="submitStory"
+          >
+          </contenteditable>
+        </div>
+      </div>
 
+      <div v-if="!remote">
+        <div class="prompt">ENTER to submit</div>
+        
         <br />
         <div class="story">
           <span class="invisible">
@@ -253,7 +299,7 @@ export default {
     <br />
     <button @click="reset" v-if="finished && count > playerNum">
       Play Again
-    </button>
+    </button> <!-- No play again button? --> 
   </div>
 </template>
 

@@ -109,7 +109,6 @@ export default {
         const db = useDatabase();
         this.finalizePlayers();
         if (this.playerNum >= 2){
-
           const attributesFB = dbRef(db, this.roomCode + "/gameAttributes/current");
           set(attributesFB, this.playerNames[0]);
 
