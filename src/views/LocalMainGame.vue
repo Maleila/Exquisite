@@ -205,7 +205,7 @@ export default {
 <template>
   <div class="main-game">
     <h2 v-if="!finished && count <= playerNum && zcount < playerNum">
-      <div class="prompt" v-if="remote">RoomCode={{ roomCode }}</div>
+      <div class="roomcode" v-if="remote">RoomCode={{ roomCode }}</div>
       <div class="title" v-if="remote && playerIndex == zcount">Your turn!</div>
       <div class="title" v-if="remote && playerIndex != zcount">Waiting...</div>
       <div v-if="!remote" class="title">
@@ -214,7 +214,7 @@ export default {
 
       <!--<div v-if="!remote || remote && playerIndex == zcount">-->
         <div v-if="true">
-        <div class="prompt">ENTER to submit</div>
+        <div class="prompt" v-if="playerIndex == zcount" >ENTER to submit</div>
         <div class="prompt" v-if="remote && playerIndex != zcount">
           Hi {{ thisPlayer }}, {{ currentPlayer }} ({{zcount +1}}/{{ playerNum }}) is typing ....
         </div>
@@ -334,6 +334,19 @@ h3 {
   margin: 0 auto;
   font-weight: 200;
   text-align: left;
+  position: fixed;
+}
+
+.main-game .roomcode {
+  top: 9%;
+  color: #484848;
+  font-size: 0.8em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 100;
+  text-align: left;
+  position: fixed;
+
 }
 
 .main-game .prompt {
@@ -343,6 +356,8 @@ h3 {
   margin: 0 auto;
   font-weight: 100;
   text-align: left;
+  position: fixed;
+  top: 20%;
 }
 
 .main-game .view-story {
@@ -365,4 +380,6 @@ h3 {
   font-size: 2em;
   padding: 10px 20px;
 }
+
+
 </style>
