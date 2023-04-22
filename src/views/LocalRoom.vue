@@ -52,10 +52,7 @@ export default {
       set(roomCodeFB, {
         created: true,
       });
-
-      const attributesFB = dbRef(db, this.roomCode + "/gameAttributes/current");
-      set(attributesFB, "");
-
+      
       const startedFB = dbRef(db, this.roomCode + "/gameAttributes/started");
       set(startedFB, false);
     },
@@ -97,7 +94,7 @@ export default {
       onValue(startedFB, (snapshot) => {
         const data = snapshot.val();
         const start = Object.values(data);
-        this.started = start[1];
+        this.started = start[0];
         if(this.started == true) {
           this.finalizePlayers();
           this.onStart();
@@ -117,8 +114,8 @@ export default {
         const db = useDatabase();
         this.finalizePlayers();
         if (this.playerNum >= 2){
-          const attributesFB = dbRef(db, this.roomCode + "/gameAttributes/current");
-          set(attributesFB, this.playerNames[0]);
+          const playerNumFB = dbRef(db, this.roomCode + "/gameAttributes/zcount");
+          set(playerNumFB, 0)
 
           const startedFB = dbRef(db, this.roomCode + "/gameAttributes/started");
           set(startedFB, true);

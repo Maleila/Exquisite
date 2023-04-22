@@ -23,29 +23,23 @@ export default {
       const db = useDatabase();
       const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
 
-      //listen for changes to whose turn it is
+      //listen for changes to whose turn it is -- atm I think it gets called twice per turn change, once for zcount change and once for currentplayer change
       onValue(currentFB, (snapshot) => {
         const data = snapshot.val();
         const currentPlayerFB = Object.values(data);
-        this.currentPlayer = currentPlayerFB[0];
-        this.zcount = currentPlayerFB[2];
-        if(this.currentPlayer == this.thisPlayer) {
-          this.focusInput();
-        }
+        this.zcount = currentPlayerFB[1];
+        this.currentPlayer = this.playerNames[this.zcount];
         console.log("current according to fb " + this.currentPlayer);
         console.log("this player: " + this.thisPlayer);
+        this.onTurnChange();
       });
 
       const sentencesFB = dbRef(db, this.roomCode + "/players");
 
-      //listen for changes to the ongoing story (specifically check if the previous sentence has been entered)
+      //listen for changes to the ongoing story
       onValue(sentencesFB, (snapshot) => {
         const data = snapshot.val();
-        const sentences = Object.values(data);
-        if(this.playerIndex > 0 && sentences[this.playerIndex - 1] != "") {
-          console.log("previous sentence: " + sentences[this.playerIndex - 1]);
-          this.previous = sentences[this.playerIndex - 1];
-        }
+        this.sentenceArray = Object.values(data);     
       });
     }    
   },
@@ -61,27 +55,39 @@ export default {
       invis: false,
       mutable: true,
       zcount: 0,
+      sentenceArray: [],
     };
   },
   methods: {
+    onTurnChange(){
+      console.log("turn changed!");
+      console.log("zcount: " + this.zcount);
+      if(this.zcount <= this.playerIndex) { //if it's not yet this player's turn
+        if(this.playerIndex > 0 && this.zcount > 0) {
+          const recent = this.zcount - 1;
+          console.log("most recent player: " + recent);
+          console.log("most recent sentence: " + this.sentenceArray[recent]);
+          if(recent == this.playerIndex - 1){ //if the last player to submit was immediately previous to this player
+            this.previous = this.sentenceArray[recent];
+          } else { //else add the most recent sentence to the invisible portion of the story
+            this.story = this.story.concat(this.sentenceArray[recent]); 
+          }
+        }
+      }
+      if(this.zcount == this.playerIndex) {
+          this.focusInput();
+      }
+    },
     //send the finished story to LocalViewStory
     passStory() {
       if(!this.remote) {
         this.story = this.story.concat(this.previous);
       } else {
-        //should maybe move this to data? not sure
-        const db = useDatabase();
-        const playersfb = dbRef(db, this.roomCode + "/players");
-        onValue(playersfb, (snapshot) => {
-          const data = snapshot.val();
-          const storyFB = Object.values(data);
-          console.log(storyFB);
-          this.story = "";
-          for(let i = 0; i < storyFB.length; i++) {
-            this.story = this.story.concat(storyFB[i] + " ");
-            console.log("story: " + this.story)
-          }
-        });
+        this.story = "";
+        for(let i = 0; i < this.sentenceArray.length; i++) {
+          this.story = this.story.concat(this.sentenceArray[i] + " ");
+          console.log("story: " + this.story)
+        }
       }
       const { story } = this;
       this.$router.push({ name: "LocalViewStory", query: { story } });
@@ -113,17 +119,6 @@ export default {
         const zcountFB = dbRef(db, this.roomCode + "/gameAttributes/zcount");
         this.zcount++;
         set(zcountFB, this.zcount);
-        if (this.zcount < this.playerNum) {
-          const attributesFB = dbRef(
-            db,
-            this.roomCode + "/gameAttributes/current"
-          );
-          const next =
-            parseInt(this.playerNames.indexOf(this.currentPlayer)) + 1;
-          console.log("next index:" + next);
-          console.log("next name: " + this.playerNames[next]);
-          set(attributesFB, this.playerNames[next]);
-        }
       }
       this.count++;
       this.story = this.story.concat(this.previous + " ");
@@ -206,7 +201,7 @@ export default {
   <div class="main-game">
     <h2 v-if="!finished && count <= playerNum && zcount < playerNum">
       <div v-if="remote">number of players={{playerNum}}, roomCode={{ roomCode }}, your name={{thisPlayer}}</div>
-      <div v-if="!remote || thisPlayer == currentPlayer">Your turn!</div>
+      <div v-if="!remote || playerIndex == zcount">Your turn!</div>
       <div v-if="!remote" class="title">
         Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
       </div>
@@ -215,7 +210,7 @@ export default {
         Hi {{ thisPlayer }}, {{ currentPlayer }} is typing ....
       </div>
 
-      <div v-if="!remote || remote && thisPlayer == currentPlayer">
+      <div v-if="!remote || remote && playerIndex == zcount">
         <div class="prompt">ENTER to submit</div>
         
         <br />
