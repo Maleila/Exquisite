@@ -28,6 +28,9 @@ export default {
         const currentPlayerFB = Object.values(data);
         this.currentPlayer = currentPlayerFB[0];
         this.zcount = currentPlayerFB[2];
+        if(this.currentPlayer == this.thisPlayer) {
+          this.focusInput();
+        }
         console.log("current according to fb " + this.currentPlayer);
         console.log("this player: " + this.thisPlayer);
       });
