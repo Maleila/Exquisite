@@ -20,6 +20,7 @@ export default {
     console.log("index: " + this.playerIndex);
 
     if(this.remote) {
+      this.mutable = false;
       const db = useDatabase();
       const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
 
@@ -60,6 +61,7 @@ export default {
   },
   methods: {
     onTurnChange(){
+      this.mutable = false;
       console.log("turn changed!");
       console.log("zcount: " + this.zcount);
       if(this.zcount <= this.playerIndex) { //if it's not yet this player's turn
@@ -70,11 +72,12 @@ export default {
           if(recent == this.playerIndex - 1){ //if the last player to submit was immediately previous to this player
             this.previous = this.sentenceArray[recent];
           } else { //else add the most recent sentence to the invisible portion of the story
-            this.story = this.story.concat(this.sentenceArray[recent]); 
+            this.story = this.story.concat(this.sentenceArray[recent] + " "); 
           }
         }
       }
       if(this.zcount == this.playerIndex) {
+          this.mutable = true;
           this.focusInput();
       }
     },
@@ -141,7 +144,9 @@ export default {
       this.previous = this.current;
       this.current = "";
 
-      this.mutable = true;
+      if(!this.remote) {
+        this.mutable = true;
+      }
       this.focusInput();
     },
     //used for a previous method of viewing the story (when that was part of this component) -- not in use
@@ -200,22 +205,28 @@ export default {
 <template>
   <div class="main-game">
     <h2 v-if="!finished && count <= playerNum && zcount < playerNum">
-      <div v-if="remote">number of players={{playerNum}}, roomCode={{ roomCode }}, your name={{thisPlayer}}</div>
-      <div v-if="!remote || playerIndex == zcount">Your turn!</div>
+      <div class="prompt" v-if="remote">RoomCode={{ roomCode }}</div>
+      <div class="title" v-if="remote && playerIndex == zcount">Your turn!</div>
+      <div class="title" v-if="remote && playerIndex != zcount">Waiting...</div>
       <div v-if="!remote" class="title">
         Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
       </div>
 
-      <div v-if="remote && thisPlayer != currentPlayer">
-        Hi {{ thisPlayer }}, {{ currentPlayer }} is typing ....
-      </div>
-
-      <div v-if="!remote || remote && playerIndex == zcount">
+      <!--<div v-if="!remote || remote && playerIndex == zcount">-->
+        <div v-if="true">
         <div class="prompt">ENTER to submit</div>
+        <div class="prompt" v-if="remote && playerIndex != zcount">
+          Hi {{ thisPlayer }}, {{ currentPlayer }} ({{zcount +1}}/{{ playerNum }}) is typing ....
+        </div>
         
         <br />
         <div class="story">
-          <span class="invisible">
+          <span 
+          class="invisible" 
+          id="invisible"
+          :style="{
+              opacity: remote ? 0.1 : 0.01,
+            }">
             {{ story }}
           </span>
           <span
