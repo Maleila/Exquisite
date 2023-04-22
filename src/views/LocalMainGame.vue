@@ -16,25 +16,40 @@ export default {
     //called when a component is added (ex when the page loads)
     this.focusInput();
 
-    const db = useDatabase();
-    const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
+    this.playerIndex = this.playerNames.indexOf(this.thisPlayer);
+    console.log("index: " + this.playerIndex);
 
-    onValue(currentFB, (snapshot) => {
-      const data = snapshot.val();
-      const currentPlayerFB = Object.values(data);
-      this.currentPlayer = currentPlayerFB[0];
-      this.zcount = currentPlayerFB[2];
-      console.log("current according to fb " + this.currentPlayer);
-      console.log("this player: " + this.thisPlayer);
-      //this.prevMessageRemote = dbRef(db, this.roomCode + "/players/" + this.currentPlayer);
-    });
-    
+    if(this.remote) {
+      const db = useDatabase();
+      const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
+
+      onValue(currentFB, (snapshot) => {
+        const data = snapshot.val();
+        const currentPlayerFB = Object.values(data);
+        this.currentPlayer = currentPlayerFB[0];
+        this.zcount = currentPlayerFB[2];
+        console.log("current according to fb " + this.currentPlayer);
+        console.log("this player: " + this.thisPlayer);
+      });
+
+      const sentencesFB = dbRef(db, this.roomCode + "/players");
+
+      onValue(sentencesFB, (snapshot) => {
+        const data = snapshot.val();
+        const sentences = Object.values(data);
+        if(this.playerIndex > 0 && sentences[this.playerIndex - 1] != "") {
+          console.log("previous sentence: " + sentences[this.playerIndex - 1]);
+          this.previous = sentences[this.playerIndex - 1];
+        }
+      });
+    }    
   },
   data() {
     
     return {
       current: "",
       currentPlayer: "",
+      playerIndex: 0,
       count: 1,
       finished: false,
       story: "",
@@ -42,9 +57,6 @@ export default {
       invis: false,
       mutable: true,
       zcount: 0,
-      storyRemote:"",
-      previousPlayer:"",
-     // prevMessageRemote: "",
     };
   },
   methods: {
@@ -104,24 +116,6 @@ export default {
           console.log("next name: " + this.playerNames[next]);
           set(attributesFB, this.playerNames[next]);
         }
-        //const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
-
-        // onValue(currentFB, (snapshot) => {
-        //   const data = snapshot.val();
-        //   const currentPlayerFB = Object.values(data);
-        //   this.zcount = currentPlayerFB[2];
-        // });
-
-
-        // const playersfb = dbRef(db, this.roomCode + "/players");
-        // onValue(playersfb, (snapshot) => {
-        //   const data = snapshot.val();
-        //   const storyFB = Object.values(data);
-        //   for(let i = 0; i < storyFB.length; i++) {
-        //     this.storyRemote = this.storyRemote.concat(storyFB[i] + " ");
-        //   }
-        //   this.previousRemote = this.previousRemote.concat(storyFB[zcountFB]+" ");
-        // });
       }
       this.count++;
       this.story = this.story.concat(this.previous + " ");
@@ -210,43 +204,7 @@ export default {
         Hi {{ thisPlayer }}, {{ currentPlayer }} is typing ....
       </div>
 
-      <div v-if="remote && thisPlayer == currentPlayer">
-        <div class="prompt">ENTER to submit</div>
-        
-        <br />
-        <div class="story">
-          <span class="invisible">
-            {{ storyRemote }}
-          </span>
-          <span
-            class="previous-sentence"
-            id="prev"
-            :style="{
-              opacity: invis ? 0.01 : 0.5,
-            }"
-            v-if="count > 0"
-          >
-            {{ previousRemote + " " }}
-          </span>
-          <contenteditable
-            tag="div"
-            :style="{
-              opacity: invis ? 0.5 : 1,
-            }"
-            :contenteditable="mutable"
-            class="new-text"
-            id="editable"
-            ref="storyInput"
-            :no-nl="true"
-            :no-html="true"
-            v-model="current"
-            @keydown.enter="submitStory"
-          >
-          </contenteditable>
-        </div>
-      </div>
-
-      <div v-if="!remote">
+      <div v-if="!remote || remote && thisPlayer == currentPlayer">
         <div class="prompt">ENTER to submit</div>
         
         <br />
