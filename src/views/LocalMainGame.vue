@@ -320,11 +320,14 @@ h3 {
 }
 
 .main-game .story {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   text-align: left;
   font-family: Desyre;
   font-size: 2em;
+  position: static;
+  margin-top: 5%;
+
 }
 
 .main-game .title {
