@@ -12,8 +12,8 @@ export default {
     LocalViewStory,
     InkButtonVS,
   },
+  //called when a component is added (ex when the page loads)
   mounted() {
-    //called when a component is added (ex when the page loads)
     this.focusInput();
 
     this.playerIndex = this.playerNames.indexOf(this.thisPlayer);
@@ -23,6 +23,7 @@ export default {
       const db = useDatabase();
       const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
 
+      //listen for changes to whose turn it is
       onValue(currentFB, (snapshot) => {
         const data = snapshot.val();
         const currentPlayerFB = Object.values(data);
@@ -37,6 +38,7 @@ export default {
 
       const sentencesFB = dbRef(db, this.roomCode + "/players");
 
+      //listen for changes to the ongoing story (specifically check if the previous sentence has been entered)
       onValue(sentencesFB, (snapshot) => {
         const data = snapshot.val();
         const sentences = Object.values(data);
@@ -48,7 +50,6 @@ export default {
     }    
   },
   data() {
-    
     return {
       current: "",
       currentPlayer: "",
@@ -63,6 +64,7 @@ export default {
     };
   },
   methods: {
+    //send the finished story to LocalViewStory
     passStory() {
       if(!this.remote) {
         this.story = this.story.concat(this.previous);
@@ -84,6 +86,7 @@ export default {
       const { story } = this;
       this.$router.push({ name: "LocalViewStory", query: { story } });
     },
+    //reset game to play again (outdated, not in use at the moment)
     reset() {
       this.current = "";
       this.count = 1;
@@ -92,11 +95,13 @@ export default {
       this.previous = "";
       this.focusInput();
     },
+    //triggered on enter in contenteditable (ie when a player submits their sentence)
     submitStory() {
       this.invis = true;
       this.mutable = false;
       setTimeout(() => this.transition(), 900);
     },
+    //handles css fade effect and updates the ongoing story
     transition() {
       if (this.remote) {
         const db = useDatabase();
@@ -124,6 +129,7 @@ export default {
       this.story = this.story.concat(this.previous + " ");
 
       //remove transition for resetting opacity to 1, then re-add after the story is updated
+      //might want to make this its own method actually
       var prev = document.getElementById("prev");
       prev.classList.add("notransition");
       prev.style.opacity = 0.5;
@@ -143,10 +149,12 @@ export default {
       this.mutable = true;
       this.focusInput();
     },
+    //used for a previous method of viewing the story (when that was part of this component) -- not in use
     viewStory() {
       this.story = this.story.concat(this.previous);
       this.finished = true;
     },
+    //refocuses on the contenteditable (which is not otherwise visible)
     focusInput() {
       nextTick(() => {
         // Without the try and catch: Error message is: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'focus')
@@ -155,7 +163,7 @@ export default {
           //this.$refs.storyInput.focus(); //need this bc vue gets confused since the input field has a v-if
           document.getElementById("editable").focus();
         } catch (ex) {
-          // Print out the error message, commented out to avoid clustering the console
+          // Print out the error message
           console.log("Error detected: " + ex);
         }
       });

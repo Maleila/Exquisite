@@ -16,11 +16,6 @@ export default {
 
     const playerNumfb = dbRef(db, this.roomCode + "/gameAttributes/zcount");
 
-    // onValue(playerNumfb, (snapshot) => {
-    //   const data = snapshot.val();
-    //   this.playerNum = data;
-    // });
-
   },
   data() {
     return {

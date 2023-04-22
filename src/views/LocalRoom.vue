@@ -36,6 +36,7 @@ export default {
         this.randRoomCode();
       }
     },
+    //Generates a new room and adds it to firebase -- only called for the host
     randRoomCode() {
       var row_password = Array(5)
         .fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
@@ -58,10 +59,12 @@ export default {
       const startedFB = dbRef(db, this.roomCode + "/gameAttributes/started");
       set(startedFB, false);
     },
+    //add specified player to firebase list (remote) or set players to specified list and start game (local)
     setPlayers(playerNames) {
       const db = useDatabase(); //only for remote - add if
       const playersfb = dbRef(db, this.roomCode + "/players");
 
+      //listen for changes to the list of players
       onValue(playersfb, (snapshot) => {
         const data = snapshot.val();
         const playersData = Object.keys(data);
@@ -81,6 +84,7 @@ export default {
         this.startGame();
       }
     },
+    //for joining remotely, enters the specified room and listens for the game starting
     enterRoomCode(roomCode) {
       this.roomCode = roomCode;
       this.enterCode = false;
@@ -89,6 +93,7 @@ export default {
       const db = useDatabase();
       const startedFB = dbRef(db, this.roomCode + "/gameAttributes");
       
+      //listen for the host telling the game to start -- when this happens, grab the final copy of the list of players from Firebase
       onValue(startedFB, (snapshot) => {
         const data = snapshot.val();
         const start = Object.values(data);
@@ -99,12 +104,15 @@ export default {
         }
       });
     },
+    //grab final copy of the list of players from Firebase
     finalizePlayers() {
       this.playerNames = this.playersFB;
       this.playerNum = this.playerNames.length;
       console.log("final players: " + this.playerNames)
     },
-    startGame() { //if you're the host or playing locally
+    //for host, sets the current player to the first in the list and tells firebase to start the game for all players
+    //for host and playing locally, shows an alert for fewer than 2 players
+    startGame() {
       if (this.remote) {
         const db = useDatabase();
         this.finalizePlayers();
@@ -127,6 +135,7 @@ export default {
         }
       }
     },
+    //sends props to LocalMainGame to start game
     onStart(){
       const {
         playerNum,
