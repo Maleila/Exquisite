@@ -15,15 +15,6 @@ export default {
 
   },
   data() {
-    // const db = useDatabase();
-    // const firebaseDB = dbRef(db, "/");
-
-    // onValue(firebaseDB, (snapshot) => {
-    //     const data = snapshot.val();
-    //     const roomCodeData = Object.keys(data);
-    //     this.roomCodes = roomCodeData;
-    // })
-
     return {
       playerName: "",
       roomCode: "",

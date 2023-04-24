@@ -16,11 +16,6 @@ export default {
 
     const playerNumfb = dbRef(db, this.roomCode + "/gameAttributes/zcount");
 
-    // onValue(playerNumfb, (snapshot) => {
-    //   const data = snapshot.val();
-    //   this.playerNum = data;
-    // });
-
   },
   data() {
     return {
@@ -51,8 +46,6 @@ export default {
         } else {
           const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
           set(playersFB, "");
-          const playerNumFB = dbRef(db, this.roomCode + "/gameAttributes/zcount");
-          set(playerNumFB, 0)
           this.playerNames[0] = this.name;
           this.addOk = false;
         }

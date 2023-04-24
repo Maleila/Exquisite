@@ -12,33 +12,43 @@ export default {
     LocalViewStory,
     InkButtonVS,
   },
+  //called when a component is added (ex when the page loads)
   mounted() {
-    //called when a component is added (ex when the page loads)
     this.focusInput();
 
-    const db = useDatabase();
-    const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
+    this.playerIndex = this.playerNames.indexOf(this.thisPlayer);
+    console.log("index: " + this.playerIndex);
 
-    onValue(currentFB, (snapshot) => {
-      const data = snapshot.val();
-      const currentPlayerFB = Object.values(data);
-      this.currentPlayer = currentPlayerFB[0];
-      this.zcount = currentPlayerFB[2];
-      console.log("current according to fb " + this.currentPlayer);
-      console.log("this player: " + this.thisPlayer);
-    });
+    if(this.remote) {
+      this.mutable = false;
+      const db = useDatabase();
+      const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
 
-    //const currTyperFB = dbRef(db, this.roomCode + "/players/" + this.currentPlayer);
+      //listen for changes to whose turn it is -- atm I think it gets called twice per turn change, once for zcount change and once for currentplayer change
+      onValue(currentFB, (snapshot) => {
+        const data = snapshot.val();
+        const currentPlayerFB = Object.values(data);
+        this.zcount = currentPlayerFB[1];
+        this.currentPlayer = this.playerNames[this.zcount];
+        console.log("current according to fb " + this.currentPlayer);
+        console.log("this player: " + this.thisPlayer);
+        this.onTurnChange();
+      });
 
-    // onValue(currTyperFB, (snapshot) => {
-    //   const data = snapshot.val();
-    //   const currentPlayerFB =
-    // });
+      const sentencesFB = dbRef(db, this.roomCode + "/players");
+
+      //listen for changes to the ongoing story
+      onValue(sentencesFB, (snapshot) => {
+        const data = snapshot.val();
+        this.sentenceArray = Object.values(data);     
+      });
+    }    
   },
   data() {
     return {
       current: "",
       currentPlayer: "",
+      playerIndex: 0,
       count: 1,
       finished: false,
       story: "",
@@ -46,14 +56,46 @@ export default {
       invis: false,
       mutable: true,
       zcount: 0,
+      sentenceArray: [],
     };
   },
   methods: {
+    onTurnChange(){
+      this.mutable = false;
+      console.log("turn changed!");
+      console.log("zcount: " + this.zcount);
+      if(this.zcount <= this.playerIndex) { //if it's not yet this player's turn
+        if(this.playerIndex > 0 && this.zcount > 0) {
+          const recent = this.zcount - 1;
+          console.log("most recent player: " + recent);
+          console.log("most recent sentence: " + this.sentenceArray[recent]);
+          if(recent == this.playerIndex - 1){ //if the last player to submit was immediately previous to this player
+            this.previous = this.sentenceArray[recent];
+          } else { //else add the most recent sentence to the invisible portion of the story
+            this.story = this.story.concat(this.sentenceArray[recent] + " "); 
+          }
+        }
+      }
+      if(this.zcount == this.playerIndex) {
+          this.mutable = true;
+          this.focusInput();
+      }
+    },
+    //send the finished story to LocalViewStory
     passStory() {
-      this.story = this.story.concat(this.previous);
+      if(!this.remote) {
+        this.story = this.story.concat(this.previous);
+      } else {
+        this.story = "";
+        for(let i = 0; i < this.sentenceArray.length; i++) {
+          this.story = this.story.concat(this.sentenceArray[i] + " ");
+          console.log("story: " + this.story)
+        }
+      }
       const { story } = this;
       this.$router.push({ name: "LocalViewStory", query: { story } });
     },
+    //reset game to play again (outdated, not in use at the moment)
     reset() {
       this.current = "";
       this.count = 1;
@@ -62,11 +104,13 @@ export default {
       this.previous = "";
       this.focusInput();
     },
+    //triggered on enter in contenteditable (ie when a player submits their sentence)
     submitStory() {
       this.invis = true;
       this.mutable = false;
       setTimeout(() => this.transition(), 900);
     },
+    //handles css fade effect and updates the ongoing story
     transition() {
       if (this.remote) {
         const db = useDatabase();
@@ -78,22 +122,12 @@ export default {
         const zcountFB = dbRef(db, this.roomCode + "/gameAttributes/zcount");
         this.zcount++;
         set(zcountFB, this.zcount);
-        if (this.zcount < this.playerNum) {
-          const attributesFB = dbRef(
-            db,
-            this.roomCode + "/gameAttributes/current"
-          );
-          const next =
-            parseInt(this.playerNames.indexOf(this.currentPlayer)) + 1;
-          console.log("next index:" + next);
-          console.log("next name: " + this.playerNames[next]);
-          set(attributesFB, this.playerNames[next]);
-        }
       }
       this.count++;
       this.story = this.story.concat(this.previous + " ");
 
       //remove transition for resetting opacity to 1, then re-add after the story is updated
+      //might want to make this its own method actually
       var prev = document.getElementById("prev");
       prev.classList.add("notransition");
       prev.style.opacity = 0.5;
@@ -110,24 +144,17 @@ export default {
       this.previous = this.current;
       this.current = "";
 
-      // var sample = document.getElementById("editable");
-      // sample.style.color = "red";
-      // sample.style.fontFamily = "Impact,Charcoal,sans-serif";
-      // var random = Math.floor(Math.random() * 3);
-      // if (random == 0) {
-      //   sample.style.fontFamily = "Impact,Charcoal,sans-serif";
-      // } else if (random == 1) {
-      //   sample.style.fontFamily = "Lucida Console, Courier New, monospace";
-      // } else {
-      //   sample.style.fontFamily = "Arial, Helvetica, sans-serif";
-      // }
-      this.mutable = true;
+      if(!this.remote) {
+        this.mutable = true;
+      }
       this.focusInput();
     },
+    //used for a previous method of viewing the story (when that was part of this component) -- not in use
     viewStory() {
       this.story = this.story.concat(this.previous);
       this.finished = true;
     },
+    //refocuses on the contenteditable (which is not otherwise visible)
     focusInput() {
       nextTick(() => {
         // Without the try and catch: Error message is: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'focus')
@@ -136,7 +163,7 @@ export default {
           //this.$refs.storyInput.focus(); //need this bc vue gets confused since the input field has a v-if
           document.getElementById("editable").focus();
         } catch (ex) {
-          // Print out the error message, commented out to avoid clustering the console
+          // Print out the error message
           console.log("Error detected: " + ex);
         }
       });
@@ -178,25 +205,28 @@ export default {
 <template>
   <div class="main-game">
     <h2 v-if="!finished && count <= playerNum && zcount < playerNum">
-      <div v-if="remote">roomCode={{ roomCode }}</div>
-      <div v-if="!remote || thisPlayer == currentPlayer">Your turn!</div>
+      <div class="roomcode" v-if="remote">RoomCode={{ roomCode }}</div>
+      <div class="title" v-if="remote && playerIndex == zcount">Your turn!</div>
+      <div class="title" v-if="remote && playerIndex != zcount">Waiting...</div>
       <div v-if="!remote" class="title">
         Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
       </div>
-      <!-- <div v-if="remote" class="title">
-        Player : {{ currentPlayer }}
-      </div> -->
 
-      <div v-if="remote && thisPlayer != currentPlayer">
-        Hi {{ thisPlayer }}, {{ currentPlayer }} is typing ....
-      </div>
-
-      <div v-if="!remote || thisPlayer == currentPlayer">
-        <div class="prompt">ENTER to submit</div>
-
+      <!--<div v-if="!remote || remote && playerIndex == zcount">-->
+        <div v-if="true">
+        <div class="prompt" v-if="playerIndex == zcount" >ENTER to submit</div>
+        <div class="prompt" v-if="remote && playerIndex != zcount">
+          Hi {{ thisPlayer }}, {{ currentPlayer }} ({{zcount +1}}/{{ playerNum }}) is typing ....
+        </div>
+        
         <br />
         <div class="story">
-          <span class="invisible">
+          <span 
+          class="invisible" 
+          id="invisible"
+          :style="{
+              opacity: remote ? 0.1 : 0.01,
+            }">
             {{ story }}
           </span>
           <span
@@ -244,7 +274,7 @@ export default {
     <br />
     <button @click="reset" v-if="finished && count > playerNum">
       Play Again
-    </button>
+    </button> <!-- No play again button? --> 
   </div>
 </template>
 
@@ -290,11 +320,14 @@ h3 {
 }
 
 .main-game .story {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   text-align: left;
   font-family: Desyre;
   font-size: 2em;
+  position: static;
+  margin-top: 5%;
+
 }
 
 .main-game .title {
@@ -304,6 +337,19 @@ h3 {
   margin: 0 auto;
   font-weight: 200;
   text-align: left;
+  position: fixed;
+}
+
+.main-game .roomcode {
+  top: 9%;
+  color: #484848;
+  font-size: 0.8em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 100;
+  text-align: left;
+  position: fixed;
+
 }
 
 .main-game .prompt {
@@ -313,6 +359,8 @@ h3 {
   margin: 0 auto;
   font-weight: 100;
   text-align: left;
+  position: fixed;
+  top: 20%;
 }
 
 .main-game .view-story {
@@ -320,7 +368,7 @@ h3 {
   justify-content: center;
   align-items: center;
   height: 80vh;
-  transform: scale(1.5);
+  /*transform: scale(1.5);*/
 }
 
 .main-game .view-story button {
@@ -335,4 +383,6 @@ h3 {
   font-size: 2em;
   padding: 10px 20px;
 }
+
+
 </style>
