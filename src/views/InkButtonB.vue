@@ -16,7 +16,7 @@
 }
 
 .ink-button button {
-  font-size: 3.5vh;
+  font-size: 8vh;
   font-weight: 100;
   color: #e1e1e1;
   background: None;
@@ -26,14 +26,16 @@
   font-family: inherit;
   /* transition: font-size 0.3s ease-in-out; */
   /* font-family: Desyre; */
-  /* font-family: "CalorieRegular"; */
+  font-family: "CalorieRegular";
+  -webkit-text-stroke: 0.15vh #e1e1e1;
 }
 
 .ink-button:hover {
   filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
 }
 .ink-button button:hover {
-  text-decoration: underline;
+  /* text-decoration: underline; */
+  -webkit-text-stroke: 0.2vh #e1e1e1;
 }
 /* .ink-button button:hover {
   font-size: 15vh;
