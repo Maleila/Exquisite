@@ -19,7 +19,7 @@ export default {
     this.playerIndex = this.playerNames.indexOf(this.thisPlayer);
     console.log("index: " + this.playerIndex);
 
-    if(this.remote) {
+    if (this.remote) {
       this.mutable = false;
       const db = useDatabase();
       const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
@@ -40,9 +40,9 @@ export default {
       //listen for changes to the ongoing story
       onValue(sentencesFB, (snapshot) => {
         const data = snapshot.val();
-        this.sentenceArray = Object.values(data);     
+        this.sentenceArray = Object.values(data);
       });
-    }    
+    }
   },
   data() {
     return {
@@ -60,36 +60,39 @@ export default {
     };
   },
   methods: {
-    onTurnChange(){
+    onTurnChange() {
       this.mutable = false;
       console.log("turn changed!");
       console.log("zcount: " + this.zcount);
-      if(this.zcount <= this.playerIndex) { //if it's not yet this player's turn
-        if(this.playerIndex > 0 && this.zcount > 0) {
+      if (this.zcount <= this.playerIndex) {
+        //if it's not yet this player's turn
+        if (this.playerIndex > 0 && this.zcount > 0) {
           const recent = this.zcount - 1;
           console.log("most recent player: " + recent);
           console.log("most recent sentence: " + this.sentenceArray[recent]);
-          if(recent == this.playerIndex - 1){ //if the last player to submit was immediately previous to this player
+          if (recent == this.playerIndex - 1) {
+            //if the last player to submit was immediately previous to this player
             this.previous = this.sentenceArray[recent];
-          } else { //else add the most recent sentence to the invisible portion of the story
-            this.story = this.story.concat(this.sentenceArray[recent] + " "); 
+          } else {
+            //else add the most recent sentence to the invisible portion of the story
+            this.story = this.story.concat(this.sentenceArray[recent] + " ");
           }
         }
       }
-      if(this.zcount == this.playerIndex) {
-          this.mutable = true;
-          this.focusInput();
+      if (this.zcount == this.playerIndex) {
+        this.mutable = true;
+        this.focusInput();
       }
     },
     //send the finished story to LocalViewStory
     passStory() {
-      if(!this.remote) {
+      if (!this.remote) {
         this.story = this.story.concat(this.previous);
       } else {
         this.story = "";
-        for(let i = 0; i < this.sentenceArray.length; i++) {
+        for (let i = 0; i < this.sentenceArray.length; i++) {
           this.story = this.story.concat(this.sentenceArray[i] + " ");
-          console.log("story: " + this.story)
+          console.log("story: " + this.story);
         }
       }
       const { story } = this;
@@ -144,7 +147,7 @@ export default {
       this.previous = this.current;
       this.current = "";
 
-      if(!this.remote) {
+      if (!this.remote) {
         this.mutable = true;
       }
       this.focusInput();
@@ -213,20 +216,23 @@ export default {
       </div>
 
       <!--<div v-if="!remote || remote && playerIndex == zcount">-->
-        <div v-if="true">
-        <div class="prompt" v-if="playerIndex == zcount" >ENTER to submit</div>
+      <div v-if="true">
+        <div class="prompt" v-if="playerIndex == zcount">ENTER to submit</div>
         <div class="prompt" v-if="remote && playerIndex != zcount">
-          Hi {{ thisPlayer }}, {{ currentPlayer }} ({{zcount +1}}/{{ playerNum }}) is typing ....
+          Hi {{ thisPlayer }}, {{ currentPlayer }} ({{ zcount + 1 }}/{{
+            playerNum
+          }}) is typing ....
         </div>
-        
+
         <br />
         <div class="story">
-          <span 
-          class="invisible" 
-          id="invisible"
-          :style="{
+          <span
+            class="invisible"
+            id="invisible"
+            :style="{
               opacity: remote ? 0.1 : 0.01,
-            }">
+            }"
+          >
             {{ story }}
           </span>
           <span
@@ -274,7 +280,8 @@ export default {
     <br />
     <button @click="reset" v-if="finished && count > playerNum">
       Play Again
-    </button> <!-- No play again button? --> 
+    </button>
+    <!-- No play again button? -->
   </div>
 </template>
 
@@ -327,7 +334,6 @@ h3 {
   font-size: 2em;
   position: static;
   margin-top: 5%;
-
 }
 
 .main-game .title {
@@ -349,7 +355,6 @@ h3 {
   font-weight: 100;
   text-align: left;
   position: fixed;
-
 }
 
 .main-game .prompt {
@@ -368,7 +373,7 @@ h3 {
   justify-content: center;
   align-items: center;
   height: 80vh;
-  /*transform: scale(1.5);*/
+  transform: scale(1.5);
 }
 
 .main-game .view-story button {
@@ -383,6 +388,4 @@ h3 {
   font-size: 2em;
   padding: 10px 20px;
 }
-
-
 </style>
