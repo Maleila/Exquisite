@@ -11,18 +11,19 @@
   background-image: url("../assets/inkVS.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 40vh;
+  background-size: 70vh;
   transition: 0.2s;
 }
 
 .ink-button button {
-  font-size: 8vh;
+  font-size: 15vh;
   font-weight: 100;
   color: #ededed;
   background: None;
   height: 15vh;
-  width: 40vh;
+  width: 70vh;
   border: None;
+  padding-bottom: 18vh;
   /* transition: font-size 0.3s ease-in-out; */
   /* font-family: inherit; */
   /* font-family: Desyre; */

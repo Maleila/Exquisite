@@ -373,7 +373,6 @@ h3 {
   justify-content: center;
   align-items: center;
   height: 80vh;
-  transform: scale(1.5);
 }
 
 .main-game .view-story button {

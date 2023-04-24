@@ -24,6 +24,7 @@
   width: 30vh;
   border: None;
   font-family: inherit;
+  padding-bottom: 1vh;
   /* transition: font-size 0.3s ease-in-out; */
   /* font-family: Desyre; */
   font-family: "CalorieRegular";
