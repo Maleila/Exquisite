@@ -27,16 +27,18 @@ export default {
     };
   },
   methods: {
-    addPlayer() {
-      this.playerNum++;
+    addPlayer() { 
       if (!this.remote) {
         if (this.name == ""){
           alert("Input your name")
-        }
-        else if (this.playerNum == 2) {
+        } 
+        else {
+          this.playerNum++;
+          if (this.playerNum == 2) {
           this.playerNames[0] = this.name;
         } else {
           this.playerNames[this.playerNum - 2] = this.name;
+        }
         }
       } else {
         console.log("adding player...")
@@ -44,6 +46,7 @@ export default {
         if (this.name == ""){
           alert("Input your name")
         } else {
+          this.playerNum++;
           const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
           set(playersFB, "");
           this.playerNames[0] = this.name;
