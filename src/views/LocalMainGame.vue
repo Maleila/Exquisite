@@ -181,10 +181,6 @@ export default {
       type: Array,
       required: true,
     },
-    rounds: {
-      type: Number,
-      required: true,
-    },
     remote: {
       type: Boolean,
       required: true,

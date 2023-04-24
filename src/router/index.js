@@ -37,7 +37,7 @@ const routes = [
     props: (route) => ({
       playerNum: parseInt(route.query.playerNum, 10),
       playerNames: route.query.playerNames,
-      rounds: parseInt(route.query.rounds, 10),
+      // rounds: parseInt(route.query.rounds, 10),
       remote: route.query.remote === "true",
       host: route.query.host === "true",
       roomCode: route.query.roomCode,

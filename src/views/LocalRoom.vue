@@ -1,5 +1,5 @@
 <script>
-import Rounds from "@/views/Rounds.vue";
+// import Rounds from "@/views/Rounds.vue";
 import Lobby from "@/views/Lobby.vue";
 import JoinRoom from "@/views/JoinRoom.vue";
 import { ref as dbRef, set, onDisconnect, onValue } from "firebase/database";
@@ -7,7 +7,6 @@ import { useDatabase, useDatabaseObject } from "vuefire";
 
 export default {
   components: {
-    Rounds,
     Lobby,
     JoinRoom,
   },
@@ -19,18 +18,14 @@ export default {
       playerNames: [],
       playersFB: [],
       thisPlayer: "",
-      rounds: 1,
       addPlayers: false,
-      roundSelect: true,
       enterCode: true,
       started: false,
       roomCode: "",
     };
   },
   methods: {
-    setRounds(rounds) {
-      this.rounds = rounds;
-      this.roundSelect = false;
+    createRoom() {
       this.addPlayers = true;
       if (this.host) {
         this.randRoomCode();
@@ -137,7 +132,6 @@ export default {
       const {
         playerNum,
         playerNames,
-        rounds,
         remote,
         host,
         roomCode,
@@ -148,7 +142,6 @@ export default {
         query: {
           playerNum,
           playerNames,
-          rounds,
           remote,
           host,
           roomCode,
@@ -181,12 +174,12 @@ export default {
 
     <div v-if="(remote && host) || !remote" class="settings">
       <div class="title">Game Settings</div>
-
-      <Rounds v-if="roundSelect" @setRounds="setRounds" />
+      <button v-if="addPlayers == false" @click="createRoom">Start a game!</button>
+     
     </div>
 
     <div v-if="addPlayers">
-      <div class="prompt">Rounds: {{ rounds }}</div>
+
       <div v-if="remote">Room Code: {{ roomCode }}</div>
       <Lobby
         :roomCode="roomCode"
