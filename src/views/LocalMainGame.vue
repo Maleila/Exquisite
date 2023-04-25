@@ -23,8 +23,10 @@ export default {
       this.mutable = false;
       const db = useDatabase();
       const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
+      //^^it would be much better to listen specifically to /gameAttributes/zcount but when I tried that before it caused issues
+      // - look at it again later
 
-      //listen for changes to whose turn it is -- atm I think it gets called twice per turn change, once for zcount change and once for currentplayer change
+      //listen for changes to whose turn it is based on zcount in firebase
       onValue(currentFB, (snapshot) => {
         const data = snapshot.val();
         const currentPlayerFB = Object.values(data);
@@ -53,6 +55,7 @@ export default {
       finished: false,
       story: "",
       previous: "",
+      following: "",
       invis: false,
       mutable: true,
       zcount: 0,
@@ -78,6 +81,11 @@ export default {
             this.story = this.story.concat(this.sentenceArray[recent] + " ");
           }
         }
+      } else if (this.zcount > this.playerIndex + 1) { //+1 so it doesn't grab the user's own sentence
+        const recent = this.zcount - 1;
+        console.log("most recent player: " + recent);
+        console.log("most recent sentence: " + this.sentenceArray[recent]);
+        this.following = this.following.concat(this.sentenceArray[recent] + " ")
       }
       if (this.zcount == this.playerIndex) {
         this.mutable = true;
@@ -256,6 +264,15 @@ export default {
             @keydown.enter="submitStory"
           >
           </contenteditable>
+          <span
+            class="invisible"
+            id="after"
+            :style="{
+              opacity: remote ? 0.1 : 0.01,
+            }"
+          >
+            {{ following }}
+          </span>
         </div>
       </div>
     </h2>
@@ -286,11 +303,11 @@ h3 {
   text-align: left !important;
 }
 
-#editable:after {
+/* #editable:after {
   content: "";
   display: inline-block;
-  width: 2em;
-}
+  width: 1em;
+} */
 
 .story {
   color: black;
