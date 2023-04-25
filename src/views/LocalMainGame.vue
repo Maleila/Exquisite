@@ -85,20 +85,33 @@ export default {
             this.story = this.story.concat(this.sentenceArray[recent] + " ");
           }
         }
-      } else if (this.zcount > this.playerIndex + 1) { //+1 so it doesn't grab the user's own sentence
+      } else if (this.zcount > this.playerIndex + 1) {
+        //+1 so it doesn't grab the user's own sentence
         const recent = this.zcount - 1;
 
-        this.following = this.following.concat(this.sentenceArray[recent] + " ")
+        this.following = this.following.concat(
+          this.sentenceArray[recent] + " "
+        );
       }
       if (this.zcount == this.playerIndex) {
         this.turnMessage = "Your turn!";
-        this.promptMessage = "Enter to submit"
+        this.promptMessage = "Enter to submit";
         this.mutable = true;
         this.focusInput();
-      } else if(this.zcount < this.playerNum) {
+      } else if (this.zcount < this.playerNum) {
         this.turnMessage = "Waiting...";
-        this.promptMessage = "Hi " + this.thisPlayer + ", " + this.currentPlayer + " (" + (this.zcount + 1 ) + "/" + this.playerNum + ") is typing...";
-      } else if (this.zcount == this.playerNum) { //maybe I want to wait on this until u click the button?
+        this.promptMessage =
+          "Hi " +
+          this.thisPlayer +
+          ", " +
+          this.currentPlayer +
+          " (" +
+          (this.zcount + 1) +
+          "/" +
+          this.playerNum +
+          ") is typing...";
+      } else if (this.zcount == this.playerNum) {
+        //maybe I want to wait on this until u click the button?
         this.turnMessage = "Completed Story";
         this.promptMessage = "By " + this.playerNames;
       }
@@ -175,8 +188,8 @@ export default {
     //used for a previous method of viewing the story (when that was part of this component) -- not in use
     viewStory() {
       if (!this.remote) {
-      this.story = this.story.concat(this.previous);
-      this.previous = "";
+        this.story = this.story.concat(this.previous);
+        this.previous = "";
       } else {
         this.story = "";
         for (let i = 0; i < this.sentenceArray.length; i++) {
@@ -239,12 +252,13 @@ export default {
         Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
       </div>
       <div v-if="!remote && count > playerNum" class="title">
-        Player {{ playerNum }} of {{ playerNum }}: {{ playerNames[playerNum - 1] }}
+        Player {{ playerNum }} of {{ playerNum }}:
+        {{ playerNames[playerNum - 1] }}
       </div>
 
       <div v-if="true">
-        <div class="prompt" v-if="!remote">ENTER to submit</div>
-        <div class="prompt" v-if="remote">{{ promptMessage }}</div>
+        <!-- TODO: can we remove this? -->
+        <div class="prompt" v-if="remote">{{ promptMessage }}></div>
 
         <br />
         <div class="story">
@@ -283,14 +297,12 @@ export default {
             @keydown.enter="submitStory"
           >
           </contenteditable>
-          <span
-            v-if="!finished"
-            class="invisible"
-            id="after"
-          >
+
+          <span v-if="!finished" class="invisible" id="after">
             {{ following }}
           </span>
         </div>
+        <div class="prompt" v-if="!remote">ENTER to submit</div>
       </div>
     </h2>
 
@@ -306,16 +318,14 @@ export default {
 
     <div v-if="!finished" class="view-story">
       <button
-        v-if="
-          (count > playerNum) || (remote && zcount >= playerNum)
-        "
+        v-if="count > playerNum || (remote && zcount >= playerNum)"
         @click="viewStory"
-      >View story</button>
+      >
+        View story
+      </button>
     </div>
 
-    <button @click="reset" v-if="finished && !remote">
-      Play Again
-    </button>
+    <button @click="reset" v-if="finished && !remote">Play Again</button>
     <!-- No play again button? -->
   </div>
 </template>
@@ -369,12 +379,15 @@ h3 {
 
 .main-game .title {
   /* font-family: Desyre; */
-  font-size: 2em;
-  width: 80%;
-  margin: 0 auto;
-  font-weight: 200;
-  text-align: left;
   position: fixed;
+  top: 0.5em;
+  left: 0.5em;
+  padding: 0.2em 0.5em;
+  border-radius: 0.2em;
+  font-size: 2em;
+  font-weight: 200;
+  background: #fffd;
+  z-index: 1;
 }
 
 .main-game .roomcode {
@@ -391,19 +404,14 @@ h3 {
 .main-game .prompt {
   color: #484848;
   font-size: 0.8em;
-  width: 80%;
-  margin: 0 auto;
   font-weight: 100;
   text-align: left;
-  position: fixed;
-  top: 20%;
 }
 
 .main-game .view-story {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
 }
 
 .main-game .view-story button {
