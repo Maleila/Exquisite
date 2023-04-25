@@ -3,6 +3,7 @@ import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
 import LocalViewStory from "@/views/LocalViewStory.vue";
 import InkButtonVS from "@/views/InkButtonVS.vue";
+import InkButtonB from "@/views/InkButtonB.vue";
 import { useDatabase, useDatabaseObject } from "vuefire";
 import { ref as dbRef, set, onDisconnect, onValue } from "firebase/database";
 
@@ -11,6 +12,7 @@ export default {
     contenteditable,
     LocalViewStory,
     InkButtonVS,
+    InkButtonB,
   },
   //called when a component is added (ex when the page loads)
   mounted() {
@@ -60,6 +62,8 @@ export default {
       mutable: true,
       zcount: 0,
       sentenceArray: [],
+      turnMessage: "",
+      promptMessage: "",
     };
   },
   methods: {
@@ -83,13 +87,20 @@ export default {
         }
       } else if (this.zcount > this.playerIndex + 1) { //+1 so it doesn't grab the user's own sentence
         const recent = this.zcount - 1;
-        console.log("most recent player: " + recent);
-        console.log("most recent sentence: " + this.sentenceArray[recent]);
+
         this.following = this.following.concat(this.sentenceArray[recent] + " ")
       }
       if (this.zcount == this.playerIndex) {
+        this.turnMessage = "Your turn!";
+        this.promptMessage = "Enter to submit"
         this.mutable = true;
         this.focusInput();
+      } else if(this.zcount < this.playerNum) {
+        this.turnMessage = "Waiting...";
+        this.promptMessage = "Hi " + this.thisPlayer + ", " + this.currentPlayer + " (" + (this.zcount + 1 ) + "/" + this.playerNum + ") is typing...";
+      } else if (this.zcount == this.playerNum) { //maybe I want to wait on this until u click the button?
+        this.turnMessage = "Completed Story";
+        this.promptMessage = "By " + this.playerNames;
       }
     },
     //send the finished story to LocalViewStory
@@ -111,6 +122,7 @@ export default {
       this.current = "";
       this.count = 1;
       this.finished = false;
+      this.mutable = true;
       this.story = "";
       this.previous = "";
       this.focusInput();
@@ -155,14 +167,23 @@ export default {
       this.previous = this.current;
       this.current = "";
 
-      if (!this.remote) {
+      if (!this.remote && this.count <= this.playerNum) {
         this.mutable = true;
       }
       this.focusInput();
     },
     //used for a previous method of viewing the story (when that was part of this component) -- not in use
     viewStory() {
+      if (!this.remote) {
       this.story = this.story.concat(this.previous);
+      this.previous = "";
+      } else {
+        this.story = "";
+        for (let i = 0; i < this.sentenceArray.length; i++) {
+          this.story = this.story.concat(this.sentenceArray[i] + " ");
+          console.log("story: " + this.story);
+        }
+      }
       this.finished = true;
     },
     //refocuses on the contenteditable (which is not otherwise visible)
@@ -211,22 +232,19 @@ export default {
 
 <template>
   <div class="main-game">
-    <h2 v-if="!finished && count <= playerNum && zcount < playerNum">
+    <h2>
       <div class="roomcode" v-if="remote">RoomCode={{ roomCode }}</div>
-      <div class="title" v-if="remote && playerIndex == zcount">Your turn!</div>
-      <div class="title" v-if="remote && playerIndex != zcount">Waiting...</div>
-      <div v-if="!remote" class="title">
+      <div class="title" v-if="remote">{{ turnMessage }}</div>
+      <div v-if="!remote && count <= playerNum" class="title">
         Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
       </div>
+      <div v-if="!remote && count > playerNum" class="title">
+        Player {{ playerNum }} of {{ playerNum }}: {{ playerNames[playerNum - 1] }}
+      </div>
 
-      <!--<div v-if="!remote || remote && playerIndex == zcount">-->
       <div v-if="true">
-        <div class="prompt" v-if="playerIndex == zcount">ENTER to submit</div>
-        <div class="prompt" v-if="remote && playerIndex != zcount">
-          Hi {{ thisPlayer }}, {{ currentPlayer }} ({{ zcount + 1 }}/{{
-            playerNum
-          }}) is typing ....
-        </div>
+        <div class="prompt" v-if="!remote">ENTER to submit</div>
+        <div class="prompt" v-if="remote">{{ promptMessage }}</div>
 
         <br />
         <div class="story">
@@ -234,7 +252,7 @@ export default {
             class="invisible"
             id="invisible"
             :style="{
-              opacity: remote ? 0.1 : 0.01,
+              opacity: finished ? 1 : 0.01,
             }"
           >
             {{ story }}
@@ -245,11 +263,12 @@ export default {
             :style="{
               opacity: invis ? 0.01 : 0.5,
             }"
-            v-if="count > 0"
+            v-if="count > 0 && !finished"
           >
             {{ previous + " " }}
           </span>
           <contenteditable
+            v-if="!finished"
             tag="div"
             :style="{
               opacity: invis ? 0.5 : 1,
@@ -265,11 +284,9 @@ export default {
           >
           </contenteditable>
           <span
+            v-if="!finished"
             class="invisible"
             id="after"
-            :style="{
-              opacity: remote ? 0.1 : 0.01,
-            }"
           >
             {{ following }}
           </span>
@@ -277,7 +294,7 @@ export default {
       </div>
     </h2>
 
-    <div class="view-story">
+    <!--<div class="view-story">
       <InkButtonVS
         v-if="
           (count > playerNum && !finished) || (remote && zcount >= playerNum)
@@ -285,13 +302,18 @@ export default {
         @click="passStory"
         role="link"
       />
+    </div>-->
+
+    <div v-if="!finished" class="view-story">
+      <button
+        v-if="
+          (count > playerNum) || (remote && zcount >= playerNum)
+        "
+        @click="viewStory"
+      >View story</button>
     </div>
 
-    <div class="story">
-      <h3 v-if="finished && count > playerNum">{{ story }}</h3>
-    </div>
-    <br />
-    <button @click="reset" v-if="finished && count > playerNum">
+    <button @click="reset" v-if="finished && !remote">
       Play Again
     </button>
     <!-- No play again button? -->
@@ -303,12 +325,6 @@ h3 {
   text-align: left !important;
 }
 
-/* #editable:after {
-  content: "";
-  display: inline-block;
-  width: 1em;
-} */
-
 .story {
   color: black;
   text-align: left !important;
@@ -316,6 +332,8 @@ h3 {
 
 .story .invisible {
   opacity: 0.01;
+  filter: opacity(100);
+  transition: opacity 3000ms ease-in-out;
 }
 
 .story .previous-sentence {
