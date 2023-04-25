@@ -1,10 +1,30 @@
 <script>
 export default {
+  data() {
+    return {
+      showButtons: false,
+      isRemote: true,
+    };
+  },
   methods: {
     startLocal() {
       const remote = false;
       const host = false;
       this.$router.push({ name: "LocalRoom", query: { remote, host } });
+    },
+    linkRemote() {
+      this.isRemote = false;
+      this.showButtons = true;
+    },
+    join() {
+      const host = false;
+      const remote = true;
+      this.$router.push({ name: "LocalRoom", query: { host, remote } });
+    },
+    host() {
+      const host = true;
+      const remote = true;
+      this.$router.push({ name: "LocalRoom", query: { host, remote } });
     },
   },
 };
@@ -19,10 +39,16 @@ export default {
         <button @click="navigate, startLocal()" role="link">LOCAL</button>
       </router-link>
 
-      <router-link to="/remote" custom v-slot="{ navigate }">
-        <button @click="navigate" role="link">REMOTE</button>
-      </router-link>
-
+      <button v-if="isRemote" @click="linkRemote">REMOTE</button>
+      <div v-if="showButtons" class="side-buttons">
+        <router-link to="/localroom" custom v-slot="{ navigate }">
+          <button @click="navigate, host()" role="link">HOST</button>
+        </router-link>
+        |
+        <router-link to="/localroom" custom v-slot="{ navigate }">
+          <button @click="navigate, join()" role="link">JOIN</button>
+        </router-link>
+      </div>
       <router-link to="/about" custom v-slot="{ navigate }">
         <button @click="navigate" role="link">ABOUT</button>
       </router-link>
@@ -70,5 +96,13 @@ export default {
 
 .home .empty {
   height: 18vh;
+}
+
+.home .side-buttons {
+  color: #434343;
+  font-family: inherit;
+  font-size: 3vh;
+  font-weight: 100;
+  letter-spacing: 0.3vh;
 }
 </style>
