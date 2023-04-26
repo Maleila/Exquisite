@@ -24,9 +24,6 @@
   width: 70vh;
   border: None;
   padding-bottom: 18vh;
-  /* transition: font-size 0.3s ease-in-out; */
-  /* font-family: inherit; */
-  /* font-family: Desyre; */
   font-family: "CalorieRegular";
 }
 
@@ -34,11 +31,6 @@
   filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
 }
 .ink-button button:hover {
-  /* text-decoration: underline; */
   -webkit-text-stroke: 0.1vh #e1e1e1;
 }
-/* .ink-button button:hover {
-    font-size: 15vh;
-    -webkit-text-stroke: 0.5px black;
-  } */
 </style>

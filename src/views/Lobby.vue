@@ -1,20 +1,18 @@
 <script>
-import { ref as dbRef, set, onDisconnect, onValue ,update} from "firebase/database";
-import { useDatabase, useDatabaseObject } from "vuefire";
+import { ref as dbRef, set, onValue} from "firebase/database";
+import { useDatabase } from "vuefire";
 
 export default {
   mounted() {
     const db = useDatabase();
     const playersfb = dbRef(db, this.roomCode + "/players");
 
+    //pulls all players in room from firebase
     onValue(playersfb, (snapshot) => {
       const data = snapshot.val();
       const playersData = Object.keys(data);
       this.players = playersData;
-      console.log(this.players);
     });
-
-    const playerNumfb = dbRef(db, this.roomCode + "/gameAttributes/zcount");
 
   },
   data() {
@@ -23,7 +21,7 @@ export default {
       players: "",
       playerNum: 1,
       name: "",
-      addOk: true,
+      addOk: true, //for remote game
     };
   },
   methods: {
@@ -41,7 +39,6 @@ export default {
         }
         }
       } else {
-        console.log("adding player...")
         const db = useDatabase();
         if (this.name == ""){
           alert("Input your name")
@@ -51,8 +48,7 @@ export default {
           set(playersFB, "");
           this.playerNames[0] = this.name;
           this.addOk = false;
-        }
-        
+        }  
       }
       this.name = "";
     },

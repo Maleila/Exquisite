@@ -2,7 +2,6 @@ import { createRouter, createWebHistory, parseQuery } from "vue-router";
 import Home from "@/views/Home.vue"; //.vue is necessary for Vite
 import About from "@/views/About.vue";
 import Gameplay from "@/views/Gameplay.vue";
-import Remote from "@/views/Remote.vue";
 import JoinRoom from "@/views/JoinRoom.vue";
 import LocalRoom from "@/views/LocalRoom.vue";
 import LocalMainGame from "@/views/LocalMainGame.vue";
@@ -12,7 +11,6 @@ const routes = [
   { path: "/", name: "Home", component: Home }, // Tell the router to render home component when the home route is visited
   { path: "/about", name: "About", component: About },
   { path: "/gameplay", name: "Gameplay", component: Gameplay },
-  { path: "/remote", name: "Remote", component: Remote },
   { path: "/joinroom", name: "JoinRoom", component: JoinRoom },
   {
     path: "/localviewstory",

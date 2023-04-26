@@ -4,8 +4,8 @@ import contenteditable from "vue-contenteditable";
 import LocalViewStory from "@/views/LocalViewStory.vue";
 import InkButtonVS from "@/views/InkButtonVS.vue";
 import InkButtonB from "@/views/InkButtonB.vue";
-import { useDatabase, useDatabaseObject } from "vuefire";
-import { ref as dbRef, set, onDisconnect, onValue } from "firebase/database";
+import { useDatabase } from "vuefire";
+import { ref as dbRef, set, onValue } from "firebase/database";
 
 export default {
   components: {
@@ -294,16 +294,6 @@ export default {
       </div>
     </h2>
 
-    <!--<div class="view-story">
-      <InkButtonVS
-        v-if="
-          (count > playerNum && !finished) || (remote && zcount >= playerNum)
-        "
-        @click="passStory"
-        role="link"
-      />
-    </div>-->
-
     <div v-if="!finished" class="view-story">
       <button
         v-if="
@@ -316,7 +306,7 @@ export default {
     <button @click="reset" v-if="finished && !remote">
       Play Again
     </button>
-    <!-- No play again button? -->
+
   </div>
 </template>
 

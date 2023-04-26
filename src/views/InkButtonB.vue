@@ -11,7 +11,7 @@
   background-image: url("../assets/inkB.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 40vh;
+  background-size: 40vh; 
   transition: 0.2s;
 }
 
@@ -25,8 +25,6 @@
   border: None;
   font-family: inherit;
   padding-bottom: 1vh;
-  /* transition: font-size 0.3s ease-in-out; */
-  /* font-family: Desyre; */
   font-family: "CalorieRegular";
   -webkit-text-stroke: 0.15vh #e1e1e1;
 }
@@ -35,11 +33,6 @@
   filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
 }
 .ink-button button:hover {
-  /* text-decoration: underline; */
   -webkit-text-stroke: 0.2vh #e1e1e1;
 }
-/* .ink-button button:hover {
-  font-size: 15vh;
-  -webkit-text-stroke: 0.5px black;
-} */
 </style>

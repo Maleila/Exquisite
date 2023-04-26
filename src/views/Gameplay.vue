@@ -32,7 +32,6 @@ export default {
 <style>
 .gameplay .title {
   color: #484848;
-  /* font-family: Desyre; */
   font-family: "CalorieRegular";
   font-size: 8em;
   width: 80%;
@@ -44,8 +43,6 @@ export default {
 }
 .gameplay .text {
   color: #484848;
-  /* font-family: Desyre; */
-  /* font-family: "CalorieRegular"; */
   font-size: 1.1em;
   width: 80%;
   margin: 0 auto;

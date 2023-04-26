@@ -29,7 +29,7 @@ export default {
   },
 };
 </script>
-
+<!-- Homepage, using router to go to other components -->
 <template>
   <div class="home">
     <h1>Exquisite</h1>

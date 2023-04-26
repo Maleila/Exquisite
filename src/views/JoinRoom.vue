@@ -7,6 +7,7 @@ export default {
     const db = useDatabase();
     const firebaseDB = dbRef(db, "/");
 
+    //pulls existing roomcodes from firebase
     onValue(firebaseDB, (snapshot) => {
         const data = snapshot.val();
         const roomCodeData = Object.keys(data);
@@ -24,6 +25,7 @@ export default {
   },
   methods: {
     submitPlayer() {
+      //checks for valid roomCode then join
         if (this.roomCode == ""){
             alert("Input room code");
         }
