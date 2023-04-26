@@ -15,11 +15,8 @@ Instructions of firebase deployment. These commands shall be run on cmd/terminal
 3. After making changes to the project and you would like to deploy it to the host, run:
 ```npm run build```
 4. Deploy to firebase:  ```firebase deploy```
-<<<<<<< HEAD
 
 
 ## Resources
 
 1. [Vue router tutorial from vueschool](https://vueschool.io/lessons/creating-the-project-with-vite-vite-only)
-=======
->>>>>>> c98b3bce0e8e4c6fcdf6d37cdb6a1b5118350d9f
