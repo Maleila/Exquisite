@@ -78,24 +78,39 @@ export default {
     },
     //for joining remotely, enters the specified room and listens for the game starting
     enterRoomCode(roomCode) {
-      this.roomCode = roomCode;
-      this.enterCode = false;
+  this.roomCode = roomCode;
+  this.enterCode = false;
+
+  const db = useDatabase();
+  const startedFB = dbRef(db, this.roomCode + "/gameAttributes");
+
+  // Check if the game has already started
+  onValue(startedFB, (snapshot) => {
+    const data = snapshot.val();
+    const start = Object.values(data);
+    this.started = start[0];
+
+    // Only proceed if the game hasn't started
+    if (!this.started) {
       this.addPlayers = true;
 
-      const db = useDatabase();
-      const startedFB = dbRef(db, this.roomCode + "/gameAttributes");
-      
       //listen for the host telling the game to start -- when this happens, grab the final copy of the list of players from Firebase
       onValue(startedFB, (snapshot) => {
         const data = snapshot.val();
         const start = Object.values(data);
         this.started = start[0];
-        if(this.started == true) {
+        if (this.started == true) {
           this.finalizePlayers();
           this.onStart();
         }
       });
-    },
+    } else {
+      console.log("Game already started. Cannot join.");
+      this.enterCode = true;
+    }
+  });
+},
+
     //grab final copy of the list of players from Firebase
     finalizePlayers() {
       this.playerNames = this.playersFB;
