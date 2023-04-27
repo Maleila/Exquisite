@@ -21,6 +21,8 @@ export default {
     this.playerIndex = this.playerNames.indexOf(this.thisPlayer);
     console.log("index: " + this.playerIndex);
 
+    this.formatAuthors();
+
     if (this.remote) {
       this.mutable = false;
       const db = useDatabase();
@@ -64,9 +66,11 @@ export default {
       sentenceArray: [],
       turnMessage: "",
       promptMessage: "",
+      authors: "",
     };
   },
   methods: {
+    //called on change to zcount in firebase
     onTurnChange() {
       this.mutable = false;
       console.log("turn changed!");
@@ -100,24 +104,20 @@ export default {
         this.promptMessage = "Hi " + this.thisPlayer + ", " + this.currentPlayer + " (" + (this.zcount + 1 ) + "/" + this.playerNum + ") is typing...";
       } else if (this.zcount == this.playerNum) { //maybe I want to wait on this until u click the button?
         this.turnMessage = "Completed Story";
-        this.promptMessage = "By " + this.playerNames;
+        this.promptMessage = "By " + this.authors;
+        setTimeout(() => this.finalTransition(), 960); //needs to wait the 900 ms for the last player's sentence to update
       }
     },
-    //send the finished story to LocalViewStory
-    passStory() {
-      if (!this.remote) {
-        this.story = this.story.concat(this.previous);
-      } else {
-        this.story = "";
-        for (let i = 0; i < this.sentenceArray.length; i++) {
-          this.story = this.story.concat(this.sentenceArray[i] + " ");
-          console.log("story: " + this.story);
-        }
+    //sets this.authors to String of playerNames with commas and "and"
+    formatAuthors(){
+      let formatted = "";
+      for (let i = 0; i < this.playerNames.length - 1; i++) {
+        formatted = formatted.concat(this.playerNames[i] + ", ")
       }
-      const { story } = this;
-      this.$router.push({ name: "LocalViewStory", query: { story } });
+      formatted = formatted.concat("and " + this.playerNames[this.playerNames.length - 1])
+      this.authors = formatted;
     },
-    //reset game to play again (outdated, not in use at the moment)
+    //reset game to play again (only used for local at the moment)
     reset() {
       this.current = "";
       this.count = 1;
@@ -169,8 +169,18 @@ export default {
 
       if (!this.remote && this.count <= this.playerNum) {
         this.mutable = true;
+      } else if (!this.remote && this.count > this.playerNum) {
+        this.finalTransition();
       }
       this.focusInput();
+    },
+    finalTransition(){
+      console.log("previous: " + this.previous);
+      this.invis = true;
+      setTimeout(() => {
+        this.story = this.story.concat(this.previous + " ");
+        this.previous = "";
+      }, 900);
     },
     //used for a previous method of viewing the story (when that was part of this component) -- not in use
     viewStory() {
@@ -239,11 +249,12 @@ export default {
         Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
       </div>
       <div v-if="!remote && count > playerNum" class="title">
-        Player {{ playerNum }} of {{ playerNum }}: {{ playerNames[playerNum - 1] }}
+        Completed Story
       </div>
 
-      <div v-if="true">
-        <div class="prompt" v-if="!remote">ENTER to submit</div>
+      <div v-if="true"> <!--should definitely get rid of this-->
+        <div class="prompt" v-if="!remote && count <= playerNum">ENTER to submit</div>
+        <div class="prompt" v-if="!remote && count > playerNum">By {{ authors }}</div>
         <div class="prompt" v-if="remote">{{ promptMessage }}</div>
 
         <br />

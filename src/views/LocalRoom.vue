@@ -110,7 +110,6 @@ export default {
     }
   });
 },
-
     //grab final copy of the list of players from Firebase
     finalizePlayers() {
       this.playerNames = this.playersFB;
