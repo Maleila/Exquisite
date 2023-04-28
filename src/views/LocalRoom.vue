@@ -2,8 +2,8 @@
 // import Rounds from "@/views/Rounds.vue";
 import Lobby from "@/views/Lobby.vue";
 import JoinRoom from "@/views/JoinRoom.vue";
-import { ref as dbRef, set, onDisconnect, onValue } from "firebase/database";
-import { useDatabase, useDatabaseObject } from "vuefire";
+import { ref as dbRef, set, onValue } from "firebase/database";
+import { useDatabase} from "vuefire";
 
 export default {
   components: {
@@ -38,7 +38,7 @@ export default {
         .map(function (x) {
           return x[Math.floor(Math.random() * x.length)];
         })
-        .join("");
+        .join(""); //Source: https://www.pakainfo.com/generate-random-password-in-vue-js/
       this.roomCode = row_password;
 
       const db = useDatabase();
@@ -176,7 +176,6 @@ export default {
     <div v-if="(remote && host) || !remote" class="settings">
       <div class="title">Game Settings</div>
       <button v-if="addPlayers == false" @click="createRoom">Start a game!</button>
-     
     </div>
 
     <div v-if="addPlayers">

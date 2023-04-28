@@ -13,7 +13,6 @@ export default {
         const roomCodeData = Object.keys(data);
         this.roomCodes = roomCodeData;
     });
-
   },
   data() {
     return {

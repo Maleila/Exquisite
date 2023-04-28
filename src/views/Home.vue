@@ -10,7 +10,6 @@ export default {
     startLocal() {
       const remote = false;
       const host = false;
-
       this.$router.push({ name: "LocalRoom", query: { remote, host } });
     },
     linkRemote() {
@@ -40,7 +39,6 @@ export default {
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A STORY WRITING GAME WITH FRIENDS</h4>
-    <!-- <div class="empty"></div> -->
     <br>
     <br>
     <div class="button">
