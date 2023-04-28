@@ -10,6 +10,7 @@ export default {
     startLocal() {
       const remote = false;
       const host = false;
+
       this.$router.push({ name: "LocalRoom", query: { remote, host } });
     },
     linkRemote() {
@@ -26,6 +27,7 @@ export default {
       const remote = true;
       this.$router.push({ name: "LocalRoom", query: { host, remote } });
     },
+    
   },
 };
 </script>
@@ -33,7 +35,14 @@ export default {
 <template>
   <div class="home">
     <h1>Exquisite</h1>
-    <div class="empty"></div>
+    <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A STORY WRITING GAME WITH FRIENDS</h4>
+    <!-- <div class="empty"></div> -->
+    <br>
+    <br>
     <div class="button">
       <router-link to="/localroom" custom v-slot="{ navigate }">
         <button @click="navigate, startLocal()" role="link">LOCAL</button>
@@ -68,6 +77,19 @@ export default {
   font-size: 55vh;
   line-height: 35vh;
   margin: 0;
+}
+
+.home h4 {
+  filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
+  color: #484848;
+  font-family: inherit;
+  font-size: 3vh;
+  font-weight: 100;
+  margin-bottom: 3.5vh;
+  border: none;
+  background: none;
+  letter-spacing: 0.3vh;
+  transition: 0.3s;
 }
 
 .home .button {

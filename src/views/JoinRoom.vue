@@ -1,6 +1,6 @@
 <script>
-import { ref as dbRef, set , onDisconnect, onValue} from 'firebase/database';
-import { useDatabase, useDatabaseObject } from 'vuefire';
+import { ref as dbRef, onValue} from 'firebase/database';
+import { useDatabase} from 'vuefire';
 
 export default {
   mounted() {
