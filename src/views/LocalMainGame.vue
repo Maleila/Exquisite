@@ -126,6 +126,7 @@ export default {
       this.mutable = true;
       this.story = "";
       this.previous = "";
+      this.showButton = false;
       this.focusInput();
     },
     //triggered on enter in contenteditable (ie when a player submits their sentence)
