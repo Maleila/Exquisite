@@ -62,6 +62,7 @@ export default {
       following: "",
       invis: false,
       mutable: true,
+      showButton: false,
       zcount: 0,
       sentenceArray: [],
       turnMessage: "",
@@ -180,9 +181,10 @@ export default {
       setTimeout(() => {
         this.story = this.story.concat(this.previous + " ");
         this.previous = "";
+        this.showButton = true;
       }, 900);
     },
-    //used for a previous method of viewing the story (when that was part of this component) -- not in use
+    //puts together story
     viewStory() {
       if (!this.remote) {
       this.story = this.story.concat(this.previous);
@@ -308,7 +310,7 @@ export default {
     <div v-if="!finished" class="view-story">
       <button
         v-if="
-          (count > playerNum) || (remote && zcount >= playerNum)
+          showButton
         "
         @click="viewStory"
       >View story</button>

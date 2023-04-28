@@ -28,7 +28,7 @@ export default {
     addPlayer() { 
       if (!this.remote) {
         if (this.name == ""){
-          alert("Input your name")
+          alert("Input your name");
         } 
         else {
           this.playerNum++;

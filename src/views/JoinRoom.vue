@@ -12,7 +12,7 @@ export default {
         const data = snapshot.val();
         const roomCodeData = Object.keys(data);
         this.roomCodes = roomCodeData;
-    })
+    });
 
   },
   data() {
@@ -21,18 +21,30 @@ export default {
       roomCode: "",
       submit: false,
       roomCodes: "",
+      started: false,
     }
   },
   methods: {
     submitPlayer() {
-      //checks for valid roomCode then join
+      const db = useDatabase();
+      const startedFB = dbRef(db, this.roomCode + "/gameAttributes");
+      
+      // Check if the game has already started
+      onValue(startedFB, (snapshot) => {
+        const data = snapshot.val();
+        const start = Object.values(data);
+        this.started = start[0];
+      });
+
+      //checks for valid roomCode
         if (this.roomCode == ""){
             alert("Input room code");
         }
         else if (!(this.roomCodes).includes(this.roomCode)) {
             alert("Invalid room code");
-        } 
-        else {
+        } else if (this.started) {
+          alert("Game already started");
+        } else {
          this.$emit('enterRoomCode', this.roomCode);
         }
     },
