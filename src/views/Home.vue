@@ -38,7 +38,7 @@ export default {
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A STORY WRITING GAME WITH FRIENDS</h4>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A COLLABORATIVE STORY WRITING GAME</h4>
     <br>
     <br>
     <div class="button">

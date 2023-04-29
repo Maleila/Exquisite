@@ -127,7 +127,7 @@ export default {
         this.turnMessage = "Waiting...";
         this.promptMessage = "Hi " + this.thisPlayer + ", " + this.currentPlayer + " (" + (this.zcount + 1 ) + "/" + this.playerNum + ") is typing...";
       } else if (this.zcount == this.playerNum) { //maybe I want to wait on this until u click the button?
-        this.turnMessage = "Completed Story";
+        this.turnMessage = "Exquisite Corpse";
         this.promptMessage = "By " + this.authors;
         setTimeout(() => this.finalTransition(), 960); //needs to wait the 900 ms for the last player's sentence to update
       }
@@ -286,7 +286,7 @@ export default {
         Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
       </div>
       <div v-if="!remote && count > playerNum" class="title">
-        Completed Story
+        Exquisite Corpse
       </div>
 
       <div v-if="true"> <!--should definitely get rid of this-->
