@@ -97,7 +97,13 @@ export default {
       }
       if (this.zcount == this.playerIndex) {
         this.turnMessage = "Your turn!";
-        this.promptMessage = "Enter to submit";
+        if (this.zcount == 0){
+          this.promptMessage = "Start the most interesting story";
+        } else if (this.zcount == this.playerNum - 1){
+          this.promptMessage = "Finish this great story";
+        } else {
+          this.promptMessage = "Continue this fun story";
+        }
         this.mutable = true;
         this.focusInput();
       } else if(this.zcount < this.playerNum) {
@@ -300,6 +306,7 @@ export default {
           >
           </contenteditable>
           <span class = "enterPrompt" v-if="!remote && count <= playerNum">ENTER to submit</span>
+          <span class = "enterPrompt" v-if="remote && this.playerIndex == this.zcount ">ENTER to submit</span>
           <span
             v-if="!finished"
             class="invisible"
