@@ -97,7 +97,7 @@ export default {
       }
       if (this.zcount == this.playerIndex) {
         this.turnMessage = "Your turn!";
-        this.promptMessage = "Enter to submit"
+        this.promptMessage = "Enter to submit";
         this.mutable = true;
         this.focusInput();
       } else if(this.zcount < this.playerNum) {
@@ -256,7 +256,7 @@ export default {
       </div>
 
       <div v-if="true"> <!--should definitely get rid of this-->
-        <div class="prompt" v-if="!remote && count <= playerNum">ENTER to submit</div>
+        
         <div class="prompt" v-if="!remote && count > playerNum">By {{ authors }}</div>
         <div class="prompt" v-if="remote">{{ promptMessage }}</div>
 
@@ -281,6 +281,7 @@ export default {
           >
             {{ previous + " " }}
           </span>
+          
           <contenteditable
             v-if="!finished"
             tag="div"
@@ -297,6 +298,7 @@ export default {
             @keydown.enter="submitStory"
           >
           </contenteditable>
+          <span class = "enterPrompt" v-if="!remote && count <= playerNum">ENTER to submit</span>
           <span
             v-if="!finished"
             class="invisible"
@@ -403,6 +405,28 @@ h3 {
   top: 20%;
 }
 
+.main-game .enterPrompt {
+  color: #484848;
+  font-family: Avenir, Papyrus, system-ui, Helvetica, Arial, sans-serif;
+  font-size: 0.5em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 100;
+  text-align: left;
+}
+/* 
+ {
+  color: #484848;
+  font-family: inherit;
+  font-size: 0.8em;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 100;
+  text-align: left;
+} */
+
+
+
 .main-game .view-story {
   display: flex;
   justify-content: center;
@@ -414,6 +438,8 @@ h3 {
   background-color: transparent;
   /* border: none; */
   border-radius: 20px;
+  position: fixed;
+  top: 30%;
   /* font-family: CalorieRegular; */
   font-family: inherit;
   text-align: center;
