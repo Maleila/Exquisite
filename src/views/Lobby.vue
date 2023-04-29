@@ -1,6 +1,7 @@
 <script>
 import { ref as dbRef, set, onValue} from "firebase/database";
 import { useDatabase } from "vuefire";
+import { nextTick } from "vue";
 
 export default {
   mounted() {
@@ -13,6 +14,8 @@ export default {
       const playersData = Object.keys(data);
       this.players = playersData;
     });
+
+    this.focusInput();
   },
   data() {
     return {
@@ -36,6 +39,7 @@ export default {
           } else {
             this.playerNames[this.playerNum - 2] = this.name;
           }
+          this.focusInput();
         }
       } else {
         const db = useDatabase();
@@ -50,6 +54,22 @@ export default {
         }  
       }
       this.name = "";
+    },
+    focusInput() {
+      nextTick(() => {
+        // Without the try and catch: Error message is: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'focus')
+        // Need a try and catch block b/c you can only access the ref after the component is mounted. So the first render this.$ref.storyInput is going to be null and raise a promise error. This try and catch block doesn't change the overall logic of this method and only serves as a way to reduce any errors on console. Reference: https://vuejs.org/guide/essentials/template-refs.html#accessing-the-refs
+        try {
+          if(!this.remote) {
+            document.getElementById("localInput").focus();
+          } else {
+            document.getElementById("remoteInput").focus();
+          }   
+        } catch (ex) {
+          // Print out the error message
+          console.log("Error detected: " + ex);
+        }
+      });
     },
   },
   props: {
@@ -79,8 +99,8 @@ export default {
     {{ item }}
   </li>
 
-  <input v-if="addOk && !remote" @keydown.enter="addPlayer" v-model="name" />
-  <input v-if="addOk && remote" @keydown.enter="addPlayer(), $emit('setPlayers', playerNames)" v-model="name" />
+  <input id="localInput" v-if="addOk && !remote" @keydown.enter="addPlayer" v-model="name" />
+  <input id="remoteInput" v-if="addOk && remote" @keydown.enter="addPlayer(), $emit('setPlayers', playerNames)" v-model="name" />
   <br />
   <!--If local game, Add button only adds player-->
   <button v-if="addOk && !remote" @click="addPlayer">Add</button>

@@ -1,5 +1,4 @@
 <script>
-// import Rounds from "@/views/Rounds.vue";
 import Lobby from "@/views/Lobby.vue";
 import JoinRoom from "@/views/JoinRoom.vue";
 import { ref as dbRef, set, onValue } from "firebase/database";

@@ -1,6 +1,7 @@
 <script>
 import { ref as dbRef, onValue} from 'firebase/database';
 import { useDatabase} from 'vuefire';
+import { nextTick } from "vue";
 
 export default {
   mounted() {
@@ -13,6 +14,8 @@ export default {
         const roomCodeData = Object.keys(data);
         this.roomCodes = roomCodeData;
     });
+
+    this.focusInput();
   },
   data() {
     return {
@@ -47,6 +50,20 @@ export default {
          this.$emit('enterRoomCode', this.roomCode);
         }
     },
+    focusInput() {
+      nextTick(() => {
+        // Without the try and catch: Error message is: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'focus')
+        // Need a try and catch block b/c you can only access the ref after the component is mounted. So the first render this.$ref.storyInput is going to be null and raise a promise error. 
+        //This try and catch block doesn't change the overall logic of this method and only serves as a way to reduce any errors on console. 
+        //Reference: https://vuejs.org/guide/essentials/template-refs.html#accessing-the-refs
+        try {
+          document.getElementById("codeInput").focus();
+        } catch (ex) {
+          // Print out the error message
+          console.log("Error detected: " + ex);
+        }
+      });
+    },
   }
 }
 </script>
@@ -57,7 +74,7 @@ export default {
     <h2>Room Code</h2>
     {{roomCode}}
     <br>
-    <input @keydown.enter="submitPlayer" v-model="roomCode">
+    <input id="codeInput" @keydown.enter="submitPlayer" v-model="roomCode">
     <button @click="submitPlayer">Enter Room</button>
   </div>
 </template>
