@@ -127,6 +127,7 @@ export default {
       this.story = "";
       this.previous = "";
       this.showButton = false;
+      this.invis = false;
       this.focusInput();
     },
     //triggered on enter in contenteditable (ie when a player submits their sentence)
@@ -354,7 +355,7 @@ h3 {
   filter: opacity(100);
   transition: opacity 900ms ease-in-out;
   text-align: left !important;
-  display: inline-block;
+  display: inline;
 }
 .story .new-text:focus-visible {
   outline: none !important;
