@@ -4,6 +4,7 @@ import { useDatabase } from "vuefire";
 import { nextTick } from "vue";
 
 export default {
+  emits: ['setPlayers'],
   mounted() {
     const db = useDatabase();
     const playersfb = dbRef(db, this.roomCode + "/players");
