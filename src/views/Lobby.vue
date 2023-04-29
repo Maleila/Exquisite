@@ -114,4 +114,9 @@ export default {
 .prompt {
   font-size: 2vh;
 }
+
+li {
+  list-style-position: inside;
+  /* probably don't need to cite this but it's from here: https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Styling_lists */
+}
 </style>

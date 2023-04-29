@@ -18,6 +18,9 @@ export default {
   mounted() {
     this.focusInput();
 
+    //code from this website: https://fontawesomeicons.com/fa/vue-js-on-tab-close-event
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
+
     this.playerIndex = this.playerNames.indexOf(this.thisPlayer);
     console.log("index: " + this.playerIndex);
 
@@ -50,6 +53,10 @@ export default {
       });
     }
   },
+  //code from this website: https://fontawesomeicons.com/fa/vue-js-on-tab-close-event
+  beforeUnmount() {
+        window.removeEventListener('beforeunload', this.handleBeforeUnload);
+      },
   data() {
     return {
       current: "",
@@ -68,9 +75,19 @@ export default {
       turnMessage: "",
       promptMessage: "",
       authors: "",
+      isTabClosed: false,
     };
   },
   methods: {
+    //code from this website: https://fontawesomeicons.com/fa/vue-js-on-tab-close-event
+    handleBeforeUnload(event) {
+      // This method will be called when the user leaves the page or closes the tab
+      this.isTabClosed = true;
+
+      // Optionally, you can show a confirmation dialog to the user
+      event.preventDefault();
+      event.returnValue = ''; //have to return something or firefox will be angry
+    },
     //called on change to zcount in firebase
     onTurnChange() {
       this.mutable = false;
@@ -221,6 +238,16 @@ export default {
       });
     },
   },
+  //code from this website: https://fontawesomeicons.com/fa/vue-js-on-tab-close-event
+  watch: {
+        isTabClosed(newValue) {
+          // This watch will be triggered when the isTabClosed data property changes
+          if (newValue) {
+            // Add your code here to handle the beforeunload event
+            console.log('User left the page or closed the tab');
+          }
+        },
+      },
   props: {
     playerNum: {
       type: Number,
