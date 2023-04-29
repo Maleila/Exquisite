@@ -30,7 +30,7 @@ export default {
   methods: {
     addPlayer() { 
       if (!this.remote) {
-        if (this.name == ""){
+        if (this.name.trim() == ""){
           alert("Input your name");
         } 
         else {
@@ -44,7 +44,7 @@ export default {
         }
       } else {
         const db = useDatabase();
-        if (this.name == ""){
+        if (this.name.trim() == ""){
           alert("Input your name")
         } else {
           this.playerNum++;
