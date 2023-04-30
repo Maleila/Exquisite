@@ -118,11 +118,11 @@ export default {
       if (this.zcount == this.playerIndex) {
         this.turnMessage = "Your turn!";
         if (this.zcount == 0) {
-          this.promptMessage = "Start the most interesting story";
+          this.promptMessage = "Start the most interesting story - ENTER to submit";
         } else if (this.zcount == this.playerNum - 1) {
-          this.promptMessage = "Finish this great story";
+          this.promptMessage = "Finish this great story - ENTER to submit";
         } else {
-          this.promptMessage = "Continue this fun story";
+          this.promptMessage = "Continue this fun story - ENTER to submit";
         }
         this.mutable = true;
         this.focusInput();
@@ -142,7 +142,7 @@ export default {
         //maybe I want to wait on this until u click the button?
         this.turnMessage = "Exquisite Corpse";
         this.promptMessage = "By " + this.authors;
-        setTimeout(() => this.finalTransition(), 960); //needs to wait the 900 ms for the last player's sentence to update
+        setTimeout(() => this.finalTransition(), 920); //needs to wait the 900 ms for the last player's sentence to update
       }
     },
     //sets this.authors to String of playerNames with commas and "and"
@@ -310,6 +310,7 @@ export default {
         <div class="prompt" v-if="!remote && count > playerNum">
           By {{ authors }}
         </div>
+        <div class="prompt" v-if="!remote && count <= playerNum">ENTER to submit</div>
         <div class="prompt" v-if="remote">{{ promptMessage }}</div>
 
         <br />
@@ -350,14 +351,14 @@ export default {
             @keydown.enter="submitStory"
           >
           </contenteditable>
-          <span class="enterPrompt" v-if="!remote && count <= playerNum"
+          <!--<span class="enterPrompt" v-if="!remote && count <= playerNum"
             >ENTER to submit</span
-          >
-          <span
+          >-->
+          <!--<span
             class="enterPrompt"
             v-if="remote && this.playerIndex == this.zcount"
             >ENTER to submit</span
-          >
+          >-->
           <span v-if="!finished" class="invisible" id="after">
             {{ following }}
           </span>

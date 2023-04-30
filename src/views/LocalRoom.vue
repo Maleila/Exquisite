@@ -189,9 +189,9 @@ export default {
         :host="host"
         @setPlayers="setPlayers"
       />
+      <!-- <InkButtonR2 v-if="host" @click="startGame()" /> -->
+      <button v-if="host" @click="startGame()">Start</button>
     </div>
-    <!-- <InkButtonR2 v-if="host" @click="startGame()" /> -->
-    <button v-if="host" @click="startGame()">Start</button>
   </div>
 </template>
 
