@@ -26,7 +26,6 @@ export default {
       const remote = true;
       this.$router.push({ name: "LocalRoom", query: { host, remote } });
     },
-    
   },
 };
 </script>
@@ -34,13 +33,15 @@ export default {
 <template>
   <div class="home">
     <h1>Exquisite</h1>
-    <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <h4>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A COLLABORATIVE STORY WRITING GAME</h4>
-    <br>
-    <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A COLLABORATIVE STORY WRITING GAME
+    </h4>
+    <br />
+    <br />
     <div class="button">
       <router-link to="/localroom" custom v-slot="{ navigate }">
         <button @click="navigate, startLocal()" role="link">LOCAL</button>
@@ -78,7 +79,6 @@ export default {
 }
 
 .home h4 {
-  filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
   color: #484848;
   font-family: inherit;
   font-size: 3vh;

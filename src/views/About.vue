@@ -1,5 +1,5 @@
 <script>
-import InkButtonB from "@/views/InkButtonB.vue";
+import InkButtonB from "@/views/buttons/InkButtonB.vue";
 
 export default {
   components: {
@@ -53,12 +53,12 @@ export default {
 }
 .about .text {
   color: #484848;
-  font-size: 1.1em;
+  font-size: 1.2em;
   width: 80%;
   margin: 0 auto;
   font-weight: 200;
   text-align: left;
-  line-height: 1.7em;
+  line-height: 1.5em;
 }
 .about .empty {
   height: 0.5vh;

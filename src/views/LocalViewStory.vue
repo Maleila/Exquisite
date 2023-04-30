@@ -1,5 +1,5 @@
 <script>
-import InkButtonB from "@/views/InkButtonB.vue";
+import InkButtonB from "@/views/buttons/InkButtonB.vue";
 
 export default {
   props: {

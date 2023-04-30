@@ -1,5 +1,5 @@
 <script>
-import InkButtonB from "@/views/InkButtonB.vue";
+import InkButtonB from "@/views/buttons/InkButtonB.vue";
 
 export default {
   components: {
@@ -43,7 +43,7 @@ export default {
 }
 .gameplay .text {
   color: #484848;
-  font-size: 1.1em;
+  font-size: 1.2em;
   width: 80%;
   margin: 0 auto;
   font-weight: 200;

@@ -1,16 +1,19 @@
 <script>
 import Lobby from "@/views/Lobby.vue";
 import JoinRoom from "@/views/JoinRoom.vue";
+import InkButtonR1 from "@/views/buttons/InkButtonR1.vue";
+import InkButtonR2 from "@/views/buttons/InkButtonR2.vue";
 import { ref as dbRef, set, onValue } from "firebase/database";
-import { useDatabase} from "vuefire";
+import { useDatabase } from "vuefire";
 
 export default {
   components: {
     Lobby,
     JoinRoom,
+    InkButtonR1,
+    InkButtonR2,
   },
-  mounted() {
-  },
+  mounted() {},
   data() {
     return {
       playerNum: 1,
@@ -46,7 +49,7 @@ export default {
       set(roomCodeFB, {
         created: true,
       });
-      
+
       const startedFB = dbRef(db, this.roomCode + "/gameAttributes/started");
       set(startedFB, false);
     },
@@ -64,14 +67,14 @@ export default {
 
       this.thisPlayer = playerNames[0];
       console.log("this player: " + this.thisPlayer);
-      if(!this.remote) {
+      if (!this.remote) {
         this.playerNames = playerNames;
       } else {
         this.playerNames = this.playersFB;
       }
       console.log("player names: " + this.playerNames);
       this.playerNum = this.playerNames.length;
-      if(!this.remote) {
+      if (!this.remote) {
         this.startGame();
       }
     },
@@ -100,7 +103,7 @@ export default {
     finalizePlayers() {
       this.playerNames = this.playersFB;
       this.playerNum = this.playerNames.length;
-      console.log("final players: " + this.playerNames)
+      console.log("final players: " + this.playerNames);
     },
     //for host, sets the current player to the first in the list and tells firebase to start the game for all players
     //for host and playing locally, shows an alert for fewer than 2 players
@@ -108,35 +111,34 @@ export default {
       if (this.remote) {
         const db = useDatabase();
         this.finalizePlayers();
-        if (this.playerNum >= 2){
-          const playerNumFB = dbRef(db, this.roomCode + "/gameAttributes/zcount");
-          set(playerNumFB, 0)
+        if (this.playerNum >= 2) {
+          const playerNumFB = dbRef(
+            db,
+            this.roomCode + "/gameAttributes/zcount"
+          );
+          set(playerNumFB, 0);
 
-          const startedFB = dbRef(db, this.roomCode + "/gameAttributes/started");
+          const startedFB = dbRef(
+            db,
+            this.roomCode + "/gameAttributes/started"
+          );
           set(startedFB, true);
           this.onStart();
-          } else {
-            alert("Wait for more players")
-            }
-      }
-      else {
-        if (this.playerNum >= 2){
-        this.onStart();
         } else {
-          alert("Add more players")
+          alert("Wait for more players");
+        }
+      } else {
+        if (this.playerNum >= 2) {
+          this.onStart();
+        } else {
+          alert("Add more players");
         }
       }
     },
     //sends props to LocalMainGame to start game
-    onStart(){
-      const {
-        playerNum,
-        playerNames,
-        remote,
-        host,
-        roomCode,
-        thisPlayer,
-      } = this;
+    onStart() {
+      const { playerNum, playerNames, remote, host, roomCode, thisPlayer } =
+        this;
       this.$router.push({
         name: "LocalGame",
         query: {
@@ -174,11 +176,12 @@ export default {
 
     <div v-if="(remote && host) || !remote" class="settings">
       <div class="title">Game Settings</div>
-      <button v-if="addPlayers == false" @click="createRoom">Start a game!</button>
+      <button v-if="addPlayers == false" @click="createRoom">
+        Start a game!
+      </button>
     </div>
 
     <div v-if="addPlayers">
-
       <div v-if="remote">Room Code: {{ roomCode }}</div>
       <Lobby
         :roomCode="roomCode"
@@ -193,6 +196,10 @@ export default {
       <router-link to="/" custom v-slot="{ navigate }">
         <button @click="navigate" role="link">Back</button>
       </router-link>
+    </div>
+    <div class="button-backet">
+      <InkButtonR1 />
+      <InkButtonR2 />
     </div>
   </div>
 </template>

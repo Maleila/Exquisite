@@ -2,8 +2,8 @@
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
 import LocalViewStory from "@/views/LocalViewStory.vue";
-import InkButtonVS from "@/views/InkButtonVS.vue";
-import InkButtonB from "@/views/InkButtonB.vue";
+import InkButtonVS from "@/views/buttons/InkButtonVS.vue";
+import InkButtonB from "@/views/buttons/InkButtonB.vue";
 import { useDatabase } from "vuefire";
 import { ref as dbRef, set, onValue } from "firebase/database";
 
@@ -19,7 +19,7 @@ export default {
     this.focusInput();
 
     //code from this website: https://fontawesomeicons.com/fa/vue-js-on-tab-close-event
-    window.addEventListener('beforeunload', this.handleBeforeUnload);
+    window.addEventListener("beforeunload", this.handleBeforeUnload);
 
     this.playerIndex = this.playerNames.indexOf(this.thisPlayer);
     console.log("index: " + this.playerIndex);
@@ -55,8 +55,8 @@ export default {
   },
   //code from this website: https://fontawesomeicons.com/fa/vue-js-on-tab-close-event
   beforeUnmount() {
-        window.removeEventListener('beforeunload', this.handleBeforeUnload);
-      },
+    window.removeEventListener("beforeunload", this.handleBeforeUnload);
+  },
   data() {
     return {
       current: "",
@@ -86,7 +86,7 @@ export default {
 
       // Optionally, you can show a confirmation dialog to the user
       event.preventDefault();
-      event.returnValue = ''; //have to return something or firefox will be angry
+      event.returnValue = ""; //have to return something or firefox will be angry
     },
     //called on change to zcount in firebase
     onTurnChange() {
@@ -107,38 +107,53 @@ export default {
             this.story = this.story.concat(this.sentenceArray[recent] + " ");
           }
         }
-      } else if (this.zcount > this.playerIndex + 1) { //+1 so it doesn't grab the user's own sentence
+      } else if (this.zcount > this.playerIndex + 1) {
+        //+1 so it doesn't grab the user's own sentence
         const recent = this.zcount - 1;
 
-        this.following = this.following.concat(this.sentenceArray[recent] + " ")
+        this.following = this.following.concat(
+          this.sentenceArray[recent] + " "
+        );
       }
       if (this.zcount == this.playerIndex) {
         this.turnMessage = "Your turn!";
-        if (this.zcount == 0){
+        if (this.zcount == 0) {
           this.promptMessage = "Start the most interesting story";
-        } else if (this.zcount == this.playerNum - 1){
+        } else if (this.zcount == this.playerNum - 1) {
           this.promptMessage = "Finish this great story";
         } else {
           this.promptMessage = "Continue this fun story";
         }
         this.mutable = true;
         this.focusInput();
-      } else if(this.zcount < this.playerNum) {
+      } else if (this.zcount < this.playerNum) {
         this.turnMessage = "Waiting...";
-        this.promptMessage = "Hi " + this.thisPlayer + ", " + this.currentPlayer + " (" + (this.zcount + 1 ) + "/" + this.playerNum + ") is typing...";
-      } else if (this.zcount == this.playerNum) { //maybe I want to wait on this until u click the button?
+        this.promptMessage =
+          "Hi " +
+          this.thisPlayer +
+          ", " +
+          this.currentPlayer +
+          " (" +
+          (this.zcount + 1) +
+          "/" +
+          this.playerNum +
+          ") is typing...";
+      } else if (this.zcount == this.playerNum) {
+        //maybe I want to wait on this until u click the button?
         this.turnMessage = "Exquisite Corpse";
         this.promptMessage = "By " + this.authors;
         setTimeout(() => this.finalTransition(), 960); //needs to wait the 900 ms for the last player's sentence to update
       }
     },
     //sets this.authors to String of playerNames with commas and "and"
-    formatAuthors(){
+    formatAuthors() {
       let formatted = "";
       for (let i = 0; i < this.playerNames.length - 1; i++) {
-        formatted = formatted.concat(this.playerNames[i] + ", ")
+        formatted = formatted.concat(this.playerNames[i] + ", ");
       }
-      formatted = formatted.concat("and " + this.playerNames[this.playerNames.length - 1])
+      formatted = formatted.concat(
+        "and " + this.playerNames[this.playerNames.length - 1]
+      );
       this.authors = formatted;
     },
     //reset game to play again (only used for local at the moment)
@@ -200,7 +215,7 @@ export default {
       }
       this.focusInput();
     },
-    finalTransition(){
+    finalTransition() {
       console.log("previous: " + this.previous);
       this.invis = true;
       setTimeout(() => {
@@ -212,8 +227,8 @@ export default {
     //puts together story
     viewStory() {
       if (!this.remote) {
-      this.story = this.story.concat(this.previous);
-      this.previous = "";
+        this.story = this.story.concat(this.previous);
+        this.previous = "";
       } else {
         this.story = "";
         for (let i = 0; i < this.sentenceArray.length; i++) {
@@ -240,14 +255,14 @@ export default {
   },
   //code from this website: https://fontawesomeicons.com/fa/vue-js-on-tab-close-event
   watch: {
-        isTabClosed(newValue) {
-          // This watch will be triggered when the isTabClosed data property changes
-          if (newValue) {
-            // Add your code here to handle the beforeunload event
-            console.log('User left the page or closed the tab');
-          }
-        },
-      },
+    isTabClosed(newValue) {
+      // This watch will be triggered when the isTabClosed data property changes
+      if (newValue) {
+        // Add your code here to handle the beforeunload event
+        console.log("User left the page or closed the tab");
+      }
+    },
+  },
   props: {
     playerNum: {
       type: Number,
@@ -289,9 +304,12 @@ export default {
         Exquisite Corpse
       </div>
 
-      <div v-if="true"> <!--should definitely get rid of this-->
-        
-        <div class="prompt" v-if="!remote && count > playerNum">By {{ authors }}</div>
+      <div v-if="true">
+        <!--should definitely get rid of this-->
+
+        <div class="prompt" v-if="!remote && count > playerNum">
+          By {{ authors }}
+        </div>
         <div class="prompt" v-if="remote">{{ promptMessage }}</div>
 
         <br />
@@ -315,7 +333,7 @@ export default {
           >
             {{ previous + " " }}
           </span>
-          
+
           <contenteditable
             v-if="!finished"
             tag="div"
@@ -332,13 +350,15 @@ export default {
             @keydown.enter="submitStory"
           >
           </contenteditable>
-          <span class = "enterPrompt" v-if="!remote && count <= playerNum">ENTER to submit</span>
-          <span class = "enterPrompt" v-if="remote && this.playerIndex == this.zcount ">ENTER to submit</span>
-          <span
-            v-if="!finished"
-            class="invisible"
-            id="after"
+          <span class="enterPrompt" v-if="!remote && count <= playerNum"
+            >ENTER to submit</span
           >
+          <span
+            class="enterPrompt"
+            v-if="remote && this.playerIndex == this.zcount"
+            >ENTER to submit</span
+          >
+          <span v-if="!finished" class="invisible" id="after">
             {{ following }}
           </span>
         </div>
@@ -346,18 +366,10 @@ export default {
     </h2>
 
     <div v-if="!finished" class="view-story">
-      <button
-        v-if="
-          showButton
-        "
-        @click="viewStory"
-      >View story</button>
+      <button v-if="showButton" @click="viewStory">View story</button>
     </div>
 
-    <button @click="reset" v-if="finished && !remote">
-      Play Again
-    </button>
-
+    <button @click="reset" v-if="finished && !remote">Play Again</button>
   </div>
 </template>
 
@@ -459,8 +471,6 @@ h3 {
   font-weight: 100;
   text-align: left;
 } */
-
-
 
 .main-game .view-story {
   display: flex;

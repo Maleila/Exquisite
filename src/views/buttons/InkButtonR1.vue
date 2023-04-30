@@ -8,22 +8,23 @@
 
 <style scoped>
 .ink-button {
-  background-image: url("../assets/inkB.svg");
+  background-image: url("../../assets/inkR.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 40vh; 
+  background-size: 30vh;
   transition: 0.2s;
 }
 
 .ink-button button {
-  font-size: 8vh;
+  font-size: 7vh;
   font-weight: 100;
-  color: #e1e1e1;
+  color: #ffffff;
   background: None;
   height: 25vh;
   width: 30vh;
   border: None;
   font-family: inherit;
+  padding-right: 13vh;
   padding-bottom: 1vh;
   font-family: "CalorieRegular";
   -webkit-text-stroke: 0.15vh #e1e1e1;
