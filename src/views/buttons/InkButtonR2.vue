@@ -1,8 +1,6 @@
 <template>
   <div class="ink-button">
-    <router-link to="/" custom v-slot="{ navigate }">
-      <button @click="navigate" role="link">BACK</button>
-    </router-link>
+    <button>START</button>
   </div>
 </template>
 

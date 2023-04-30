@@ -3,6 +3,7 @@ import Lobby from "@/views/Lobby.vue";
 import JoinRoom from "@/views/JoinRoom.vue";
 import InkButtonR1 from "@/views/buttons/InkButtonR1.vue";
 import InkButtonR2 from "@/views/buttons/InkButtonR2.vue";
+import InkButtonR3 from "@/views/buttons/InkButtonR3.vue";
 import { ref as dbRef, set, onValue } from "firebase/database";
 import { useDatabase } from "vuefire";
 
@@ -12,6 +13,7 @@ export default {
     JoinRoom,
     InkButtonR1,
     InkButtonR2,
+    InkButtonR3,
   },
   mounted() {},
   data() {
@@ -176,9 +178,7 @@ export default {
 
     <div v-if="(remote && host) || !remote" class="settings">
       <div class="title">Game Settings</div>
-      <button v-if="addPlayers == false" @click="createRoom">
-        Start a game!
-      </button>
+      <InkButtonR3 v-if="addPlayers == false" @click="createRoom" />
     </div>
 
     <div v-if="addPlayers">
@@ -190,17 +190,8 @@ export default {
         @setPlayers="setPlayers"
       />
     </div>
+    <!-- <InkButtonR2 v-if="host" @click="startGame()" /> -->
     <button v-if="host" @click="startGame()">Start</button>
-
-    <div class="back">
-      <router-link to="/" custom v-slot="{ navigate }">
-        <button @click="navigate" role="link">Back</button>
-      </router-link>
-    </div>
-    <div class="button-backet">
-      <InkButtonR1 />
-      <InkButtonR2 />
-    </div>
   </div>
 </template>
 
@@ -227,5 +218,15 @@ export default {
 
 .local-room .prompt {
   font-size: 2vh;
+}
+
+.local-room .buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.local-room .empty {
+  height: 10vh;
 }
 </style>
