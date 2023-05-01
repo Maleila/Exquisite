@@ -29,6 +29,6 @@
   filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
 }
 .ink-button button:hover {
-  -webkit-text-stroke: 0.1vh #e1e1e1;
+  -webkit-text-stroke: 0.1vh #ffffff;
 }
 </style>

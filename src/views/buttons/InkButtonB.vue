@@ -26,13 +26,13 @@
   font-family: inherit;
   padding-bottom: 1vh;
   font-family: "CalorieRegular";
-  -webkit-text-stroke: 0.15vh #e1e1e1;
+  -webkit-text-stroke: 0.15vh #ffffff;
 }
 
 .ink-button:hover {
   filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
 }
 .ink-button button:hover {
-  -webkit-text-stroke: 0.2vh #e1e1e1;
+  -webkit-text-stroke: 0.2vh #ffffff;
 }
 </style>
