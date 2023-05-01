@@ -25,11 +25,13 @@ export default {
       addPlayers: false,
       enterCode: true,
       started: false,
+      hasBox: true,
       roomCode: "",
     };
   },
   methods: {
     createRoom() {
+      this.hasBox = false;
       this.addPlayers = true;
       if (this.host) {
         this.randRoomCode();
@@ -178,7 +180,10 @@ export default {
 
     <div v-if="(remote && host) || !remote" class="settings">
       <div class="title">Game Settings</div>
-      <InkButtonR3 v-if="addPlayers == false" @click="createRoom" />
+      <div v-if="hasBox" class="start-button">
+        <div class="start-box"></div>
+        <InkButtonR3 v-if="!addPlayers" @click="createRoom" />
+      </div>
     </div>
 
     <div v-if="addPlayers">
@@ -210,6 +215,7 @@ export default {
   margin: 0 auto;
   font-weight: 200;
   text-align: center;
+  -webkit-text-stroke: 0.05vh #000000;
 }
 
 .local-room .empty {
@@ -228,5 +234,9 @@ export default {
 
 .local-room .empty {
   height: 10vh;
+}
+
+.local-room .start-box {
+  height: 8vh;
 }
 </style>

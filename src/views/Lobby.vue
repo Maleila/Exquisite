@@ -96,20 +96,25 @@ export default {
 </script>
 
 <template>
-  <div class="prompt">Players:</div>
-  <li v-if="!remote" v-for="item in playerNames">
-    {{ item }}
-  </li>
+  <br />
+  <div class="prompt">Players</div>
+  <br />
+  <div class="players">
+    <li v-if="!remote" v-for="item in playerNames">
+      {{ item }}
+    </li>
 
-  <li v-if="remote" v-for="item in players">
-    {{ item }}
-  </li>
-
+    <li v-if="remote" v-for="item in players">
+      {{ item }}
+    </li>
+  </div>
+  <br />
   <input
     id="localInput"
     v-if="addOk && !remote"
     @keydown.enter="addPlayer"
     v-model="name"
+    maxlength="14"
   />
   <input
     id="remoteInput"
@@ -143,7 +148,14 @@ export default {
 
 <style>
 .prompt {
-  font-size: 2vh;
+  font-size: 3vh;
+}
+
+.players {
+  font-size: 3vh;
+  text-align: left;
+  width: 30vh;
+  margin: 0 auto;
 }
 
 li {
@@ -157,5 +169,17 @@ li {
   justify-content: center;
   gap: 3vh;
   margin-left: 3vh;
+}
+
+input {
+  width: 36vh;
+  height: 4vh;
+  font-size: 2.5vh;
+  color: #484848;
+  border-color: #484848;
+  border-radius: 1em;
+  border-width: 0.2vh;
+  text-indent: 2vh;
+  background-color: transparent;
 }
 </style>

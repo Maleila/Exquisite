@@ -24,7 +24,7 @@
   width: 30vh;
   border: None;
   font-family: inherit;
-  padding-right: 18vh;
+  padding-right: 17vh;
   padding-bottom: 6vh;
   font-family: "CalorieRegular";
   -webkit-text-stroke: 0.15vh #ffffff;
