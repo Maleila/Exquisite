@@ -76,6 +76,7 @@ export default {
       promptMessage: "",
       authors: "",
       isTabClosed: false,
+      cursorFocused: false,
     };
   },
   methods: {
@@ -246,6 +247,7 @@ export default {
         try {
           //this.$refs.storyInput.focus(); //need this bc vue gets confused since the input field has a v-if
           document.getElementById("editable").focus();
+          this.cursorFocused = true;
         } catch (ex) {
           // Print out the error message
           console.log("Error detected: " + ex);
@@ -349,11 +351,13 @@ export default {
             :no-html="true"
             v-model="current"
             @keydown.enter="submitStory"
+            @blur="cursorFocused = false"
+            @focus="cursorFocused = true"
           >
           </contenteditable>
-          <!--<span class="enterPrompt" v-if="!remote && count <= playerNum"
-            >ENTER to submit</span
-          >-->
+          <span class="enterPrompt" v-if="!cursorFocused && (!remote && count <= playerNum || remote && this.playerIndex == this.zcount)"
+            > Type here!</span
+          >
           <!--<span
             class="enterPrompt"
             v-if="remote && this.playerIndex == this.zcount"
