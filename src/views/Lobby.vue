@@ -155,5 +155,7 @@ li {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  gap: 3vh;
+  margin-left: 3vh;
 }
 </style>

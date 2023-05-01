@@ -11,6 +11,8 @@
   background-position: center;
   background-size: 20vh;
   transition: 0.2s;
+  height: 15vh;
+  width: 20vh;
 }
 
 .ink-button button {
@@ -18,12 +20,12 @@
   font-weight: 100;
   color: #ffffff;
   background: None;
-  height: 25vh;
+  height: 20vh;
   width: 30vh;
   border: None;
   font-family: inherit;
-  padding-right: 8vh;
-  padding-bottom: 1vh;
+  padding-right: 18vh;
+  padding-bottom: 6vh;
   font-family: "CalorieRegular";
   -webkit-text-stroke: 0.15vh #ffffff;
 }
