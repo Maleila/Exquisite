@@ -80,6 +80,12 @@ export default {
     };
   },
   methods: {
+    //determines whether to show "type here" message when cursor loses focus
+    helperFlag() {
+      if(this.mutable) {
+        this.cursorFocused = false;
+      }
+    },
     //code from this website: https://fontawesomeicons.com/fa/vue-js-on-tab-close-event
     handleBeforeUnload(event) {
       // This method will be called when the user leaves the page or closes the tab
@@ -351,7 +357,7 @@ export default {
             :no-html="true"
             v-model="current"
             @keydown.enter="submitStory"
-            @blur="cursorFocused = false"
+            @blur="helperFlag"
             @focus="cursorFocused = true"
           >
           </contenteditable>
