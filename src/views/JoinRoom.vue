@@ -5,15 +5,15 @@ import { nextTick } from "vue";
 
 export default {
   mounted() {
-    const db = useDatabase();
-    const firebaseDB = dbRef(db, "/");
+    // const db = useDatabase();
+    // const firebaseDB = dbRef(db, "/");
 
-    //pulls existing roomcodes from firebase
-    onValue(firebaseDB, (snapshot) => {
-        const data = snapshot.val();
-        const roomCodeData = Object.keys(data);
-        this.roomCodes = roomCodeData;
-    });
+    // //pulls existing roomcodes from firebase
+    // onValue(firebaseDB, (snapshot) => {
+    //     const data = snapshot.val();
+    //     const roomCodeData = Object.keys(data);
+    //     this.roomCodes = roomCodeData;
+    // });
 
     this.focusInput();
   },
@@ -24,6 +24,7 @@ export default {
       submit: false,
       roomCodes: "",
       started: false,
+      checkCode: "",
     }
   },
   methods: {
@@ -38,11 +39,16 @@ export default {
         this.started = start[0];
       });
 
+      const codes = dbRef(db, this.roomCode);
+      onValue(codes, (snapshot) => {
+        const data = snapshot.exists();
+        this.checkCode = data;
+      }); //Checks if entered roomCode exists in database
+
       //checks for valid roomCode
         if (this.roomCode == ""){
             alert("Input room code");
-        }
-        else if (!(this.roomCodes).includes(this.roomCode)) {
+        } else if (!this.checkCode) {
             alert("Invalid room code");
         } else if (this.started) {
           alert("Game already started");
