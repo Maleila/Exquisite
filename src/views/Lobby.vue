@@ -38,6 +38,8 @@ export default {
       if (!this.remote) {
         if (this.name.trim() == "") {
           alert("Input your name");
+        } else if(this.playerNames.includes(this.name.trim())) {
+          alert("Choose another name!");
         } else {
           this.playerNum++;
           if (this.playerNum == 2) {
@@ -51,6 +53,8 @@ export default {
         const db = useDatabase();
         if (this.name.trim() == "") {
           alert("Input your name");
+        } else if(this.players.includes(this.name.trim())) {
+          alert("Choose another name!");
         } else {
           this.playerNum++;
           const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
