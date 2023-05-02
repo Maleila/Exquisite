@@ -173,13 +173,14 @@ export default {
   <div class="local-room">
     <div class="empty"></div>
 
+    <div class="title">Game Settings</div>
+
     <JoinRoom
       v-if="remote && !host && enterCode"
       @enterRoomCode="enterRoomCode"
     />
 
     <div v-if="(remote && host) || !remote" class="settings">
-      <div class="title">Game Settings</div>
       <div v-if="hasBox" class="start-button">
         <div class="start-box"></div>
         <InkButtonR3 v-if="!addPlayers" @click="createRoom" />
