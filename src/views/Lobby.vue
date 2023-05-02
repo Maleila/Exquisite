@@ -99,6 +99,7 @@ export default {
   <br />
   <div class="prompt">Players</div>
   <div class="players">
+    <br />
     <li v-if="!remote" v-for="item in playerNames">
       {{ item }}
     </li>
@@ -122,20 +123,15 @@ export default {
     v-model="name"
   />
   <br />
-
+  <br />
   <div class="buttons">
     <!--If local game, Add button only adds player-->
-    <!-- <button v-if="addOk && !remote" @click="addPlayer">Add</button> -->
     <InkButtonR1 v-if="addOk && !remote" @click="addPlayer" />
     <!--If remote game, Add button adds player and sends player info back to parent component-->
     <InkButtonR1
       v-if="addOk && remote"
       @click="addPlayer(), $emit('setPlayers', playerNames)"
     />
-
-    <!-- <button v-if="!remote" @click="$emit('setPlayers', playerNames)">
-    Start
-  </button> -->
     <InkButtonR2
       v-if="!remote && playerNames.length >= 2"
       @click="$emit('setPlayers', playerNames)"

@@ -188,14 +188,22 @@ export default {
 
     <div v-if="addPlayers">
       <div v-if="remote">Room Code: {{ roomCode }}</div>
+      <br />
       <Lobby
         :roomCode="roomCode"
         :remote="remote"
         :host="host"
         @setPlayers="setPlayers"
       />
-      <!-- <InkButtonR2 v-if="host" @click="startGame()" /> -->
-      <button v-if="host" @click="startGame()">Start</button>
+      <div class="waiting-message" v-if="remote && playersFB.length == 1">
+        Waiting for others ...
+      </div>
+      <div class="begin-story">
+        <InkButtonR2
+          v-if="host && playersFB.length >= 2"
+          @click="startGame()"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -218,10 +226,6 @@ export default {
   -webkit-text-stroke: 0.05vh #000000;
 }
 
-.local-room .empty {
-  height: 15 vh;
-}
-
 .local-room .prompt {
   font-size: 2vh;
 }
@@ -233,10 +237,20 @@ export default {
 }
 
 .local-room .empty {
-  height: 10vh;
+  height: 5vh;
 }
 
 .local-room .start-box {
-  height: 8vh;
+  height: 15vh;
+}
+
+.local-room .begin-story {
+  text-align: center;
+  width: 18vh;
+  margin: 0 auto;
+}
+
+.local-room .waiting-message {
+  font-size: 2vh;
 }
 </style>
