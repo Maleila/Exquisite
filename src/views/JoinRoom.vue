@@ -1,5 +1,5 @@
 <script>
-import { ref as dbRef, onValue} from 'firebase/database';
+import { ref as dbRef, onValue, get} from 'firebase/database';
 import { useDatabase} from 'vuefire';
 import { nextTick } from "vue";
 
@@ -24,7 +24,6 @@ export default {
       submit: false,
       roomCodes: "",
       started: false,
-      checkCode: "",
     }
   },
   methods: {
@@ -39,22 +38,20 @@ export default {
         this.started = start[0];
       });
 
-      const codes = dbRef(db, this.roomCode);
-      onValue(codes, (snapshot) => {
+      get(dbRef(db, this.roomCode)).then((snapshot) => {
         const data = snapshot.exists();
-        this.checkCode = data;
-      }); //Checks if entered roomCode exists in database
 
-      //checks for valid roomCode
+        //checks for valid roomCode
         if (this.roomCode == ""){
-            alert("Input room code");
-        } else if (!this.checkCode) {
-            alert("Invalid room code");
+          alert("Input room code");
+        } else if (!data) {
+          alert("Invalid room code");
         } else if (this.started) {
           alert("Game already started");
         } else {
-         this.$emit('enterRoomCode', this.roomCode);
+          this.$emit('enterRoomCode', this.roomCode);
         }
+      }); //Checks if entered roomCode exists in database
     },
     focusInput() {
       nextTick(() => {
