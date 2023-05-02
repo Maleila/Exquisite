@@ -320,7 +320,7 @@ export default {
         </div>
         <div class="prompt" v-if="!remote && count <= playerNum">ENTER to submit</div>
         <div class="prompt" v-if="remote">{{ promptMessage }}</div>
-
+        
         <br />
         <div class="story">
           <span
@@ -372,6 +372,7 @@ export default {
           <span v-if="!finished" class="invisible" id="after">
             {{ following }}
           </span>
+          <img v-if="remote && this.playerIndex != this.zcount && this.zcount < this.playerNum" src="src/assets/pencil.gif" alt="drawing pencil">
         </div>
       </div>
     </h2>
