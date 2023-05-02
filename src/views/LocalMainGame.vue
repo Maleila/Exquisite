@@ -68,7 +68,7 @@ export default {
       previous: "",
       following: "",
       invis: false,
-      mutable: true,
+      mutable: true,  // Is the story editable by the current player?
       showButton: false,
       zcount: 0,
       sentenceArray: [],
@@ -76,15 +76,23 @@ export default {
       promptMessage: "",
       authors: "",
       isTabClosed: false,
-      cursorFocused: false,
     };
   },
   methods: {
-    //determines whether to show "type here" message when cursor loses focus
-    helperFlag() {
-      if(this.mutable) {
-        this.cursorFocused = false;
-      }
+    // Ensure user cannot lose the ability to type by
+    // clicking outside of the edit area while typing
+    onFocusLost() {
+      // The browser will move the selection to the clicked location _after_ sending
+      // us the blur event. Wait until it's done stealing focus from us, _then_
+      // steal it back!
+      setTimeout(
+        () => {
+          if(this.mutable) {
+            const editable = document.getElementById("editable");
+            window.getSelection().selectAllChildren(editable);
+            window.getSelection().collapseToEnd();
+          }
+        }, 0);
     },
     //code from this website: https://fontawesomeicons.com/fa/vue-js-on-tab-close-event
     handleBeforeUnload(event) {
@@ -253,7 +261,6 @@ export default {
         try {
           //this.$refs.storyInput.focus(); //need this bc vue gets confused since the input field has a v-if
           document.getElementById("editable").focus();
-          this.cursorFocused = true;
         } catch (ex) {
           // Print out the error message
           console.log("Error detected: " + ex);
@@ -357,18 +364,15 @@ export default {
             :no-html="true"
             v-model="current"
             @keydown.enter="submitStory"
-            @blur="helperFlag"
-            @focus="cursorFocused = true"
+            @blur="onFocusLost"
           >
           </contenteditable>
-          <span class="enterPrompt" v-if="!cursorFocused && (!remote && count <= playerNum || remote && this.playerIndex == this.zcount)"
-            > Type here!</span
-          >
-          <!--<span
+          <!-- <div
             class="enterPrompt"
             v-if="remote && this.playerIndex == this.zcount"
-            >ENTER to submit</span
-          >-->
+          >
+            ENTER to submit
+          </div> -->
           <span v-if="!finished" class="invisible" id="after">
             {{ following }}
           </span>
@@ -468,10 +472,9 @@ h3 {
   color: #484848;
   font-family: Avenir, Papyrus, system-ui, Helvetica, Arial, sans-serif;
   font-size: 0.5em;
-  width: 80%;
   margin: 0 auto;
   font-weight: 100;
-  text-align: left;
+  text-align: center;
 }
 /* 
  {
