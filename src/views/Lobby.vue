@@ -1,15 +1,15 @@
 <script>
 import { ref as dbRef, set, onValue } from "firebase/database";
-import InkButtonR1 from "@/views/buttons/InkButtonR1.vue";
-import InkButtonR2 from "@/views/buttons/InkButtonR2.vue";
+import InkButtonAdd from "@/views/buttons/InkButtonAdd.vue";
+import InkButtonStart from "@/views/buttons/InkButtonStart.vue";
 import { useDatabase } from "vuefire";
 import { nextTick } from "vue";
 
 export default {
   emits: ["setPlayers"],
   components: {
-    InkButtonR1,
-    InkButtonR2,
+    InkButtonAdd,
+    InkButtonStart,
   },
   mounted() {
     const db = useDatabase();
@@ -38,7 +38,7 @@ export default {
       if (!this.remote) {
         if (this.name.trim() == "") {
           alert("Input your name");
-        } else if(this.playerNames.includes(this.name.trim())) {
+        } else if (this.playerNames.includes(this.name.trim())) {
           alert("Choose another name!");
         } else {
           this.playerNum++;
@@ -53,7 +53,7 @@ export default {
         const db = useDatabase();
         if (this.name.trim() == "") {
           alert("Input your name");
-        } else if(this.players.includes(this.name.trim())) {
+        } else if (this.players.includes(this.name.trim())) {
           alert("Choose another name!");
         } else {
           this.playerNum++;
@@ -130,13 +130,13 @@ export default {
   <br />
   <div class="buttons">
     <!--If local game, Add button only adds player-->
-    <InkButtonR1 v-if="addOk && !remote" @click="addPlayer" />
+    <InkButtonAdd v-if="addOk && !remote" @click="addPlayer" />
     <!--If remote game, Add button adds player and sends player info back to parent component-->
-    <InkButtonR1
+    <InkButtonAdd
       v-if="addOk && remote"
       @click="addPlayer(), $emit('setPlayers', playerNames)"
     />
-    <InkButtonR2
+    <InkButtonStart
       v-if="!remote && playerNames.length >= 2"
       @click="$emit('setPlayers', playerNames)"
     />

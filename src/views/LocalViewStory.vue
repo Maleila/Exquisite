@@ -1,5 +1,5 @@
 <script>
-import InkButtonB from "@/views/buttons/InkButtonB.vue";
+import InkButtonBack from "@/views/buttons/InkButtonBack.vue";
 
 export default {
   props: {
@@ -9,7 +9,7 @@ export default {
     },
   },
   components: {
-    InkButtonB,
+    InkButtonBack,
   },
 };
 </script>
@@ -20,7 +20,7 @@ export default {
     <div class="story">{{ story }}</div>
     <div class="empty"></div>
 
-    <div class="back"><InkButtonB /></div>
+    <div class="back"><InkButtonBack /></div>
   </div>
 </template>
 

@@ -1,9 +1,8 @@
 <script>
 import Lobby from "@/views/Lobby.vue";
 import JoinRoom from "@/views/JoinRoom.vue";
-import InkButtonR1 from "@/views/buttons/InkButtonR1.vue";
-import InkButtonR2 from "@/views/buttons/InkButtonR2.vue";
-import InkButtonR3 from "@/views/buttons/InkButtonR3.vue";
+import InkButtonStart from "@/views/buttons/InkButtonStart.vue";
+import InkButtonGame from "@/views/buttons/InkButtonGame.vue";
 import { ref as dbRef, set, onValue } from "firebase/database";
 import { useDatabase } from "vuefire";
 
@@ -11,9 +10,8 @@ export default {
   components: {
     Lobby,
     JoinRoom,
-    InkButtonR1,
-    InkButtonR2,
-    InkButtonR3,
+    InkButtonStart,
+    InkButtonGame,
   },
   mounted() {},
   data() {
@@ -183,7 +181,7 @@ export default {
     <div v-if="(remote && host) || !remote" class="settings">
       <div v-if="hasBox" class="start-button">
         <div class="start-box"></div>
-        <InkButtonR3 v-if="!addPlayers" @click="createRoom" />
+        <InkButtonGame v-if="!addPlayers" @click="createRoom" />
       </div>
     </div>
 
@@ -200,7 +198,7 @@ export default {
         Waiting for others ...
       </div>
       <div class="begin-story">
-        <InkButtonR2
+        <InkButtonStart
           v-if="host && playersFB.length >= 2"
           @click="startGame()"
         />

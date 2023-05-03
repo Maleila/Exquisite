@@ -1,9 +1,9 @@
 <script>
-import InkButtonB from "@/views/buttons/InkButtonB.vue";
+import InkButtonBack from "@/views/buttons/InkButtonBack.vue";
 
 export default {
   components: {
-    InkButtonB,
+    InkButtonBack,
   },
 };
 </script>
@@ -25,7 +25,7 @@ export default {
       since we don't know the details yet).
     </div>
     <div class="empty"></div>
-    <div class="back"><InkButtonB /></div>
+    <div class="back"><InkButtonBack /></div>
   </div>
 </template>
 

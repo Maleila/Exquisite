@@ -2,8 +2,6 @@
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
 import LocalViewStory from "@/views/LocalViewStory.vue";
-import InkButtonVS from "@/views/buttons/InkButtonVS.vue";
-import InkButtonB from "@/views/buttons/InkButtonB.vue";
 import { useDatabase } from "vuefire";
 import { ref as dbRef, set, onValue } from "firebase/database";
 
@@ -11,8 +9,6 @@ export default {
   components: {
     contenteditable,
     LocalViewStory,
-    InkButtonVS,
-    InkButtonB,
   },
   //called when a component is added (ex when the page loads)
   mounted() {
@@ -68,7 +64,7 @@ export default {
       previous: "",
       following: "",
       invis: false,
-      mutable: true,  // Is the story editable by the current player?
+      mutable: true, // Is the story editable by the current player?
       showButton: false,
       zcount: 0,
       sentenceArray: [],
@@ -85,14 +81,13 @@ export default {
       // The browser will move the selection to the clicked location _after_ sending
       // us the blur event. Wait until it's done stealing focus from us, _then_
       // steal it back!
-      setTimeout(
-        () => {
-          if(this.mutable) {
-            const editable = document.getElementById("editable");
-            window.getSelection().selectAllChildren(editable);
-            window.getSelection().collapseToEnd();
-          }
-        }, 0);
+      setTimeout(() => {
+        if (this.mutable) {
+          const editable = document.getElementById("editable");
+          window.getSelection().selectAllChildren(editable);
+          window.getSelection().collapseToEnd();
+        }
+      }, 0);
     },
     //code from this website: https://fontawesomeicons.com/fa/vue-js-on-tab-close-event
     handleBeforeUnload(event) {
@@ -133,7 +128,8 @@ export default {
       if (this.zcount == this.playerIndex) {
         this.turnMessage = "Your turn!";
         if (this.zcount == 0) {
-          this.promptMessage = "Start the most interesting story - ENTER to submit";
+          this.promptMessage =
+            "Start the most interesting story - ENTER to submit";
         } else if (this.zcount == this.playerNum - 1) {
           this.promptMessage = "Finish this great story - ENTER to submit";
         } else {
@@ -325,9 +321,11 @@ export default {
         <div class="prompt" v-if="!remote && count > playerNum">
           By {{ authors }}
         </div>
-        <div class="prompt" v-if="!remote && count <= playerNum">ENTER to submit</div>
+        <div class="prompt" v-if="!remote && count <= playerNum">
+          ENTER to submit
+        </div>
         <div class="prompt" v-if="remote">{{ promptMessage }}</div>
-        
+
         <br />
         <div class="story">
           <span
@@ -376,7 +374,15 @@ export default {
           <span v-if="!finished" class="invisible" id="after">
             {{ following }}
           </span>
-          <img v-if="remote && this.playerIndex != this.zcount && this.zcount < this.playerNum" src="src/assets/pencil.gif" alt="drawing pencil">
+          <img
+            v-if="
+              remote &&
+              this.playerIndex != this.zcount &&
+              this.zcount < this.playerNum
+            "
+            src="src/assets/pencil.gif"
+            alt="drawing pencil"
+          />
         </div>
       </div>
     </h2>
