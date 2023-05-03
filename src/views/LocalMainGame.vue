@@ -126,7 +126,7 @@ export default {
         );
       }
       if (this.zcount == this.playerIndex) {
-        this.turnMessage = "Your turn!";
+        this.turnMessage = "Your turn, " + this.thisPlayer + "!";
         if (this.zcount == 0) {
           this.promptMessage =
             "Start the most interesting story - ENTER to submit";
@@ -153,7 +153,7 @@ export default {
         //maybe I want to wait on this until u click the button?
         this.turnMessage = "Exquisite Corpse";
         this.promptMessage = "By " + this.authors;
-        setTimeout(() => this.finalTransition(), 920); //needs to wait the 900 ms for the last player's sentence to update
+        setTimeout(() => this.finalTransition(), 910); //needs to wait the 900 ms for the last player's sentence to update
       }
     },
     //sets this.authors to String of playerNames with commas and "and"
