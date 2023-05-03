@@ -5,22 +5,15 @@ import Gameplay from "@/views/Gameplay.vue";
 import JoinRoom from "@/views/JoinRoom.vue";
 import LocalRoom from "@/views/LocalRoom.vue";
 import LocalMainGame from "@/views/LocalMainGame.vue";
-import LocalViewStory from "@/views/LocalViewStory.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home }, // Tell the router to render home component when the home route is visited
   { path: "/about", name: "About", component: About },
   { path: "/gameplay", name: "Gameplay", component: Gameplay },
   { path: "/joinroom", name: "JoinRoom", component: JoinRoom },
+
   {
-    path: "/localviewstory",
-    name: "LocalViewStory",
-    component: LocalViewStory,
-    props: (route) => ({
-      story: route.query.story,
-    }),
-  },
-  { path: "/localroom",
+    path: "/localroom",
     name: "LocalRoom",
     component: LocalRoom,
     props: (route) => ({

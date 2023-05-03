@@ -1,14 +1,12 @@
 <script>
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
-import LocalViewStory from "@/views/LocalViewStory.vue";
 import { useDatabase } from "vuefire";
 import { ref as dbRef, set, onValue } from "firebase/database";
 
 export default {
   components: {
     contenteditable,
-    LocalViewStory,
   },
   //called when a component is added (ex when the page loads)
   mounted() {
