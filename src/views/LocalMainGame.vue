@@ -505,4 +505,15 @@ h3 {
   font-size: 2em;
   padding: 10px 20px;
 }
+
+.main-game img {
+  max-width: 50%;
+  max-height: 50%;
+}
+/* Center the image horizontally */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
