@@ -14,15 +14,14 @@ export default {
     <div class="empty"></div>
     <div class="text">
       <b>To begin a local game,</b> assemble a group of friends around a table
-      and choose the corresponding number of players. After the first player
+      and have everyone enter their name. After the first player
       hits submit, pass the laptop to the next player. Make sure not to let
       other players view the screen until their turn!
       <br />
       <br />
       <b>To begin a remote game,</b> click "Remote" to generate a room code
-      which you can share with friends. After everyone has joined, the game can
-      begin with each player on their own device. (I'll edit this one later
-      since we don't know the details yet).
+      which you can share with friends. After everyone has joined, the host can
+      start the game and each player will be able to play on their own device.
     </div>
     <div class="empty"></div>
     <div class="back"><InkButtonBack /></div>
