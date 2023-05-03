@@ -306,18 +306,12 @@ export default {
 <template>
   <div class="main-game">
     <h2>
-      <div class="roomcode" v-if="remote">RoomCode={{ roomCode }}</div>
-      <div class="title" v-if="remote">{{ turnMessage }}</div>
-      <div v-if="!remote && count <= playerNum" class="title">
-        Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
-      </div>
-      <div v-if="!remote && count > playerNum" class="title">
-        Exquisite Corpse
-      </div>
-
-      <div v-if="true">
-        <!--should definitely get rid of this-->
-
+      <div class="title-box">
+        <div class="roomcode" v-if="remote">RoomCoddade: {{ roomCode }}</div>
+        <div class="title" v-if="remote">{{ turnMessage }}</div>
+        <div class="title" v-if="!remote && count <= playerNum">
+          Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
+        </div>
         <div class="prompt" v-if="!remote && count > playerNum">
           By {{ authors }}
         </div>
@@ -325,6 +319,14 @@ export default {
           ENTER to submit
         </div>
         <div class="prompt" v-if="remote">{{ promptMessage }}</div>
+      </div>
+
+      <div v-if="!remote && count > playerNum" class="title">
+        Exquisite Corpse
+      </div>
+
+      <div v-if="true">
+        <!--should definitely get rid of this-->
 
         <br />
         <div class="story">
@@ -442,14 +444,26 @@ h3 {
   margin-top: 5%;
 }
 
-.main-game .title {
-  /* font-family: Desyre; */
-  font-size: 2em;
-  width: 80%;
-  margin: 0 auto;
-  font-weight: 200;
-  text-align: left;
+.main-game .title-box {
   position: fixed;
+  top: 2em;
+  left: 3.5em;
+  padding: 0.2em 0.5em;
+  border-radius: 0.2em;
+  background: rgba(224, 224, 224, 0.8);
+  z-index: 1;
+}
+
+.main-game .title-box .title {
+  font-size: 2em;
+  font-weight: 200;
+}
+
+.main-game .title-box .prompt {
+  color: #484848;
+  font-size: 0.8em;
+  font-weight: 100;
+  text-align: left;
 }
 
 .main-game .roomcode {
@@ -463,17 +477,6 @@ h3 {
   position: fixed;
 }
 
-.main-game .prompt {
-  color: #484848;
-  font-size: 0.8em;
-  width: 80%;
-  margin: 0 auto;
-  font-weight: 100;
-  text-align: left;
-  position: fixed;
-  top: 20%;
-}
-
 .main-game .enterPrompt {
   color: #484848;
   font-family: Avenir, Papyrus, system-ui, Helvetica, Arial, sans-serif;
@@ -482,16 +485,6 @@ h3 {
   font-weight: 100;
   text-align: center;
 }
-/* 
- {
-  color: #484848;
-  font-family: inherit;
-  font-size: 0.8em;
-  width: 80%;
-  margin: 0 auto;
-  font-weight: 100;
-  text-align: left;
-} */
 
 .main-game .view-story {
   display: flex;
