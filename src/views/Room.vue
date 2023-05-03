@@ -142,7 +142,7 @@ export default {
       const { playerNum, playerNames, remote, host, roomCode, thisPlayer } =
         this;
       this.$router.push({
-        name: "LocalGame",
+        name: "MainGame",
         query: {
           playerNum,
           playerNames,

@@ -10,7 +10,7 @@ export default {
     startLocal() {
       const remote = false;
       const host = false;
-      this.$router.push({ name: "LocalRoom", query: { remote, host } });
+      this.$router.push({ name: "Room", query: { remote, host } });
     },
     linkRemote() {
       this.isRemote = false;
@@ -19,12 +19,12 @@ export default {
     join() {
       const host = false;
       const remote = true;
-      this.$router.push({ name: "LocalRoom", query: { host, remote } });
+      this.$router.push({ name: "Room", query: { host, remote } });
     },
     host() {
       const host = true;
       const remote = true;
-      this.$router.push({ name: "LocalRoom", query: { host, remote } });
+      this.$router.push({ name: "Room", query: { host, remote } });
     },
   },
 };
@@ -43,17 +43,17 @@ export default {
     <br />
     <br />
     <div class="button">
-      <router-link to="/localroom" custom v-slot="{ navigate }">
+      <router-link to="/room" custom v-slot="{ navigate }">
         <button @click="navigate, startLocal()" role="link">LOCAL</button>
       </router-link>
 
       <button v-if="isRemote" @click="linkRemote">REMOTE</button>
       <div v-if="showButtons" class="side-buttons">
-        <router-link to="/localroom" custom v-slot="{ navigate }">
+        <router-link to="/room" custom v-slot="{ navigate }">
           <button @click="navigate, host()" role="link">HOST</button>
         </router-link>
         |
-        <router-link to="/localroom" custom v-slot="{ navigate }">
+        <router-link to="/room" custom v-slot="{ navigate }">
           <button @click="navigate, join()" role="link">JOIN</button>
         </router-link>
       </div>

@@ -306,7 +306,7 @@ export default {
   <div class="main-game">
     <h2>
       <div class="title-box">
-        <div class="roomcode" v-if="remote">RoomCoddade: {{ roomCode }}</div>
+        <div class="roomcode" v-if="remote">RoomCode: {{ roomCode }}</div>
         <div class="title" v-if="remote">{{ turnMessage }}</div>
         <div class="title" v-if="!remote && count <= playerNum">
           Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
