@@ -20,3 +20,6 @@ Instructions of firebase deployment. These commands shall be run on cmd/terminal
 ## Resources
 
 1. [Vue router tutorial from vueschool](https://vueschool.io/lessons/creating-the-project-with-vite-vite-only)
+
+## Gif source:
+https://www.dotdotdot-studio.com/ 
