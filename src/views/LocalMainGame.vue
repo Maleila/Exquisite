@@ -128,8 +128,7 @@ export default {
       if (this.zcount == this.playerIndex) {
         this.turnMessage = "Your turn, " + this.thisPlayer + "!";
         if (this.zcount == 0) {
-          this.promptMessage =
-            "Start the most interesting story";
+          this.promptMessage = "Start the most interesting story";
         } else if (this.zcount == this.playerNum - 1) {
           this.promptMessage = "Finish this great story";
         } else {
@@ -312,21 +311,19 @@ export default {
         <div class="title" v-if="!remote && count <= playerNum">
           Player {{ count }} of {{ playerNum }}: {{ playerNames[count - 1] }}
         </div>
+        <div v-if="!remote && count > playerNum" class="title">
+          Exquisite Corpse
+        </div>
         <div class="prompt" v-if="!remote && count > playerNum">
           By {{ authors }}
         </div>
-        
         <div class="prompt" v-if="remote">{{ promptMessage }}</div>
-      </div>
-
-      <div v-if="!remote && count > playerNum" class="title">
-        Exquisite Corpse
       </div>
 
       <div v-if="true">
         <!--should definitely get rid of this-->
-
         <br />
+        <div v-if="remote"><br /></div>
         <div class="story">
           <span
             class="invisible"
@@ -372,7 +369,7 @@ export default {
             ENTER to submit
           </div>
           <div class="enterPrompt" v-if="!remote && count <= playerNum">
-          ENTER to submit
+            ENTER to submit
           </div>
           <img
             class="pencilGif"
@@ -481,24 +478,28 @@ h3 {
   color: #484848;
   font-family: Avenir, Papyrus, system-ui, Helvetica, Arial, sans-serif;
   font-size: 0.5em;
-  margin: 0 auto;
   font-weight: 100;
   position: fixed;
-  top: 80%;
+  bottom: 3em;
+  left: 3.5em;
+  padding: 0.2em 0.5em;
+  border-radius: 0.2em;
+  background: rgba(224, 224, 224, 0.95);
+  z-index: 1;
 }
 
 .main-game .pencilGif {
   position: fixed;
   width: 20%;
-  right: 0px;
-  top: 0;
+  right: 50%;
+  top: 50%;
 }
 
 .main-game .view-story {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 0vh;
 }
 
 .main-game .view-story button {
@@ -517,13 +518,8 @@ h3 {
 }
 
 .main-game img {
-  max-width: 50%;
-  max-height: 50%;
+  max-width: 60%;
+  max-height: 60%;
 }
 /* Center the image horizontally */
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 </style>
