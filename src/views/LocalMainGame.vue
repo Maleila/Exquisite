@@ -491,15 +491,15 @@ h3 {
 .main-game .pencilGif {
   position: fixed;
   width: 20%;
-  right: 0px;
-  top: 0;
+  right: 50%;
+  top: 50%;
 }
 
 .main-game .view-story {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 0vh;
 }
 
 .main-game .view-story button {
@@ -518,13 +518,8 @@ h3 {
 }
 
 .main-game img {
-  max-width: 50%;
-  max-height: 50%;
+  max-width: 60%;
+  max-height: 60%;
 }
 /* Center the image horizontally */
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 </style>
