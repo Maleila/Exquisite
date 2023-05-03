@@ -129,11 +129,11 @@ export default {
         this.turnMessage = "Your turn, " + this.thisPlayer + "!";
         if (this.zcount == 0) {
           this.promptMessage =
-            "Start the most interesting story - ENTER to submit";
+            "Start the most interesting story";
         } else if (this.zcount == this.playerNum - 1) {
-          this.promptMessage = "Finish this great story - ENTER to submit";
+          this.promptMessage = "Finish this great story";
         } else {
-          this.promptMessage = "Continue this fun story - ENTER to submit";
+          this.promptMessage = "Continue this fun story";
         }
         this.mutable = true;
         this.focusInput();
@@ -315,9 +315,7 @@ export default {
         <div class="prompt" v-if="!remote && count > playerNum">
           By {{ authors }}
         </div>
-        <div class="prompt" v-if="!remote && count <= playerNum">
-          ENTER to submit
-        </div>
+        
         <div class="prompt" v-if="remote">{{ promptMessage }}</div>
       </div>
 
@@ -367,16 +365,17 @@ export default {
             @blur="onFocusLost"
           >
           </contenteditable>
-          <!-- <div
+          <div
             class="enterPrompt"
             v-if="remote && this.playerIndex == this.zcount"
           >
             ENTER to submit
-          </div> -->
-          <span v-if="!finished" class="invisible" id="after">
-            {{ following }}
-          </span>
+          </div>
+          <div class="enterPrompt" v-if="!remote && count <= playerNum">
+          ENTER to submit
+          </div>
           <img
+            class="pencilGif"
             v-if="
               remote &&
               this.playerIndex != this.zcount &&
@@ -385,6 +384,9 @@ export default {
             src="src/assets/pencil.gif"
             alt="drawing pencil"
           />
+          <span v-if="!finished" class="invisible" id="after">
+            {{ following }}
+          </span>
         </div>
       </div>
     </h2>
@@ -483,7 +485,15 @@ h3 {
   font-size: 0.5em;
   margin: 0 auto;
   font-weight: 100;
-  text-align: center;
+  position: fixed;
+  top: 80%;
+}
+
+.main-game .pencilGif {
+  position: fixed;
+  width: 20%;
+  right: 0px;
+  top: 0;
 }
 
 .main-game .view-story {
