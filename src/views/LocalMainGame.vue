@@ -455,8 +455,10 @@ h3 {
 }
 
 .main-game .title-box .title {
+  color: #282828;
   font-size: 2em;
   font-weight: 200;
+  text-align: left;
 }
 
 .main-game .title-box .prompt {
@@ -466,15 +468,11 @@ h3 {
   text-align: left;
 }
 
-.main-game .roomcode {
-  top: 9%;
+.main-game .title-box .roomcode {
   color: #484848;
   font-size: 0.8em;
-  width: 80%;
-  margin: 0 auto;
   font-weight: 100;
   text-align: left;
-  position: fixed;
 }
 
 .main-game .enterPrompt {
