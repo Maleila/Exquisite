@@ -1,12 +1,14 @@
 <script>
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
+import InkButtonView from "@/views/buttons/InkButtonView.vue";
 import { useDatabase } from "vuefire";
 import { ref as dbRef, set, onValue } from "firebase/database";
 
 export default {
   components: {
     contenteditable,
+    InkButtonView,
   },
   //called when a component is added (ex when the page loads)
   mounted() {
@@ -387,7 +389,7 @@ export default {
     </h2>
 
     <div v-if="!finished" class="view-story">
-      <button v-if="showButton" @click="viewStory">View story</button>
+      <InkButtonView v-if="showButton" @click="viewStory" />
     </div>
 
     <button @click="reset" v-if="finished && !remote">Play Again</button>
@@ -498,6 +500,11 @@ h3 {
   justify-content: center;
   align-items: center;
   height: 0vh;
+  position: fixed;
+  width: 20%;
+  right: 40%;
+  top: 50%;
+  z-index: 1;
 }
 
 .main-game .view-story button {

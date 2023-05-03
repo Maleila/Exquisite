@@ -1,8 +1,6 @@
 <template>
   <div class="ink-button">
-    <router-link to="/localviewstory" custom v-slot="{ navigate }">
-      <button @click="navigate" role="link">View Story</button>
-    </router-link>
+    <button>View Story</button>
   </div>
 </template>
 
@@ -11,19 +9,19 @@
   background-image: url("../../assets/inkVS.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 70vh;
+  background-size: 60vh;
   transition: 0.2s;
 }
 
 .ink-button button {
-  font-size: 15vh;
+  font-size: 14vh;
   font-weight: 100;
   color: #ffffff;
   background: None;
   height: 15vh;
   width: 70vh;
   border: None;
-  padding-bottom: 18vh;
+  padding-bottom: 16vh;
   font-family: "CalorieRegular";
 }
 
