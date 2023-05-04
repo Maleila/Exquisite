@@ -2,6 +2,8 @@
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
 import InkButtonView from "@/views/buttons/InkButtonView.vue";
+import InkButtonHome from "@/views/buttons/InkButtonHome.vue";
+import InkButtonAgain from "@/views/buttons/InkButtonAgain.vue";
 import { useDatabase } from "vuefire";
 import { ref as dbRef, set, onValue } from "firebase/database";
 
@@ -9,6 +11,8 @@ export default {
   components: {
     contenteditable,
     InkButtonView,
+    InkButtonHome,
+    InkButtonAgain,
   },
   //called when a component is added (ex when the page loads)
   mounted() {
@@ -392,7 +396,10 @@ export default {
       <InkButtonView v-if="showButton" @click="viewStory" />
     </div>
 
-    <button @click="reset" v-if="finished && !remote">Play Again</button>
+    <div class="buttons">
+      <InkButtonAgain @click="reset" v-if="finished && !remote" />
+      <InkButtonHome v-if="finished" />
+    </div>
   </div>
 </template>
 

@@ -197,7 +197,13 @@ export default {
       <div class="waiting-message" v-if="remote && playersFB.length == 1">
         Waiting for others
       </div>
-      <img class="dotGif" v-if="remote && playersFB.length == 1" src="src/assets/dotdotdot.gif" alt="dot dot dot gif">
+      <br />
+      <img
+        class="dotGif"
+        v-if="remote && playersFB.length == 1"
+        src="src/assets/dotdotdot.gif"
+        alt="dot dot dot gif"
+      />
       <div class="begin-story">
         <InkButtonStart
           v-if="host && playersFB.length >= 2"
@@ -259,6 +265,5 @@ export default {
   margin: 0 auto;
   display: flex;
   justify-content: center;
-
 }
 </style>
