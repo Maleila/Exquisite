@@ -75,7 +75,7 @@ export default {
   filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
   color: #484848;
   font-family: "CalorieRegular";
-  font-size: 55vh;
+  font-size: 35vw;
   line-height: 35vh;
   margin: 0;
 }
