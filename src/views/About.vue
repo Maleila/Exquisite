@@ -1,3 +1,5 @@
+<!--Page with background information on Exquisite Corpses-->
+
 <script>
 import InkButtonBack from "@/views/buttons/InkButtonBack.vue";
 

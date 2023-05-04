@@ -1,3 +1,8 @@
+<!--Child component of Room.vue that facilitates adding player names
+and viewing all players currently in the game. For local games, there
+are no restrictions on player number, but for remote games the user will
+only be able to add one name.-->
+
 <script>
 import { ref as dbRef, set, onValue } from "firebase/database";
 import InkButtonAdd from "@/views/buttons/InkButtonAdd.vue";
@@ -19,7 +24,7 @@ export default {
     onValue(playersfb, (snapshot) => {
       const data = snapshot.val();
       const playersData = Object.keys(data);
-      this.players = playersData;
+      this.playersRemote = playersData;
     });
 
     this.focusInput();
@@ -27,7 +32,7 @@ export default {
   data() {
     return {
       playerNames: [],
-      players: "",
+      playersRemote: "",
       playerNum: 1,
       name: "",
       addOk: true, //for remote game
@@ -35,40 +40,37 @@ export default {
   },
   methods: {
     addPlayer() {
-      if (!this.remote) {
-        if (this.name.trim() == "") {
+      //prevent users from entering whitespace-only names or names that have already been used in this game
+      if (this.name.trim() == "") {
           alert("Input your name");
-        } else if (this.playerNames.includes(this.name.trim())) {
+        } else if (this.playerNames.includes(this.name.trim()) || this.playersRemote.includes(this.name.trim())) {
           alert("Choose another name!");
         } else {
-          this.playerNum++;
-          if (this.playerNum == 2) {
-            this.playerNames[0] = this.name;
+          //for local game store players in a String array
+          if (!this.remote) {
+              this.playerNum++;
+              if (this.playerNum == 2) {
+                this.playerNames[0] = this.name;
+              } else {
+                this.playerNames[this.playerNum - 2] = this.name;
+              }
+              this.focusInput();
+            //for remote game store players in Firebase
           } else {
-            this.playerNames[this.playerNum - 2] = this.name;
+            const db = useDatabase();
+            this.playerNum++;
+            const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
+            set(playersFB, "");
+            this.playerNames[0] = this.name;
+            this.addOk = false;
           }
-          this.focusInput();
         }
-      } else {
-        const db = useDatabase();
-        if (this.name.trim() == "") {
-          alert("Input your name");
-        } else if (this.players.includes(this.name.trim())) {
-          alert("Choose another name!");
-        } else {
-          this.playerNum++;
-          const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
-          set(playersFB, "");
-          this.playerNames[0] = this.name;
-          this.addOk = false;
-        }
-      }
       this.name = "";
     },
     focusInput() {
       nextTick(() => {
         // Without the try and catch: Error message is: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'focus')
-        // Need a try and catch block b/c you can only access the ref after the component is mounted. So the first render this.$ref.storyInput is going to be null and raise a promise error. This try and catch block doesn't change the overall logic of this method and only serves as a way to reduce any errors on console. Reference: https://vuejs.org/guide/essentials/template-refs.html#accessing-the-refs
+        // Need a try and catch block b/c you can only access the ref after the component is mounted
         try {
           if (!this.remote) {
             document.getElementById("localInput").focus();
@@ -76,7 +78,6 @@ export default {
             document.getElementById("remoteInput").focus();
           }
         } catch (ex) {
-          // Print out the error message
           console.log("Error detected: " + ex);
         }
       });
@@ -108,18 +109,18 @@ export default {
       {{ item }}
     </li>
 
-    <li v-if="remote" v-for="item in players">
+    <li v-if="remote" v-for="item in playersRemote">
       {{ item }}
     </li>
   </div>
   <br />
-  <div v-if="!host && remote && !addOk && players.length >= 2">
+  <div v-if="!host && remote && !addOk && playersRemote.length >= 2">
     Waiting for host to start game
     <br />
     <br />
     <img
       class="dotGif"
-      v-if="remote && !addOk && players.length >= 2"
+      v-if="remote && !addOk && playersRemote.length >= 2"
       src="dotdotdot.gif"
       alt="dot dot dot gif"
     />
@@ -147,6 +148,7 @@ export default {
       v-if="addOk && remote"
       @click="addPlayer(), $emit('setPlayers', playerNames)"
     />
+    <!--For local game, option to start the game as soon as there are at least two players-->
     <InkButtonStart
       v-if="!remote && playerNames.length >= 2"
       @click="$emit('setPlayers', playerNames)"
@@ -168,7 +170,7 @@ export default {
 
 li {
   list-style-position: inside;
-  /* probably don't need to cite this but it's from here: https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Styling_lists */
+  /* From: https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Styling_lists */
 }
 
 .buttons {

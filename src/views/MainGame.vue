@@ -1,3 +1,5 @@
+<!--Page facilitating the central gameplay for both remote and local games.-->
+
 <script>
 import { nextTick } from "vue";
 import contenteditable from "vue-contenteditable";
@@ -22,7 +24,6 @@ export default {
     window.addEventListener("beforeunload", this.handleBeforeUnload);
 
     this.playerIndex = this.playerNames.indexOf(this.thisPlayer);
-    console.log("index: " + this.playerIndex);
 
     this.formatAuthors();
 
@@ -30,8 +31,6 @@ export default {
       this.mutable = false;
       const db = useDatabase();
       const currentFB = dbRef(db, this.roomCode + "/gameAttributes");
-      //^^it would be much better to listen specifically to /gameAttributes/zcount but when I tried that before it caused issues
-      // - look at it again later
 
       //listen for changes to whose turn it is based on zcount in firebase
       onValue(currentFB, (snapshot) => {
@@ -39,8 +38,6 @@ export default {
         const currentPlayerFB = Object.values(data);
         this.zcount = currentPlayerFB[1];
         this.currentPlayer = this.playerNames[this.zcount];
-        console.log("current according to fb " + this.currentPlayer);
-        console.log("this player: " + this.thisPlayer);
         this.onTurnChange();
       });
 
@@ -59,23 +56,31 @@ export default {
   },
   data() {
     return {
-      current: "",
       currentPlayer: "",
-      playerIndex: 0,
-      count: 1,
-      finished: false,
+
+      playerIndex: 0, //tracks the index of this player in the list of all players
+      count: 1, //determines turns for local
+      zcount: 0, //determines turns for remote (based on firebase)
+      
+      //User-inputted elements of this story
       story: "",
       previous: "",
+      current: "",
       following: "",
-      invis: false,
-      mutable: true, // Is the story editable by the current player?
-      showButton: false,
-      zcount: 0,
+    
+      //The complete story as a string array
       sentenceArray: [],
+
+      //Title and subtitle in heading
       turnMessage: "",
       promptMessage: "",
       authors: "",
+
       isTabClosed: false,
+      invis: false,
+      mutable: true, // Is the story editable by the current player?
+      showButton: false, //Determines whether or not to show "view story" button
+      finished: false,
     };
   },
   methods: {
@@ -93,42 +98,41 @@ export default {
         }
       }, 0);
     },
-    //code from this website: https://fontawesomeicons.com/fa/vue-js-on-tab-close-event
+    //Called when user tries to close tab or reload page
+    //Code from this website: https://fontawesomeicons.com/fa/vue-js-on-tab-close-event
     handleBeforeUnload(event) {
-      // This method will be called when the user leaves the page or closes the tab
       this.isTabClosed = true;
 
-      // Optionally, you can show a confirmation dialog to the user
       event.preventDefault();
-      event.returnValue = ""; //have to return something or firefox will be angry
+      event.returnValue = ""; //have to return something for Firefox
     },
-    //called on change to zcount in firebase
+    //called on change to zcount in firebase -- only for remote
     onTurnChange() {
       this.mutable = false;
-      console.log("turn changed!");
-      console.log("zcount: " + this.zcount);
-      if (this.zcount <= this.playerIndex) {
-        //if it's not yet this player's turn
-        if (this.playerIndex > 0 && this.zcount > 0) {
-          const recent = this.zcount - 1;
-          console.log("most recent player: " + recent);
-          console.log("most recent sentence: " + this.sentenceArray[recent]);
-          if (recent == this.playerIndex - 1) {
-            //if the last player to submit was immediately previous to this player
-            this.previous = this.sentenceArray[recent];
-          } else {
-            //else add the most recent sentence to the invisible portion of the story
-            this.story = this.story.concat(this.sentenceArray[recent] + " ");
-          }
+       //if it's not yet this player's turn
+      if (this.playerIndex > 0 && this.zcount > 0 && this.zcount <= this.playerIndex) {
+        const recent = this.zcount - 1;
+        if (recent == this.playerIndex - 1) {
+          //if the last player to submit was immediately previous to this player, show their sentence
+          this.previous = this.sentenceArray[recent];
+        } else {
+          //else add the most recent sentence to the invisible portion of the story
+          this.story = this.story.concat(this.sentenceArray[recent] + " ");
         }
-      } else if (this.zcount > this.playerIndex + 1) {
-        //+1 so it doesn't grab the user's own sentence
+        //else if this player's turn has passed
+      } else if (this.zcount > this.playerIndex + 1) { //+1 so it doesn't grab the user's own sentence
         const recent = this.zcount - 1;
 
+        //add the most recent sentence to the invisible portion of the story displayed AFTER this player's sentence
         this.following = this.following.concat(
           this.sentenceArray[recent] + " "
         );
       }
+      this.updateHeading();
+    },
+    //Updates title and subtitle based on whose turn it is (only for remote)
+    updateHeading() {
+      //if it's this player's turn, update subtitle accordingly
       if (this.zcount == this.playerIndex) {
         this.turnMessage = "Your turn, " + this.thisPlayer + "!";
         if (this.zcount == 0) {
@@ -140,6 +144,7 @@ export default {
         }
         this.mutable = true;
         this.focusInput();
+        //if this player player is waiting for their turn, update subtitle accordingly
       } else if (this.zcount < this.playerNum) {
         this.turnMessage = "Waiting...";
         this.promptMessage =
@@ -152,8 +157,8 @@ export default {
           "/" +
           this.playerNum +
           ") is typing...";
+        //if the story is complete, update title and subtitle accordingly
       } else if (this.zcount == this.playerNum) {
-        //maybe I want to wait on this until u click the button?
         this.turnMessage = "Exquisite Corpse";
         this.promptMessage = "By " + this.authors;
         setTimeout(() => this.finalTransition(), 910); //needs to wait the 900 ms for the last player's sentence to update
@@ -170,7 +175,7 @@ export default {
       );
       this.authors = formatted;
     },
-    //reset game to play again (only used for local at the moment)
+    //reset game to play again (only for local)
     reset() {
       this.current = "";
       this.count = 1;
@@ -205,7 +210,6 @@ export default {
       this.story = this.story.concat(this.previous + " ");
 
       //remove transition for resetting opacity to 1, then re-add after the story is updated
-      //might want to make this its own method actually
       var prev = document.getElementById("prev");
       prev.classList.add("notransition");
       prev.style.opacity = 0.5;
@@ -229,8 +233,9 @@ export default {
       }
       this.focusInput();
     },
+    //handles the transition after the final player enters their sentence from active gameplay
+    //to being able to view the complete story
     finalTransition() {
-      console.log("previous: " + this.previous);
       this.invis = true;
       setTimeout(() => {
         this.story = this.story.concat(this.previous + " ");
@@ -238,7 +243,7 @@ export default {
         this.showButton = true;
       }, 900);
     },
-    //puts together story
+    //puts together complete story for user to view
     viewStory() {
       if (!this.remote) {
         this.story = this.story.concat(this.previous);
@@ -247,7 +252,6 @@ export default {
         this.story = "";
         for (let i = 0; i < this.sentenceArray.length; i++) {
           this.story = this.story.concat(this.sentenceArray[i] + " ");
-          console.log("story: " + this.story);
         }
       }
       this.finished = true;
@@ -256,12 +260,10 @@ export default {
     focusInput() {
       nextTick(() => {
         // Without the try and catch: Error message is: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'focus')
-        // Need a try and catch block b/c you can only access the ref after the component is mounted. So the first render this.$ref.storyInput is going to be null and raise a promise error. This try and catch block doesn't change the overall logic of this method and only serves as a way to reduce any errors on console. Reference: https://vuejs.org/guide/essentials/template-refs.html#accessing-the-refs
+        // Need a try and catch block b/c you can only access the ref after the component is mounted. 
         try {
-          //this.$refs.storyInput.focus(); //need this bc vue gets confused since the input field has a v-if
           document.getElementById("editable").focus();
         } catch (ex) {
-          // Print out the error message
           console.log("Error detected: " + ex);
         }
       });
@@ -272,7 +274,6 @@ export default {
     isTabClosed(newValue) {
       // This watch will be triggered when the isTabClosed data property changes
       if (newValue) {
-        // Add your code here to handle the beforeunload event
         console.log("User left the page or closed the tab");
       }
     },
@@ -324,8 +325,7 @@ export default {
         <div class="prompt" v-if="remote">{{ promptMessage }}</div>
       </div>
 
-      <div v-if="true">
-        <!--should definitely get rid of this-->
+      <div>
         <br />
         <div v-if="remote"><br /></div>
         <div class="story">

@@ -1,3 +1,7 @@
+<!--Page that coordinates game setup, including creating a room, entering a room,
+inputting names, and starting the game, using the Lobby.vue and JoinRoom.vue child
+components. "Local," "Join," and "Host" on the home page all direct here.-->
+
 <script>
 import Lobby from "@/views/Lobby.vue";
 import JoinRoom from "@/views/JoinRoom.vue";
@@ -13,21 +17,23 @@ export default {
     InkButtonStart,
     InkButtonGame,
   },
-  mounted() {},
   data() {
     return {
       playerNum: 1,
       playerNames: [],
       playersFB: [],
       thisPlayer: "",
+      roomCode: "",
+
       addPlayers: false,
       enterCode: true,
       started: false,
       hasBox: true,
-      roomCode: "",
     };
   },
   methods: {
+    //Called on "start a game" button clicked -- sets visibility of Lobby to true
+    //and geenrates a room code if this player is the host on a remote game
     createRoom() {
       this.hasBox = false;
       this.addPlayers = true;
@@ -56,8 +62,9 @@ export default {
       set(startedFB, false);
     },
     //add specified player to firebase list (remote) or set players to specified list and start game (local)
+    //called when Lobby component sends back this list (or single player)
     setPlayers(playerNames) {
-      const db = useDatabase(); //only for remote - add if
+      const db = useDatabase();
       const playersfb = dbRef(db, this.roomCode + "/players");
 
       //listen for changes to the list of players
@@ -68,13 +75,11 @@ export default {
       });
 
       this.thisPlayer = playerNames[0];
-      console.log("this player: " + this.thisPlayer);
       if (!this.remote) {
         this.playerNames = playerNames;
       } else {
         this.playerNames = this.playersFB;
       }
-      console.log("player names: " + this.playerNames);
       this.playerNum = this.playerNames.length;
       if (!this.remote) {
         this.startGame();
@@ -90,7 +95,8 @@ export default {
       const db = useDatabase();
       const startedFB = dbRef(db, this.roomCode + "/gameAttributes");
 
-      //listen for the host telling the game to start -- when this happens, grab the final copy of the list of players from Firebase
+      //listen for the host telling the game to start -- when this happens, 
+      //grabs the final copy of the list of players from Firebase
       onValue(startedFB, (snapshot) => {
         const data = snapshot.val();
         const start = Object.values(data);
@@ -101,11 +107,10 @@ export default {
         }
       });
     },
-    //grab final copy of the list of players from Firebase
+    //grabs final copy of the list of players from Firebase
     finalizePlayers() {
       this.playerNames = this.playersFB;
       this.playerNum = this.playerNames.length;
-      console.log("final players: " + this.playerNames);
     },
     //for host, sets the current player to the first in the list and tells firebase to start the game for all players
     //for host and playing locally, shows an alert for fewer than 2 players
@@ -137,7 +142,7 @@ export default {
         }
       }
     },
-    //sends props to LocalMainGame to start game
+    //sends props to MainGame to start game
     onStart() {
       const { playerNum, playerNames, remote, host, roomCode, thisPlayer } =
         this;

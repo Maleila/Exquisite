@@ -1,3 +1,6 @@
+<!--Page with light instructions on starting a local game and
+starting or joining a remote game-->
+
 <script>
 import InkButtonBack from "@/views/buttons/InkButtonBack.vue";
 

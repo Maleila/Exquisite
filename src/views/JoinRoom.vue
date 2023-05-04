@@ -1,3 +1,7 @@
+<!--Child component of Room.vue that facilitates joining a remote game via room code.
+Shows only through remote>join path, and will be the first component to show in 
+Room.vue in this case-->
+
 <script>
 import { ref as dbRef, onValue, get } from "firebase/database";
 import InkButtonEnter from "@/views/buttons/InkButtonEnter.vue";
@@ -9,16 +13,6 @@ export default {
     InkButtonEnter,
   },
   mounted() {
-    // const db = useDatabase();
-    // const firebaseDB = dbRef(db, "/");
-
-    // //pulls existing roomcodes from firebase
-    // onValue(firebaseDB, (snapshot) => {
-    //     const data = snapshot.val();
-    //     const roomCodeData = Object.keys(data);
-    //     this.roomCodes = roomCodeData;
-    // });
-
     this.focusInput();
   },
   data() {
@@ -45,7 +39,7 @@ export default {
       get(dbRef(db, this.roomCode)).then((snapshot) => {
         const data = snapshot.exists();
 
-        //checks for valid roomCode
+        //Checks for valid roomCode
         if (this.roomCode == "") {
           alert("Input room code");
         } else if (!data) {
@@ -60,13 +54,12 @@ export default {
     focusInput() {
       nextTick(() => {
         // Without the try and catch: Error message is: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'focus')
-        // Need a try and catch block b/c you can only access the ref after the component is mounted. So the first render this.$ref.storyInput is going to be null and raise a promise error.
+        // Need a try and catch block b/c you can only access the id after the component is mounted. So the first render the id is going to be null and raise a promise error.
         //This try and catch block doesn't change the overall logic of this method and only serves as a way to reduce any errors on console.
         //Reference: https://vuejs.org/guide/essentials/template-refs.html#accessing-the-refs
         try {
           document.getElementById("codeInput").focus();
         } catch (ex) {
-          // Print out the error message
           console.log("Error detected: " + ex);
         }
       });

@@ -1,3 +1,6 @@
+<!-- Homepage, using router to navigate to Gameplay page, About page,
+local game or remote game -->
+
 <script>
 export default {
   data() {
@@ -29,7 +32,6 @@ export default {
   },
 };
 </script>
-<!-- Homepage, using router to go to other components -->
 <template>
   <div class="home">
     <h1>Exquisite</h1>
