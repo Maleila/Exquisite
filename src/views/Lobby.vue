@@ -121,7 +121,7 @@ export default {
     <img
       class="dotGif"
       v-if="remote && !addOk && playersRemote.length >= 2"
-      src="dotdotdot.gif"
+      src="dist/assets/dotdotdot.gif"
       alt="dot dot dot gif"
     />
   </div>

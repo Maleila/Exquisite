@@ -206,7 +206,7 @@ export default {
       <img
         class="dotGif"
         v-if="remote && playersFB.length == 1"
-        src="dotdotdot.gif"
+        src="dist/assets/dotdotdot.gif"
         alt="dot dot dot gif"
       />
       <div class="begin-story">
