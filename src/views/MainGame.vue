@@ -375,16 +375,16 @@ export default {
           <div class="enterPrompt" v-if="!remote && count <= playerNum">
             ENTER to submit
           </div>
-          <!-- <img
+          <img
             class="pencilGif"
             v-if="
               remote &&
               this.playerIndex != this.zcount &&
               this.zcount < this.playerNum
             "
-            src="src/assets/pencil.gif"
+            src="pencil.gif"
             alt="drawing pencil"
-          /> -->
+          />
           <span v-if="!finished" class="invisible" id="after">
             {{ following }}
           </span>

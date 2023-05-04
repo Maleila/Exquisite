@@ -117,12 +117,12 @@ export default {
     Waiting for host to start game
     <br />
     <br />
-    <!-- <img
+    <img
       class="dotGif"
       v-if="remote && !addOk && players.length >= 2"
-      src="src/assets/dotdotdot.gif"
+      src="dotdotdot.gif"
       alt="dot dot dot gif"
-    /> -->
+    />
   </div>
   <input
     id="localInput"

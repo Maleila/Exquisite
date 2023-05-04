@@ -198,12 +198,12 @@ export default {
         Waiting for others
       </div>
       <br />
-      <!-- <img
+      <img
         class="dotGif"
         v-if="remote && playersFB.length == 1"
-        src="src/assets/dotdotdot.gif"
+        src="dotdotdot.gif"
         alt="dot dot dot gif"
-      /> -->
+      />
       <div class="begin-story">
         <InkButtonStart
           v-if="host && playersFB.length >= 2"
