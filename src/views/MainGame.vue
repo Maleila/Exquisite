@@ -376,7 +376,7 @@ export default {
             ENTER to submit
           </div>
           <img
-            class="pencilGif"
+            class="dist/assets/pencilGif"
             v-if="
               remote &&
               this.playerIndex != this.zcount &&
