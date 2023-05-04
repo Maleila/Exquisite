@@ -497,9 +497,9 @@ h3 {
 
 .main-game .pencilGif {
   position: fixed;
-  width: 20%;
-  right: 50%;
-  top: 50%;
+  width: 35%;
+  right: 32%;
+  top: 40%;
 }
 
 .main-game .view-story {
@@ -514,24 +514,8 @@ h3 {
   z-index: 1;
 }
 
-.main-game .view-story button {
-  background-color: transparent;
-  /* border: none; */
-  border-radius: 20px;
-  position: fixed;
-  top: 30%;
-  /* font-family: CalorieRegular; */
-  font-family: inherit;
-  text-align: center;
-  display: block;
-  margin: 0 auto;
-  font-size: 2em;
-  padding: 10px 20px;
+.main-game .pencilGif img {
+  max-width: 100%;
+  max-height: 100%;
 }
-
-.main-game img {
-  max-width: 60%;
-  max-height: 60%;
-}
-/* Center the image horizontally */
 </style>
