@@ -14,9 +14,9 @@ export default {
     <div class="empty"></div>
     <div class="text">
       <b>To begin a local game,</b> assemble a group of friends around a table
-      and have everyone enter their name. After the first player
-      hits submit, pass the laptop to the next player. Make sure not to let
-      other players view the screen until their turn!
+      and have everyone enter their name. After the first player hits submit,
+      pass the laptop to the next player. Make sure not to let other players
+      view the screen until their turn!
       <br />
       <br />
       <b>To begin a remote game,</b> click "Remote" to generate a room code
