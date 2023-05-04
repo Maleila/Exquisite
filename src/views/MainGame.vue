@@ -497,8 +497,8 @@ h3 {
 
 .main-game .pencilGif {
   position: fixed;
-  width: 35%;
-  right: 32%;
+  width: 40%;
+  right: 30%;
   top: 40%;
 }
 
