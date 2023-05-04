@@ -112,9 +112,18 @@ export default {
       {{ item }}
     </li>
   </div>
-  <br>
-  <div v-if="remote && !addOk && players.length >= 2" >Waiting for host to start game</div>
-  <img class="dotGif" v-if="remote && !addOk && players.length >= 2" src="src/assets/dotdotdot.gif" alt="dot dot dot gif">
+  <br />
+  <div v-if="!host && remote && !addOk && players.length >= 2">
+    Waiting for host to start game
+    <br />
+    <br />
+    <img
+      class="dotGif"
+      v-if="remote && !addOk && players.length >= 2"
+      src="src/assets/dotdotdot.gif"
+      alt="dot dot dot gif"
+    />
+  </div>
   <input
     id="localInput"
     v-if="addOk && !remote"
@@ -175,7 +184,6 @@ li {
   margin: 0 auto;
   display: flex;
   justify-content: center;
-
 }
 
 input {

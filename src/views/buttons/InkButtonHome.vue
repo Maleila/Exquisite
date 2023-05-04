@@ -1,6 +1,8 @@
 <template>
   <div class="ink-button">
-    <button>START</button>
+    <router-link to="/" custom v-slot="{ navigate }">
+      <button @click="navigate" role="link">HOME</button>
+    </router-link>
   </div>
 </template>
 
@@ -8,7 +10,7 @@
 .ink-button {
   background-image: url("../../assets/inkR.svg");
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: center;
   background-size: 20vh;
   transition: 0.2s;
   height: 15vh;
@@ -20,12 +22,12 @@
   font-weight: 100;
   color: #ffffff;
   background: None;
-  height: 10vh;
+  height: 15vh;
   width: 20vh;
   border: None;
   font-family: inherit;
   padding-right: 7vh;
-  padding-top: 2vh;
+  padding-bottom: 1vh;
   font-family: "CalorieRegular";
   -webkit-text-stroke: 0.15vh #ffffff;
 }

@@ -19,9 +19,10 @@
   color: #ffffff;
   background: None;
   height: 15vh;
-  width: 70vh;
+  width: 60vh;
   border: None;
-  padding-bottom: 16vh;
+  padding-bottom: 18vh;
+  padding-right: 3vh;
   font-family: "CalorieRegular";
 }
 

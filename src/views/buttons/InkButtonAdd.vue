@@ -20,12 +20,12 @@
   font-weight: 100;
   color: #ffffff;
   background: None;
-  height: 20vh;
-  width: 30vh;
+  height: 15vh;
+  width: 20vh;
   border: None;
   font-family: inherit;
-  padding-right: 19vh;
-  padding-bottom: 6vh;
+  padding-right: 9vh;
+  padding-bottom: 1vh;
   font-family: "CalorieRegular";
   -webkit-text-stroke: 0.15vh #ffffff;
 }
