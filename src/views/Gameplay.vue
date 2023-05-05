@@ -40,7 +40,7 @@ export default {
   margin: 0 auto;
   font-weight: 200;
   text-align: left;
-  line-height: 21vh;
+  line-height: 1.5em;
   filter: drop-shadow(1px 2px 1px rgb(0 0 0 / 0.3));
 }
 .gameplay .text {
@@ -53,7 +53,7 @@ export default {
   line-height: 1.7em;
 }
 .gameplay .empty {
-  height: 3vh;
+  height: 1em;
 }
 .gameplay .back {
   transform: scale(0.8);

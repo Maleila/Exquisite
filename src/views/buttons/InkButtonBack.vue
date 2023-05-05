@@ -11,28 +11,28 @@
   background-image: url("../../assets/inkB.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 40vh;
+  background-size: 20em;
   transition: 0.2s;
 }
 
 .ink-button button {
-  font-size: 8vh;
+  font-size: 4em;
   font-weight: 100;
   color: #ffffff;
   background: None;
-  height: 25vh;
-  width: 30vh;
+  height: 3em;
+  width: 3em;
   border: None;
   font-family: inherit;
-  padding-bottom: 1vh;
+  padding-bottom: 0.2em;
   font-family: "CalorieRegular";
-  -webkit-text-stroke: 0.15vh #ffffff;
+  -webkit-text-stroke: 0.02em #ffffff;
 }
 
 .ink-button:hover {
   filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
 }
 .ink-button button:hover {
-  -webkit-text-stroke: 0.2vh #ffffff;
+  -webkit-text-stroke: 0.04em #ffffff;
 }
 </style>

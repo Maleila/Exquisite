@@ -50,7 +50,7 @@ export default {
   margin: 0 auto;
   font-weight: 200;
   text-align: left;
-  line-height: 20vh;
+  line-height: 1em;
   filter: drop-shadow(1px 2px 1px rgb(0 0 0 / 0.3));
 }
 .about .text {
@@ -60,10 +60,10 @@ export default {
   margin: 0 auto;
   font-weight: 200;
   text-align: left;
-  line-height: 1.5em;
+  line-height: 1.6em;
 }
 .about .empty {
-  height: 0.5vh;
+  height: 0.5em;
 }
 .about .back {
   transform: scale(0.8);
