@@ -25,11 +25,19 @@ npm run dev
 ## Deployment with Firebase
 
 To deploy the Exquisite Corpse Web App using Firebase, follow these instructions:
-1. Download the Firebase CLI ```npm install -g firebase-tools```
-2. Login to Firebase ```firebase login```
-3. After making changes to the project, build it ```npm run build```
-4. Deploy to Firebase ```firebase deploy```
-
-
-## Gif source:
-https://www.dotdotdot-studio.com/ 
+1. Download the Firebase CLI 
+```
+npm install -g firebase-tools
+```
+2. Login to Firebase 
+```
+firebase login
+```
+3. After making changes to the project, build it 
+```
+npm run build
+```
+4. Deploy to Firebase 
+```
+firebase deploy
+```
