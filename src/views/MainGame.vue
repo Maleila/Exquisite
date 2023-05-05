@@ -61,13 +61,13 @@ export default {
       playerIndex: 0, //tracks the index of this player in the list of all players
       count: 1, //determines turns for local
       zcount: 0, //determines turns for remote (based on firebase)
-      
+
       //User-inputted elements of this story
       story: "",
       previous: "",
       current: "",
       following: "",
-    
+
       //The complete story as a string array
       sentenceArray: [],
 
@@ -109,8 +109,12 @@ export default {
     //called on change to zcount in firebase -- only for remote
     onTurnChange() {
       this.mutable = false;
-       //if it's not yet this player's turn
-      if (this.playerIndex > 0 && this.zcount > 0 && this.zcount <= this.playerIndex) {
+      //if it's not yet this player's turn
+      if (
+        this.playerIndex > 0 &&
+        this.zcount > 0 &&
+        this.zcount <= this.playerIndex
+      ) {
         const recent = this.zcount - 1;
         if (recent == this.playerIndex - 1) {
           //if the last player to submit was immediately previous to this player, show their sentence
@@ -120,7 +124,8 @@ export default {
           this.story = this.story.concat(this.sentenceArray[recent] + " ");
         }
         //else if this player's turn has passed
-      } else if (this.zcount > this.playerIndex + 1) { //+1 so it doesn't grab the user's own sentence
+      } else if (this.zcount > this.playerIndex + 1) {
+        //+1 so it doesn't grab the user's own sentence
         const recent = this.zcount - 1;
 
         //add the most recent sentence to the invisible portion of the story displayed AFTER this player's sentence
@@ -260,7 +265,7 @@ export default {
     focusInput() {
       nextTick(() => {
         // Without the try and catch: Error message is: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'focus')
-        // Need a try and catch block b/c you can only access the ref after the component is mounted. 
+        // Need a try and catch block b/c you can only access the ref after the component is mounted.
         try {
           document.getElementById("editable").focus();
         } catch (ex) {
@@ -325,70 +330,68 @@ export default {
         <div class="prompt" v-if="remote">{{ promptMessage }}</div>
       </div>
 
-      <div>
-        <br />
-        <div v-if="remote"><br /></div>
-        <div class="story">
-          <span
-            class="invisible"
-            id="invisible"
-            :style="{
-              opacity: finished ? 1 : 0.01,
-            }"
-          >
-            {{ story }}
-          </span>
-          <span
-            class="previous-sentence"
-            id="prev"
-            :style="{
-              opacity: invis ? 0.01 : 0.5,
-            }"
-            v-if="count > 0 && !finished"
-          >
-            {{ previous + " " }}
-          </span>
+      <br />
+      <div v-if="remote"><br /></div>
+      <div class="story">
+        <span
+          class="invisible"
+          id="invisible"
+          :style="{
+            opacity: finished ? 1 : 0.01,
+          }"
+        >
+          {{ story }}
+        </span>
+        <span
+          class="previous-sentence"
+          id="prev"
+          :style="{
+            opacity: invis ? 0.01 : 0.5,
+          }"
+          v-if="count > 0 && !finished"
+        >
+          {{ previous + " " }}
+        </span>
 
-          <contenteditable
-            v-if="!finished"
-            tag="div"
-            :style="{
-              opacity: invis ? 0.5 : 1,
-            }"
-            :contenteditable="mutable"
-            class="new-text"
-            id="editable"
-            ref="storyInput"
-            :no-nl="true"
-            :no-html="true"
-            v-model="current"
-            @keydown.enter="submitStory"
-            @blur="onFocusLost"
-          >
-          </contenteditable>
-          <div
-            class="enterPrompt"
-            v-if="remote && this.playerIndex == this.zcount"
-          >
-            ENTER to submit
-          </div>
-          <div class="enterPrompt" v-if="!remote && count <= playerNum">
-            ENTER to submit
-          </div>
-          <img
-            class="dist/assets/pencilGif"
-            v-if="
-              remote &&
-              this.playerIndex != this.zcount &&
-              this.zcount < this.playerNum
-            "
-            src="pencil.gif"
-            alt="drawing pencil"
-          />
-          <span v-if="!finished" class="invisible" id="after">
-            {{ following }}
-          </span>
+        <contenteditable
+          v-if="!finished"
+          tag="div"
+          :style="{
+            opacity: invis ? 0.5 : 1,
+          }"
+          :contenteditable="mutable"
+          class="new-text"
+          id="editable"
+          ref="storyInput"
+          :no-nl="true"
+          :no-html="true"
+          v-model="current"
+          @keydown.enter="submitStory"
+          @blur="onFocusLost"
+        >
+        </contenteditable>
+        <div
+          class="enterPrompt"
+          v-if="remote && this.playerIndex == this.zcount"
+        >
+          ENTER to submit
         </div>
+        <div class="enterPrompt" v-if="!remote && count <= playerNum">
+          ENTER to submit
+        </div>
+        <img
+          class="dist/assets/pencilGif"
+          v-if="
+            remote &&
+            this.playerIndex != this.zcount &&
+            this.zcount < this.playerNum
+          "
+          src="pencil.gif"
+          alt="drawing pencil"
+        />
+        <span v-if="!finished" class="invisible" id="after">
+          {{ following }}
+        </span>
       </div>
     </h2>
 
@@ -442,8 +445,6 @@ h3 {
 
 .main-game .story {
   width: 90%;
-  margin: 0 auto;
-  text-align: left;
   font-family: Desyre;
   font-size: 2em;
   position: static;
@@ -452,11 +453,11 @@ h3 {
 
 .main-game .title-box {
   position: fixed;
-  top: 2em;
-  left: 3.5em;
+  top: 8%;
+  left: 8%;
   padding: 0.2em 0.5em;
-  border-radius: 0.2em;
-  background: rgba(224, 224, 224, 0.8);
+  border-radius: 0.5em;
+  background: rgba(224, 224, 224, 0.95);
   z-index: 1;
 }
 
@@ -487,10 +488,10 @@ h3 {
   font-size: 0.5em;
   font-weight: 100;
   position: fixed;
-  bottom: 3em;
-  left: 3.5em;
+  bottom: 8%;
+  left: 8%;
   padding: 0.2em 0.5em;
-  border-radius: 0.2em;
+  border-radius: 0.5em;
   background: rgba(224, 224, 224, 0.95);
   z-index: 1;
 }
