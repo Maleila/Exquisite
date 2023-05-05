@@ -1,6 +1,6 @@
 # Exquisite Corpse Web App
 
-The Exquisite Corpse Web App is a project based on Vue.js that allows users to play the game "exquisite corpse". This markdown file provides information on how to get started with the project, recommended IDE setup, and deployment instructions using Firebase.
+The Exquisite Corpse Web App is a project based on Vue.js that allows users to play the game "exquisite corpse". The game involves a group of people completing a story. Each player adds a sentence to the story based on the given information, but the given information is only the sentence written by the previous player. This markdown file provides information on how to get started with the project, recommended IDE setup, and deployment instructions using Firebase.
 
 ## Installation
 
