@@ -448,7 +448,9 @@ h3 {
   font-family: Desyre;
   font-size: 2em;
   position: static;
+  margin: 0 auto;
   margin-top: 5%;
+  text-align: left;
 }
 
 .main-game .title-box {
