@@ -75,20 +75,20 @@ export default {
   filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
   color: #484848;
   font-family: "CalorieRegular";
-  font-size: 35vw;
-  line-height: 35vh;
+  font-size: 30em;
+  line-height: 0.55em;
   margin: 0;
 }
 
 .home h4 {
   color: #484848;
   font-family: inherit;
-  font-size: 3vh;
+  font-size: 1.5em;
   font-weight: 100;
-  margin-bottom: 3.5vh;
+  margin-bottom: 1em;
   border: none;
   background: none;
-  letter-spacing: 0.3vh;
+  letter-spacing: 0.2em;
   transition: 0.3s;
 }
 
@@ -102,12 +102,12 @@ export default {
 .home .button button {
   color: #434343;
   font-family: inherit;
-  font-size: 3vh;
+  font-size: 1.5em;
   font-weight: 100;
-  margin-bottom: 3.5vh;
+  margin-bottom: 1em;
   border: none;
   background: none;
-  letter-spacing: 0.3vh;
+  letter-spacing: 0.2em;
   transition: 0.3s;
 }
 
@@ -116,15 +116,11 @@ export default {
   filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
 }
 
-.home .empty {
-  height: 18vh;
-}
-
 .home .side-buttons {
   color: #434343;
   font-family: inherit;
-  font-size: 3vh;
+  font-size: 1em;
   font-weight: 100;
-  letter-spacing: 0.3vh;
+  letter-spacing: 0.3em;
 }
 </style>
