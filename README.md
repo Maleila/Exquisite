@@ -6,8 +6,14 @@ The Exquisite Corpse Web App is a project based on Vue.js that allows users to p
 
 To get started with the Exquisite Corpse Web App, follow these steps:
 1. Clone the repository
-2. Install dependencies ```npm install```
-3. Start the development server ```npm run dev```
+2. Install dependencies 
+```
+npm install
+```
+3. Start the development server 
+```
+npm run dev
+```
 
 ## Recommended IDE Setup
 
