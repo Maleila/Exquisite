@@ -18,9 +18,6 @@ npm run dev
 ## Recommended IDE Setup
 
 1. Install [Visual Studio Code](https://code.visualstudio.com/)
-2. Install the [Volar extension](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
-3. Disable the Vetur extension
-4. Install the [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
 
 ## Deployment with Firebase
 
@@ -46,3 +43,10 @@ firebase deploy
 
 1. Local version: Designed for in-person gameplay, where players can join the game and play face-to-face.
 2. Remote version: Allows players to play online, either by creating their own room or joining an existing one.
+
+## Known Bugs
+
+1. Firefox: player sentences that stretch a few words onto a new line may not be read when the user hits enter.
+This is related to how Firefox specifically reads the contenteditable.
+2. Safari: the cursor initally does not appear on the screen even though the user can type (and cannot click out
+of the contenteditable)
