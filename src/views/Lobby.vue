@@ -42,29 +42,32 @@ export default {
     addPlayer() {
       //prevent users from entering whitespace-only names or names that have already been used in this game
       if (this.name.trim() == "") {
-          alert("Input your name");
-        } else if (this.playerNames.includes(this.name.trim()) || this.playersRemote.includes(this.name.trim())) {
-          alert("Choose another name!");
-        } else {
-          //for local game store players in a String array
-          if (!this.remote) {
-              this.playerNum++;
-              if (this.playerNum == 2) {
-                this.playerNames[0] = this.name;
-              } else {
-                this.playerNames[this.playerNum - 2] = this.name;
-              }
-              this.focusInput();
-            //for remote game store players in Firebase
-          } else {
-            const db = useDatabase();
-            this.playerNum++;
-            const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
-            set(playersFB, "");
+        alert("Input your name");
+      } else if (
+        this.playerNames.includes(this.name.trim()) ||
+        this.playersRemote.includes(this.name.trim())
+      ) {
+        alert("Choose another name!");
+      } else {
+        //for local game store players in a String array
+        if (!this.remote) {
+          this.playerNum++;
+          if (this.playerNum == 2) {
             this.playerNames[0] = this.name;
-            this.addOk = false;
+          } else {
+            this.playerNames[this.playerNum - 2] = this.name;
           }
+          this.focusInput();
+          //for remote game store players in Firebase
+        } else {
+          const db = useDatabase();
+          this.playerNum++;
+          const playersFB = dbRef(db, this.roomCode + "/players/" + this.name);
+          set(playersFB, "");
+          this.playerNames[0] = this.name;
+          this.addOk = false;
         }
+      }
       this.name = "";
     },
     focusInput() {
@@ -121,7 +124,7 @@ export default {
     <img
       class="dotGif"
       v-if="remote && !addOk && playersRemote.length >= 2"
-      src="dist/assets/dotdotdot.gif"
+      src="dotdotdot.gif"
       alt="dot dot dot gif"
     />
   </div>
@@ -158,13 +161,13 @@ export default {
 
 <style>
 .prompt {
-  font-size: 3vh;
+  font-size: 1.5em;
 }
 
 .players {
-  font-size: 3vh;
+  font-size: 1.5em;
   text-align: left;
-  width: 30vh;
+  width: 8em;
   margin: 0 auto;
 }
 
@@ -177,26 +180,26 @@ li {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 3vh;
-  margin-left: 3vh;
+  gap: 1em;
+  margin-left: 1em;
 }
 
 .dotGif {
-  width: 18vh;
+  width: 8em;
   margin: 0 auto;
   display: flex;
   justify-content: center;
 }
 
 input {
-  width: 36vh;
-  height: 4vh;
-  font-size: 2.5vh;
+  width: 15em;
+  height: 1.5em;
+  font-size: 1.2em;
   color: #484848;
   border-color: #484848;
   border-radius: 1em;
-  border-width: 0.2vh;
-  text-indent: 2vh;
+  border-width: 0.05em;
+  text-indent: 0.8em;
   background-color: transparent;
 }
 </style>

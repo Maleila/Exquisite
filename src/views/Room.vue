@@ -95,7 +95,7 @@ export default {
       const db = useDatabase();
       const startedFB = dbRef(db, this.roomCode + "/gameAttributes");
 
-      //listen for the host telling the game to start -- when this happens, 
+      //listen for the host telling the game to start -- when this happens,
       //grabs the final copy of the list of players from Firebase
       onValue(startedFB, (snapshot) => {
         const data = snapshot.val();
@@ -206,7 +206,7 @@ export default {
       <img
         class="dotGif"
         v-if="remote && playersFB.length == 1"
-        src="dist/assets/dotdotdot.gif"
+        src="dotdotdot.gif"
         alt="dot dot dot gif"
       />
       <div class="begin-story">
@@ -222,51 +222,40 @@ export default {
 <style scoped>
 .local-room h1 {
   color: #434343;
-
   font-size: 4em;
   font-weight: 900;
   line-height: 0.4em;
 }
 
 .local-room .title {
-  font-size: 6vh;
+  font-size: 3em;
   width: 80%;
   margin: 0 auto;
   font-weight: 200;
   text-align: center;
-  -webkit-text-stroke: 0.05vh #000000;
-}
-
-.local-room .prompt {
-  font-size: 2vh;
-}
-
-.local-room .buttons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  -webkit-text-stroke: 0.01em #000000;
 }
 
 .local-room .empty {
-  height: 5vh;
+  height: 2.5em;
 }
 
 .local-room .start-box {
-  height: 15vh;
+  height: 8em;
 }
 
 .local-room .begin-story {
   text-align: center;
-  width: 18vh;
+  width: 8em;
   margin: 0 auto;
 }
 
 .local-room .waiting-message {
-  font-size: 2vh;
+  font-size: 1em;
 }
 
 .local-room .dotGif {
-  width: 18vh;
+  width: 8em;
   margin: 0 auto;
   display: flex;
   justify-content: center;

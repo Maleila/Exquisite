@@ -88,7 +88,7 @@ export default {
 <style scoped>
 .enter-roomcode {
   text-align: center;
-  width: 18vh;
+  width: 8em;
   margin: 0 auto;
 }
 </style>

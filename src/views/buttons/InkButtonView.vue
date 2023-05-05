@@ -9,20 +9,19 @@
   background-image: url("../../assets/inkVS.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 60vh;
+  background-size: 25em;
   transition: 0.2s;
 }
 
 .ink-button button {
-  font-size: 14vh;
+  font-size: 5em;
   font-weight: 100;
   color: #ffffff;
   background: None;
-  height: 15vh;
-  width: 60vh;
+  height: 2em;
+  width: 5em;
   border: None;
-  padding-bottom: 18vh;
-  padding-right: 3vh;
+  padding-right: 0.4em;
   font-family: "CalorieRegular";
 }
 
@@ -30,6 +29,6 @@
   filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 0.3));
 }
 .ink-button button:hover {
-  -webkit-text-stroke: 0.1vh #ffffff;
+  -webkit-text-stroke: 0.01em #ffffff;
 }
 </style>
