@@ -203,12 +203,6 @@ export default {
         Waiting for others
       </div>
       <br />
-      <img
-        class="dotGif"
-        v-if="remote && playersFB.length == 1"
-        src="dotdotdot.gif"
-        alt="dot dot dot gif"
-      />
       <div class="begin-story">
         <InkButtonStart
           v-if="host && playersFB.length >= 2"
@@ -252,12 +246,5 @@ export default {
 
 .local-room .waiting-message {
   font-size: 1em;
-}
-
-.local-room .dotGif {
-  width: 8em;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
 }
 </style>

@@ -379,16 +379,6 @@ export default {
         <div class="enterPrompt" v-if="!remote && count <= playerNum">
           ENTER to submit
         </div>
-        <img
-          class="dist/assets/pencilGif"
-          v-if="
-            remote &&
-            this.playerIndex != this.zcount &&
-            this.zcount < this.playerNum
-          "
-          src="pencil.gif"
-          alt="drawing pencil"
-        />
         <span v-if="!finished" class="invisible" id="after">
           {{ following }}
         </span>
@@ -498,13 +488,6 @@ h3 {
   z-index: 1;
 }
 
-.main-game .pencilGif {
-  position: fixed;
-  width: 40%;
-  right: 30%;
-  top: 40%;
-}
-
 .main-game .view-story {
   display: flex;
   justify-content: center;
@@ -515,10 +498,5 @@ h3 {
   right: 40%;
   top: 50%;
   z-index: 1;
-}
-
-.main-game .pencilGif img {
-  max-width: 100%;
-  max-height: 100%;
 }
 </style>

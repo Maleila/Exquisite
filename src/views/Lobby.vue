@@ -121,12 +121,6 @@ export default {
     Waiting for host to start game
     <br />
     <br />
-    <img
-      class="dotGif"
-      v-if="remote && !addOk && playersRemote.length >= 2"
-      src="dotdotdot.gif"
-      alt="dot dot dot gif"
-    />
   </div>
   <input
     id="localInput"
@@ -182,13 +176,6 @@ li {
   justify-content: center;
   gap: 1em;
   margin-left: 1em;
-}
-
-.dotGif {
-  width: 8em;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
 }
 
 input {
