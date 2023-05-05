@@ -1,10 +1,26 @@
 # Exquisite Corpse Web App
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+The Exquisite Corpse Web App is a project based on Vue.js that allows users to play the game "exquisite corpse" online. This markdown file provides information on how to get started with the project, recommended IDE setup, and deployment instructions using Firebase.
 
-## Recommended IDE Setup
+## Installation
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+To get started with the Exquisite Corpse Web App, follow these steps:
+1. Clone the repository
+2. Install dependencies
+```
+npm install
+```
+3. Start the development server
+```
+npm run dev
+```
+
+
+
+
+- [VS Code](https://code.visualstudio.com/) 
+- [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) 
+- [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
 ## Instructions on firebase deployment
 
@@ -16,10 +32,6 @@ Instructions of firebase deployment. These commands shall be run on cmd/terminal
 ```npm run build```
 4. Deploy to firebase:  ```firebase deploy```
 
-
-## Resources
-
-1. [Vue router tutorial from vueschool](https://vueschool.io/lessons/creating-the-project-with-vite-vite-only)
 
 ## Gif source:
 https://www.dotdotdot-studio.com/ 
