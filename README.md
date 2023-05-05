@@ -41,3 +41,8 @@ npm run build
 ```
 firebase deploy
 ```
+
+## Features
+
+1. Local version: Designed for in-person gameplay, where players can join the game and play face-to-face.
+2. Remote version: Allows players to play online, either by creating their own room or joining an existing one.
